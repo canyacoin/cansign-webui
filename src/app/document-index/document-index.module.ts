@@ -6,6 +6,8 @@ import { DropzoneComponent } from './dropzone/dropzone.component';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
+import { FilesListComponent } from './files-list/files-list.component';
+import { FileComponent } from './file/file.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -23,6 +25,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   providers: [
     { provide: DROPZONE_CONFIG, useValue: DEFAULT_DROPZONE_CONFIG, },
   ],
-  declarations: [DocumentsIndexWrapperComponent, DropzoneComponent]
+  declarations: [DocumentsIndexWrapperComponent, DropzoneComponent, FilesListComponent, FileComponent],
+  entryComponents: [FileComponent]
 })
 export class DocumentIndexModule { }
