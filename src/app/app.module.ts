@@ -16,7 +16,7 @@ import { LocalStorageService } from './@service/local-storage.service';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
