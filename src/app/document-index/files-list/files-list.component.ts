@@ -55,6 +55,7 @@ export class FilesListComponent implements OnInit {
       this.ipfs.fileCount++;
 
       let fileObj = files[key];
+      this.ipfs.files.push(fileObj);
       this.listFile(fileObj);
 
       let fileComp = this.fileComponents[this.ipfs.fileCount].instance;
