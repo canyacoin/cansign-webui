@@ -1,25 +1,38 @@
 .file {
-  @include flex-row;
   background-color: white;
   .progress,
-  .content {
-    @include flex-column-center;
-    height: 70px;
+  .content,
+  .status {
+    // min-height: 112px;
+    > div {
+      // padding: get-spacer(3);
+    }
   }
   .progress {
     @include flex-align-center;
-    flex-basis: 70px;
-    width: 70px;
+    // flex-basis: 70px;
+    // width: 70px;
   }
   .content {
-    width: 100%;
+    border-right: 1px solid $gray-300;
+    h6 {
+      color: $gray-500;
+      margin: 0;
+    }
+    nav {
+      margin-top: get-spacer(3);
+    }
   }
   .name {
+    font-size: $h5-font-size;
     font-weight: $bold;
     display: block;
   }
   .link {
     font-size: $font-size-sm;
+    display: inline-block;
+    margin-bottom: -8px;
+    width: 120px;
   }
   .link-placeholder {
     font-size: $font-size-sm;
@@ -42,13 +55,26 @@
     }
   }
 
+  .actions {
+    h6 {
+      color: $gray-500;
+      margin: 0;
+    }
+    .status {
+      display: block;
+    }
+    nav {
+      margin-top: get-spacer(3);
+    }
+  }
+
   .svg {
     height: 100%;
     width: 100%;
     circle {
       transition: stroke-dashoffset 1s linear;
       stroke-dashoffset: 0;
-      stroke-width: 4px;
+      stroke-width: 5px;
       stroke: $gray-100;
     }
     .bar {

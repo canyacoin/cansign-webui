@@ -1,4 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
+import { IpfsService } from '../../@service/ipfs.service';
 
 declare var require: any;
 
@@ -26,7 +27,9 @@ export class FileComponent implements OnInit {
 
   ipfsHash: string
 
-  constructor(private zone: NgZone) {}
+  constructor(
+    private zone: NgZone,
+    public ipfs: IpfsService) {}
 
   ngOnInit() {
   }
@@ -34,16 +37,16 @@ export class FileComponent implements OnInit {
   renderIpfsLink() {
     console.log(this.ipfsHash);
     let link = `https://gateway.ipfs.io/ipfs/${this.ipfsHash}`;
-    this.ipfsLink = `<a href="${link}" target="_blank" class="link">${this.ipfsHash}</a> <span>-</span> <span class="copy copy-${this.ipfsHash}">copy</span>`;
+    this.ipfsLink = `<span class="copy copy-${this.ipfsHash}"><i class="fa fa-copy"></i></span> <a href="${link}" target="_blank" class="link text-truncate" style="width: 120px;">${this.ipfsHash}</a>`;
     this.zone.run(() => console.log('field run'));
 
     new clipboard(`.copy-${this.ipfsHash}`, {
       text: function(trigger) {
 
-        trigger.innerText = 'copied!';
+        trigger.innerHTML = '<i class="fa fa-check"></i>';
         trigger.classList.add('copied');
         setTimeout(() => {
-          trigger.innerText = 'copy';
+          trigger.innerHTML = '<i class="fa fa-copy"></i>';
           trigger.classList.remove('copied');
         }, 2000);
 

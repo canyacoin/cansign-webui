@@ -1,12 +1,30 @@
 <article class="file">
-  <div class="progress">
-    <svg class="svg" xmlns="http://www.w3.org/2000/svg">
-      <circle class="circle" r="21" cx="50%" cy="50%" fill="transparent" stroke-dasharray="0"></circle>
-      <circle class="bar" r="21" cx="50%" cy="50%" fill="transparent" stroke-dasharray="131.95" [style.stroke-dashoffset]="pctg"></circle>
-    </svg>
-  </div>
-  <div class="content">
-    <span class="name">{{ name }}</span>
-    <div [innerHtml]="ipfsLink"></div>
+  <div class="row align-items-center">
+    <div class="col-2 progress">
+      <div>
+        <svg class="svg" xmlns="http://www.w3.org/2000/svg">
+          <circle class="circle" r="42" cx="50%" cy="50%" fill="transparent" stroke-dasharray="0"></circle>
+          <circle class="bar" r="42" cx="50%" cy="50%" fill="transparent" stroke-dasharray="ipfs.fileProgressPerimeter" [style.stroke-dashoffset]="pctg"></circle>
+        </svg>
+      </div>
+    </div>
+    <div class="col-6 content">
+      <div>
+        <h6>DOCUMENT</h6>
+        <span class="name">{{ name }}</span>
+        <nav>
+          <div [innerHtml]="ipfsLink"></div>
+        </nav>
+      </div>
+    </div>
+    <div class="col-4 actions">
+      <div>
+        <h6>Status</h6>
+        <span class="status">Uploaded</span>
+        <nav>
+          <a href="#" class="btn btn-sm btn-primary">Request signatures</a>
+        </nav>
+      </div>
+    </div>
   </div>
 </article>

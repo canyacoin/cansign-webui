@@ -32,7 +32,7 @@ export class IpfsService {
   onFileAdded: Subject<any> = new Subject<any>()
 
 
-  fileProgressPerimeter: number = 131.95
+  fileProgressPerimeter: number = 263.89
 
   constructor() {
     node.on('ready', () => {
