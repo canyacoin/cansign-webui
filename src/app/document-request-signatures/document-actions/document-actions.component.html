@@ -8,10 +8,12 @@
       <h6>DOCUMENT INFO</h6>
       <small>Name</small>
       <p>{{ currentFile.name }}</p>
+      <small>Last modified</small>
+      <p>{{ moment(currentFile.lastModified).format('dddd, MMMM Do YYYY') }}</p>
       <small>Uploaded at</small>
-      <p>April 27, 2018</p>
+      <p>{{ moment(currentFile.uploadedAt).format('dddd, MMMM Do YYYY') }}</p>
       <small>Status</small>
-      <p>Uploaded</p>
+      <p class="capitalize">{{ currentFile.status }}</p>
     </article>
     <article>
       <h6>EXPIRATION DATE</h6>

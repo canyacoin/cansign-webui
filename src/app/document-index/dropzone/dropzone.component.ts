@@ -48,7 +48,8 @@ export class DropzoneComponent implements OnInit {
         size: file.size,
         progress: 0,
         lastModified: file.lastModified,
-        uploadedAt: (new Date()).getTime()
+        uploadedAt: (new Date()).getTime(),
+        status: 'uploaded',
       };
       this.ipfs.files.push(f);
       this.ipfs.onFileAdded.next(f);

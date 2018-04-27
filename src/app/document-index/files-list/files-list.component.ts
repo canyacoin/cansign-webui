@@ -39,7 +39,7 @@ export class FilesListComponent implements OnInit {
       file.ipfsHash = data.ipfsFile.hash;
       file.renderIpfsLink();
 
-      this.storeFile(data);
+      this.ls.storeFile(data);
     });
   }
 
@@ -65,23 +65,6 @@ export class FilesListComponent implements OnInit {
       fileComp.pctg = 0;
       fileComp.renderIpfsLink();
     });
-  }
-
-  storeFile({ ipfsFile, fileObj }) {
-    let files = this.ls.getFiles();
-
-    files[ipfsFile.hash] = {
-      hash: ipfsFile.hash,
-      path: ipfsFile.path,
-      size: ipfsFile.size,
-      name: fileObj.name,
-      type: fileObj.type,
-      lastModified: fileObj.lastModified,
-      uploadedAt: fileObj.uploadedAt,
-      pctg: 0,
-    }
-
-    this.ls.store({ files });
   }
 
   listFile(data) {

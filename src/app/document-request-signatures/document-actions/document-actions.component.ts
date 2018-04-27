@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from '../../@service/local-storage.service';
+import * as Moment from 'moment';
 
 declare let window: any;
 
@@ -16,10 +17,13 @@ export class DocumentActionsComponent implements OnInit {
 
   currentFile: any
 
+  moment: any
+
   constructor(
     private route: ActivatedRoute,
-    private ls: LocalStorageService
-    ) { }
+    private ls: LocalStorageService) {
+    this.moment = Moment;
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {

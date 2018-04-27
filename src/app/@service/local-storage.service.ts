@@ -30,4 +30,22 @@ export class LocalStorageService {
   store(data) {
     localStorage.setItem('cansign', JSON.stringify(data));
   }
+
+  storeFile({ ipfsFile, fileObj }) {
+    let files = this.getFiles();
+
+    files[ipfsFile.hash] = {
+      hash: ipfsFile.hash,
+      path: ipfsFile.path,
+      size: ipfsFile.size,
+      name: fileObj.name,
+      type: fileObj.type,
+      lastModified: fileObj.lastModified,
+      uploadedAt: fileObj.uploadedAt,
+      pctg: 0,
+      status: fileObj.status,
+    }
+
+    this.store({ files });
+  }
 }
