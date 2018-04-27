@@ -17,7 +17,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   url: '/upload',
   autoQueue: false,
   maxFilesize: 50,
-  acceptedFiles: null
+  acceptedFiles: 'application/pdf',
 };
 
 @NgModule({

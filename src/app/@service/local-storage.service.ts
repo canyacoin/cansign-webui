@@ -23,6 +23,10 @@ export class LocalStorageService {
     return this.get().files;
   }
 
+  getFile(hash) {
+    return this.getFiles()[hash];
+  }
+
   store(data) {
     localStorage.setItem('cansign', JSON.stringify(data));
   }

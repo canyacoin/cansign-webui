@@ -1,0 +1,52 @@
+<aside id="document-actions">
+  <div class="container-fluid">
+    <article>
+      <h6>DOCUMENT ACTIONS</h6>
+      <button class="btn btn-primary btn-block">Request signatures</button>
+    </article>
+    <article>
+      <h6>DOCUMENT INFO</h6>
+      <small>Name</small>
+      <p>{{ currentFile.name }}</p>
+      <small>Uploaded at</small>
+      <p>April 27, 2018</p>
+      <small>Status</small>
+      <p>Uploaded</p>
+    </article>
+    <article>
+      <h6>EXPIRATION DATE</h6>
+      <fieldset class="form-group">
+        <label for="expiration_date" class="sr-only">Expiration date</label>
+        <input type="date" name="expiration_date" class="form-control">
+      </fieldset>
+    </article>
+    <article>
+      <h6>SIGNERS</h6>
+      <button class="btn btn-dark btn-block" id="add-signer-btn" (click)="displaySignersForm()">Add a signer</button>
+      <div id="new-signer-form" class="d-none">
+        <fieldset class="form-group">
+          <label for="signer_name">Signer name</label>
+          <input type="text" name="signer_name" class="form-control">
+        </fieldset>
+        <fieldset class="form-group">
+          <label for="signer_eth_address">Signer ETH address</label>
+          <input type="text" name="signer_eth_address" class="form-control">
+        </fieldset>
+        <fieldset class="form-group">
+          <label for="signer_email">Signer email</label>
+          <input type="text" name="signer_email" class="form-control">
+        </fieldset>
+        <fieldset class="form-group">
+          <button class="btn btn-dark">Add</button>
+          <button class="btn btn-outline btn-danger" (click)="displaySignersForm()">Cancel</button>
+        </fieldset>
+      </div>
+      <div class="signer">
+        <small>Name</small>
+        <p>Gustavo Andrés Ibarra</p>
+        <small>ETH Address</small>
+        <p>0x5678uihgcffhijtf678jomkjhvgyui</p>
+      </div>
+    </article>
+  </div>
+</aside>

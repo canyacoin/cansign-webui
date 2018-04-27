@@ -44,6 +44,8 @@ export class FilesListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ipfs.fileCount = -1;
+
     let files = this.ls.getFiles();
 
     if (Object.keys(files).length == 0) {
@@ -74,6 +76,8 @@ export class FilesListComponent implements OnInit {
       size: ipfsFile.size,
       name: fileObj.name,
       type: fileObj.type,
+      lastModified: fileObj.lastModified,
+      uploadedAt: fileObj.uploadedAt,
       pctg: 0,
     }
 

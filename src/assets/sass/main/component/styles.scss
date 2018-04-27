@@ -30,17 +30,24 @@ body {
     @include make-col($size);
     width: percentage($size / $grid-columns);
     padding-top: $site-wrapper-padding-top;
+    overflow-y: scroll;
     position: absolute;
     background: white;
     height: 100%;
     bottom: 0;
     right: 0;
     top: 0;
+    p {
+      margin-bottom: get-spacer(0);
+    }
     article {
       h6 {
         font-weight: $bold;
       }
       margin-bottom: get-spacer(4);
+    }
+    .signer {
+      margin-top: get-spacer(3);
     }
   }
 }
