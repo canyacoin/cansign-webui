@@ -33,13 +33,25 @@ export class FilesListComponent implements OnInit {
       this.fileComponents[data.index].instance.pctg = data.pctg;
     });
 
-    ipfs.onFileUploadEnd.subscribe((data) => {
-      console.log(data);
-      let file = this.fileComponents[data.fileObj.index].instance;
-      file.ipfsHash = data.ipfsFile.hash;
+    ipfs.onFileUploadEnd.subscribe(({ ipfsFile, fileObj }) => {
+      let file = this.fileComponents[fileObj.index].instance;
+      file.ipfsHash = ipfsFile.hash;
       file.renderIpfsLink();
 
-      this.ls.storeFile(data);
+      let data = {
+        hash: ipfsFile.hash,
+        path: ipfsFile.path,
+        size: ipfsFile.size,
+        name: fileObj.name,
+        type: fileObj.type,
+        lastModified: fileObj.lastModified,
+        uploadedAt: fileObj.uploadedAt,
+        pctg: 0,
+        status: fileObj.status,
+        signers: fileObj.signers,
+      }
+
+      this.ls.storeFile(ipfsFile.hash, data);
     });
   }
 

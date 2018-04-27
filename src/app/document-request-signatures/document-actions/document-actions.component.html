@@ -27,27 +27,27 @@
       <button class="btn btn-dark btn-block" id="add-signer-btn" (click)="displaySignersForm()">Add a signer</button>
       <div id="new-signer-form" class="d-none">
         <fieldset class="form-group">
-          <label for="signer_name">Signer name</label>
-          <input type="text" name="signer_name" class="form-control">
+          <label for="signerName">Signer name</label>
+          <input type="text" name="signerName" class="form-control" [(ngModel)]="signer.name">
         </fieldset>
         <fieldset class="form-group">
-          <label for="signer_eth_address">Signer ETH address</label>
-          <input type="text" name="signer_eth_address" class="form-control">
+          <label for="signerEthAddress">Signer ETH address</label>
+          <input type="text" name="signerEthAddress" class="form-control" [(ngModel)]="signer.ETHAddress">
         </fieldset>
         <fieldset class="form-group">
-          <label for="signer_email">Signer email</label>
-          <input type="text" name="signer_email" class="form-control">
+          <label for="signerEmail">Signer email</label>
+          <input type="text" name="signerEmail" class="form-control" [(ngModel)]="signer.email">
         </fieldset>
         <fieldset class="form-group">
-          <button class="btn btn-dark">Add</button>
+          <button class="btn btn-dark" (click)="addSigner()">Add</button>
           <button class="btn btn-outline btn-danger" (click)="displaySignersForm()">Cancel</button>
         </fieldset>
       </div>
-      <div class="signer">
+      <div class="signer" *ngFor="let signer of signers">
         <small>Name</small>
-        <p>Gustavo Andrés Ibarra</p>
+        <p>{{ signer.name }}</p>
         <small>ETH Address</small>
-        <p>0x5678uihgcffhijtf678jomkjhvgyui</p>
+        <p>{{ signer.ETHAddress }}</p>
       </div>
     </article>
   </div>

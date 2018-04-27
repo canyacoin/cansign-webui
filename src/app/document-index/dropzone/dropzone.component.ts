@@ -50,6 +50,7 @@ export class DropzoneComponent implements OnInit {
         lastModified: file.lastModified,
         uploadedAt: (new Date()).getTime(),
         status: 'uploaded',
+        signers: {},
       };
       this.ipfs.files.push(f);
       this.ipfs.onFileAdded.next(f);
