@@ -13,6 +13,8 @@ const node = new IPFS({
 @Injectable()
 export class IpfsService {
 
+  node: any
+
   progress: number = 0
 
   fileCount: number = -1
@@ -35,6 +37,8 @@ export class IpfsService {
   fileProgressPerimeter: number = 263.89
 
   constructor() {
+    this.node = node;
+
     node.on('ready', () => {
       console.log('Online status: ', node.isOnline() ? 'online' : 'offline');
       console.log(node);

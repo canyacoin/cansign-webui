@@ -10,7 +10,38 @@ body {
 
 .site-wrapper {
   background-color: $gray-100;
-  padding-bottom: 112px;
-  padding-top: 112px;
+  padding-bottom: $site-wrapper-padding-top;
+  padding-top: $site-wrapper-padding-top;
   min-height: 100vh;
 }
+
+#document-request-signatures {
+  padding-bottom: 35px;
+  position: relative;
+  padding-top: 0;
+  #document-content {
+    padding-top: $site-wrapper-padding-top;
+    height: 100vh;
+    width: 100%;
+  }
+
+  $size: 3;
+  #document-actions {
+    @include make-col($size);
+    width: percentage($size / $grid-columns);
+    padding-top: $site-wrapper-padding-top;
+    position: absolute;
+    background: white;
+    height: 100%;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    article {
+      h6 {
+        font-weight: $bold;
+      }
+      margin-bottom: get-spacer(4);
+    }
+  }
+}
+

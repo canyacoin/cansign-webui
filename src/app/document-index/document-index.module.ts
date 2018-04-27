@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AppRoutingModule } from '../app-routing.module';
+import { SharedModule } from '../@shared/shared.module';
 
 import { DocumentsIndexWrapperComponent } from './documents-index-wrapper/documents-index-wrapper.component';
 import { DropzoneComponent } from './dropzone/dropzone.component';
@@ -9,7 +11,6 @@ import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { FilesListComponent } from './files-list/files-list.component';
 import { FileComponent } from './file/file.component';
-import { FooterComponent } from '../footer/footer.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -23,6 +24,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   imports: [
     CommonModule,
     DropzoneModule,
+    AppRoutingModule,
+    SharedModule
   ],
   providers: [
     { provide: DROPZONE_CONFIG, useValue: DEFAULT_DROPZONE_CONFIG, },
@@ -31,8 +34,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     DocumentsIndexWrapperComponent,
     DropzoneComponent,
     FilesListComponent,
-    FileComponent,
-    FooterComponent
+    FileComponent
   ],
   entryComponents: [FileComponent]
 })

@@ -1,7 +1,46 @@
-<main class="site-wrapper" role="main">
+<main class="site-wrapper" role="main" id="document-request-signatures">
+  <aside id="document-actions">
+    <div class="container-fluid">
+      <article>
+        <h6>DOCUMENT ACTIONS</h6>
+        <button class="btn btn-primary btn-block">Request signatures</button>
+      </article>
+      <article>
+        <h6>DOCUMENT INFO</h6>
+        <small>Name</small>
+        <p>Document name</p>
+        <small>Uploaded at</small>
+        <p>April 27, 2018</p>
+      </article>
+      <article>
+        <h6>EXPIRATION DATE</h6>
+        <fieldset class="form-group">
+          <label for="expiration_date" class="sr-only">Expiration date</label>
+          <input type="date" name="expiration_date" class="form-control">
+        </fieldset>
+      </article>
+      <article>
+        <h6>SIGNERS</h6>
+        <fieldset class="form-group">
+          <label for="signer_name" class="sr-only">Signer name</label>
+          <input type="text" name="signer_name" class="form-control">
+        </fieldset>
+        <div class="signer">
+          <small>Name</small>
+          <p>Gustavo Andrés Ibarra</p>
+          <small>ETH Address</small>
+          <p>0x5678uihgcffhijtf678jomkjhvgyui</p>
+        </div>
+      </article>
+    </div>
+  </aside>
   <div class="container-fluid">
-    <p>
-      documents-request-signatures-wrapper works!
-    </p>
+    <div class="row">
+      <div class="col-7">
+        <app-document-content></app-document-content>
+      </div>
+    </div>
   </div>
 </main>
+
+<app-footer></app-footer>
