@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IpfsService } from '../../@service/ipfs.service';
+import { EthereumService } from '../../@service/ethereum.service';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
@@ -18,7 +19,8 @@ export class DocumentContentComponent implements OnInit {
   constructor(
     private ipfs: IpfsService,
     private route: ActivatedRoute,
-    private sanitizer: DomSanitizer) { }
+    private sanitizer: DomSanitizer,
+    private eth: EthereumService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {

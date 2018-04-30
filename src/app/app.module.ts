@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +13,7 @@ import { DocumentRequestSignaturesModule } from './document-request-signatures/d
 import { HeaderComponent } from './header/header.component';
 import { IpfsService } from './@service/ipfs.service';
 import { LocalStorageService } from './@service/local-storage.service';
+import { EthereumService } from './@service/ethereum.service';
 
 @NgModule({
   declarations: [
@@ -25,10 +27,12 @@ import { LocalStorageService } from './@service/local-storage.service';
     DocumentNewModule,
     DocumentSignModule,
     DocumentRequestSignaturesModule,
+    HttpClientModule,
   ],
   providers: [
     IpfsService,
     LocalStorageService,
+    EthereumService,
   ],
   bootstrap: [AppComponent]
 })

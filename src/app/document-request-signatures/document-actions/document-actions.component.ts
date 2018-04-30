@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from '../../@service/local-storage.service';
+import { EthereumService } from '../../@service/ethereum.service';
 import { Signer } from '../../@model/signer.model';
 import * as Moment from 'moment';
 
@@ -26,8 +27,10 @@ export class DocumentActionsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private ls: LocalStorageService) {
+    private ls: LocalStorageService,
+    public eth: EthereumService) {
     this.moment = Moment;
+    this.signers = [];
   }
 
   ngOnInit() {
