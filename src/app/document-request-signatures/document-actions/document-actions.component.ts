@@ -31,6 +31,7 @@ export class DocumentActionsComponent implements OnInit {
     public eth: EthereumService) {
     this.moment = Moment;
     this.signers = [];
+
   }
 
   ngOnInit() {
@@ -38,6 +39,13 @@ export class DocumentActionsComponent implements OnInit {
       this.docId = params['ipfsHash'];
 
       this.currentFile = this.ls.getFile(this.docId);
+
+      this.eth.onETHAddress.subscribe(address => {
+        if (!this.currentFile.creatorAddress) {
+          this.currentFile.creatorAddress = this.eth.ETHAddress;
+          this.ls.storeFile(this.docId, this.currentFile);
+        }
+      });
 
       Object.keys(this.currentFile.signers).forEach(key => {
         let signer = this.currentFile.signers[key];

@@ -55,3 +55,26 @@ body {
 .capitalize {
   text-transform: capitalize;
 }
+
+
+.modal {
+  @include flex-column-center;
+  background-color: rgba($black, 0.7);
+  position: fixed;
+  z-index: 100000;
+  height: 100%;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+  .modal-body {
+    border-radius: $border-radius-lg;
+    background-color: white;
+    padding: get-spacer(3);
+    min-height: 350px;
+  }
+  .signer {
+    @include normalize-text;
+    margin-bottom: get-spacer(2);
+  }
+}

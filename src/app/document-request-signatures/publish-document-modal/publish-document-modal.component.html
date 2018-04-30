@@ -1,0 +1,37 @@
+<div class="modal" *ngIf="display">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <div class="modal-body">
+          <h4>IMPORTANT</h4>
+          <small>Note: you are connected to the <em>{{ eth.networkType }}</em> Ethereum network using this Ethereum address: <strong>{{ eth.ETHAddress }}</strong></small>
+          <p class="mt-3">By publishing the document <strong>{{ currentFile.name }}</strong>:</p>
+          <ul>
+            <li>You will create a new record in this smart contract: <a href="{{ eth.networkURL }}/address/{{ eth.contractAddress }}" target="_blank">{{ eth.contractAddress }}</a></li>
+            <li>A fee of 1% CAN or ETH will be charged to the creator for publishing the document</li>
+            <li>The signers will be notified via email</li>
+            <li>Each signer address must match the signer address specified in this document</li>
+            <li>A fee of 1% CAN or ETH will be charged to each signer in order to sign the document</li>
+          </ul>
+          <h6>SIGNERS</h6>
+          <div class="row">
+            <div class="col-4" *ngFor="let signer of signers">
+              <div class="signer">
+                <small>Name</small>
+                <p>{{ signer.name }}</p>
+                <small>ETH address</small>
+                <p>{{ signer.ETHAddress }}</p>
+                <small>Email address</small>
+                <p>{{ signer.email }}</p>
+              </div>
+            </div>
+          </div>
+          <nav class="mt-3">
+            <button class="btn btn-primary" (click)="eth.publishDocument(currentFile)">Confirm &amp; Publish</button>
+            <button class="btn btn-danger btn-outline" (click)="display = false">Cancel</button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

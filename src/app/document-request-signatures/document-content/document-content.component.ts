@@ -27,16 +27,6 @@ export class DocumentContentComponent implements OnInit {
       this.docId = params['ipfsHash'];
 
       this.filePath = this.sanitizer.bypassSecurityTrustResourceUrl(this.makeFilePath());
-      // this.ipfs.onNodeReady.subscribe(nodeIsReady => {
-      //   if (nodeIsReady) {
-      //     this.ipfs.node.files.get(this.docId, (error, file) => {
-      //       if (error) console.log(error);
-
-      //       console.log(file);
-      //     });
-      //   }
-      // });
-
     });
   }
 
