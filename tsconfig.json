@@ -14,6 +14,11 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "cansign.v1.abi": [
+        "./assets/contracts/cansign.v1.json"
+      ]
+    }
   }
 }

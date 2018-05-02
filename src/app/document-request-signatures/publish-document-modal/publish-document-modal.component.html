@@ -7,7 +7,7 @@
           <small>Note: you are connected to the <em>{{ eth.networkType }}</em> Ethereum network using this Ethereum address: <strong>{{ eth.ETHAddress }}</strong></small>
           <p class="mt-3">By publishing the document <strong>{{ currentFile.name }}</strong>:</p>
           <ul>
-            <li>You will create a new record in this smart contract: <a href="{{ eth.networkURL }}/address/{{ eth.contractAddress }}" target="_blank">{{ eth.contractAddress }}</a></li>
+            <li>You will create a new record in this smart contract: <a href="{{ eth.networkURL }}/address/{{ eth.contractAddress }}" target="_blank" class="text-truncate d-inline-block" style="width: 120px; margin-bottom: -9px;">{{ eth.contractAddress }}</a></li>
             <li>A fee of 1% CAN or ETH will be charged to the creator for publishing the document</li>
             <li>The signers will be notified via email</li>
             <li>Each signer address must match the signer address specified in this document</li>
@@ -17,10 +17,8 @@
           <div class="row">
             <div class="col-4" *ngFor="let signer of signers">
               <div class="signer">
-                <small>Name</small>
-                <p>{{ signer.name }}</p>
                 <small>ETH address</small>
-                <p>{{ signer.ETHAddress }}</p>
+                <p class="text-truncate" style="width: 120px">{{ signer.ETHAddress }}</p>
                 <small>Email address</small>
                 <p>{{ signer.email }}</p>
               </div>

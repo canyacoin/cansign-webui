@@ -29,10 +29,6 @@
       <button class="btn btn-dark btn-block" id="add-signer-btn" (click)="displaySignersForm()">Add a signer</button>
       <div id="new-signer-form" class="d-none">
         <fieldset class="form-group">
-          <label for="signerName">Signer name</label>
-          <input type="text" name="signerName" class="form-control" [(ngModel)]="signer.name">
-        </fieldset>
-        <fieldset class="form-group">
           <label for="signerEthAddress">Signer ETH address</label>
           <input type="text" name="signerEthAddress" class="form-control" [(ngModel)]="signer.ETHAddress">
         </fieldset>
@@ -46,10 +42,10 @@
         </fieldset>
       </div>
       <div class="signer" *ngFor="let signer of signers">
-        <small>Name</small>
-        <p>{{ signer.name }}</p>
         <small>ETH Address</small>
-        <p>{{ signer.ETHAddress }}</p>
+        <p class="text-truncate" style="width: 280px">{{ signer.ETHAddress }}</p>
+        <small>Email</small>
+        <p>{{ signer.email }}</p>
       </div>
     </article>
   </div>
