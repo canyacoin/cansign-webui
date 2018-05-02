@@ -88,6 +88,8 @@ export class FilesListComponent implements OnInit {
 
     file.instance.name = data.name;
 
+    file.instance.status = data.status;
+
     file.instance.size = data.size;
 
     file.instance.pctg = this.ipfs.fileProgressPerimeter;

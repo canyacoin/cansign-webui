@@ -20,7 +20,7 @@
     <div class="col-4 actions">
       <div>
         <h6>Status</h6>
-        <span class="status">Uploaded</span>
+        <span class="status text-capitalize">{{ status }}</span>
         <nav>
           <a [routerLink]="['/documents', ipfsHash, 'request-signatures']" class="btn btn-sm btn-primary">Request signatures</a>
         </nav>

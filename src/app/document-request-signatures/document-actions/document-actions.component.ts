@@ -55,6 +55,10 @@ export class DocumentActionsComponent implements OnInit {
     });
   }
 
+  addNotificationEmail(){}
+
+  addExpirationDate(){}
+
   displaySignersForm(){
     window.$('#new-signer-form').toggleClass('d-none');
     window.$('#add-signer-btn').toggleClass('d-none');
@@ -70,5 +74,7 @@ export class DocumentActionsComponent implements OnInit {
     this.ls.storeFile(this.docId, file);
 
     this.signer = {};
+
+    this.displaySignersForm();
   }
 }

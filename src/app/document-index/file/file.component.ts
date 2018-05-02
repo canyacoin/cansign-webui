@@ -17,6 +17,8 @@ export class FileComponent implements OnInit {
 
   name: string
 
+  status: string
+
   size: number
 
   pctg: number

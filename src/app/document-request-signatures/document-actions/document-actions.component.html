@@ -18,11 +18,22 @@
       <p class="capitalize">{{ currentFile.status }}</p>
     </article>
     <article>
+      <h6>NOTIFICATION EMAIL</h6>
+      <div class="input-group">
+        <input type="email" class="form-control" placeholder="creator@email.com">
+        <div class="input-group-append">
+          <button class="btn btn-dark" (click)="addNotificationEmail()">Add</button>
+        </div>
+      </div>
+    </article>
+    <article>
       <h6>EXPIRATION DATE</h6>
-      <fieldset class="form-group">
-        <label for="expiration_date" class="sr-only">Expiration date</label>
-        <input type="date" name="expiration_date" class="form-control">
-      </fieldset>
+      <div class="input-group">
+        <input type="date" class="form-control">
+        <div class="input-group-append">
+          <button class="btn btn-dark" (click)="addExpirationDate()">Add</button>
+        </div>
+      </div>
     </article>
     <article>
       <h6>SIGNERS</h6>

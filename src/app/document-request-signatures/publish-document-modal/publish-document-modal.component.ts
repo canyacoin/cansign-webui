@@ -19,6 +19,10 @@ export class PublishDocumentModalComponent implements OnInit {
   signers: Array<Signer> = []
 
   display: boolean = false
+  onBeforePublish: boolean = false
+  onError: boolean = false
+  onPublishing: boolean = false
+  onAfterPublishing: boolean = false
 
   constructor(
     private route: ActivatedRoute,
@@ -27,6 +31,13 @@ export class PublishDocumentModalComponent implements OnInit {
 
     eth.onPublishDocument.subscribe(data => {
       this.display = data.displayPublishDocumentModal;
+      this.onBeforePublish = data.onBeforePublish;
+      this.onError = data.onError;
+      this.onPublishing = data.onPublishing;
+      this.onAfterPublishing = data.onAfterPublishing;
+      if (data.currentFile) {
+        this.currentFile = data.currentFile;
+      }
     });
 
   }
@@ -42,6 +53,14 @@ export class PublishDocumentModalComponent implements OnInit {
         this.signers.push(signer);
       });
     });
+  }
+
+  reset(){
+    this.display = false;
+    this.onBeforePublish = false;
+    this.onError = false;
+    this.onPublishing = false;
+    this.onAfterPublishing = false;
   }
 
 }

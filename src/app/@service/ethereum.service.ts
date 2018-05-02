@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
+import { LocalStorageService } from './local-storage.service';
 
 declare let require: any;
 declare var window: any;
@@ -26,13 +27,16 @@ export class EthereumService {
 
   CanSignContract: any
 
+  txn: string
+
 
   onPublishDocument: Subject<any> = new Subject<any>()
 
   onETHAddress: Subject<any> = new Subject<any>()
 
   constructor(
-    private http: HttpClient) {
+    private http: HttpClient,
+    private ls: LocalStorageService) {
 
     if (!this.web3) {
       this.setWeb3Provider();
@@ -46,7 +50,11 @@ export class EthereumService {
 
   openPublishDocumentModal(){
     this.onPublishDocument.next({
-      displayPublishDocumentModal: true
+      displayPublishDocumentModal: true,
+      onBeforePublish: true,
+      onError: false,
+      onPublishing: false,
+      onAfterPublishing: false,
     });
   }
 
@@ -71,23 +79,66 @@ export class EthereumService {
       expirationDate,
       signers,
       txOptions).then(gas => {
-        console.log(gas);
         txOptions.gas = gas;
+
+        this.onPublishing();
 
         this.CanSignContract.addDocument(
           hash,
           expirationDate,
           signers,
-          txOptions).then(txn => {
-            console.log(txn);
+          txOptions).then(receipt => {
+            console.log(receipt);
+            this.onAfterPublishing(receipt, document);
+            // TODO Store txn in database linked to user eth address and doc hash
           }).catch(error => {
             console.log(error);
+            this.onPublishError();
           });
 
       }).catch(error => {
         console.log(error);
-
+        this.onPublishError();
       });
+  }
+
+  onPublishing(){
+    this.onPublishDocument.next({
+      displayPublishDocumentModal: true,
+      onBeforePublish: false,
+      onError: false,
+      onPublishing: true,
+      onAfterPublishing: false,
+    });
+  }
+
+  onAfterPublishing(receipt, document){
+    let currentFile = this.ls.getFile(document.hash);
+    currentFile.txn = receipt.txn;
+    currentFile.status = 'published';
+
+    this.ls.storeFile(document.hash, currentFile);
+
+    this.txn = receipt.txn;
+
+    this.onPublishDocument.next({
+      displayPublishDocumentModal: true,
+      onBeforePublish: false,
+      onError: false,
+      onPublishing: false,
+      onAfterPublishing: true,
+      currentFile: currentFile,
+    });
+  }
+
+  onPublishError(){
+    this.onPublishDocument.next({
+      displayPublishDocumentModal: true,
+      onBeforePublish: false,
+      onError: true,
+      onPublishing: false,
+      onAfterPublishing: false,
+    });
   }
 
   setContract() {
