@@ -41,12 +41,16 @@ export class PublishDocumentModalComponent implements OnInit {
       this.currentFile = data.currentFile ? data.currentFile : this.currentFile;
       this.txn = data.receipt ? data.receipt.txn : '';
 
+      this.init();
       this.zone.run(() => console.log('ran'));
     });
 
   }
 
   ngOnInit() {
+  }
+
+  init(){
     this.route.params.subscribe(params => {
       this.docId = params['ipfsHash'];
 
