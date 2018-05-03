@@ -57,4 +57,17 @@ export class FileComponent implements OnInit {
     });
   }
 
+  isUploaded(){
+    return this.status === 'uploaded';
+  }
+
+  isPublished(){
+    return this.status === 'published';
+  }
+
+  isSigned(){
+    return this.status === 'signed';
+  }
+
+
 }

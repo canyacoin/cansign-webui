@@ -17,7 +17,10 @@
     ],
     "paths": {
       "cansign.v1.abi": [
-        "./assets/contracts/cansign.v1.json"
+        "assets/contracts/cansign.v1.json"
+      ],
+      "@service/*": [
+        "app/@service/*"
       ]
     }
   }

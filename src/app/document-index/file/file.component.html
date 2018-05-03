@@ -22,7 +22,18 @@
         <h6>Status</h6>
         <span class="status text-capitalize">{{ status }}</span>
         <nav>
-          <a [routerLink]="['/documents', ipfsHash, 'request-signatures']" class="btn btn-sm btn-primary">Request signatures</a>
+          <a
+            *ngIf="isUploaded()"
+            [routerLink]="['/documents', ipfsHash, 'request-signatures']"
+            class="btn btn-sm btn-primary">Request signatures</a>
+          <a
+            *ngIf="isPublished()"
+            [routerLink]="['/documents', ipfsHash, 'sign']"
+            class="btn btn-sm btn-primary">See document</a>
+          <a
+            *ngIf="isSigned()"
+            href="#"
+            class="btn btn-sm btn-primary">See document</a>
         </nav>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IpfsService } from '@service/ipfs.service';
 
 @Component({
   selector: 'app-documents-request-signatures-wrapper',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DocumentsRequestSignaturesWrapperComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private ipfs: IpfsService) { }
 
   ngOnInit() {
+    this.ipfs.stop();
   }
 
 }

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from '../app-routing.module';
+
 import { SharedModule } from '../@shared/shared.module';
 import { DocumentsRequestSignaturesWrapperComponent } from './documents-request-signatures-wrapper/documents-request-signatures-wrapper.component';
 import { DocumentContentComponent } from './document-content/document-content.component';
@@ -11,7 +13,8 @@ import { PublishDocumentModalComponent } from './publish-document-modal/publish-
   imports: [
     CommonModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
   declarations: [
     DocumentsRequestSignaturesWrapperComponent,

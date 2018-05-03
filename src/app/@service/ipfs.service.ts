@@ -7,7 +7,8 @@ declare let require: any;
 const streamBuffers = require('stream-buffers');
 const IPFS = require('ipfs');
 const node = new IPFS({
-  repo: '../assets/ipfs'
+  repo: '../assets/ipfs',
+  start: false,
 });
 
 @Injectable()
@@ -21,6 +22,8 @@ export class IpfsService {
 
   files: Array<any> = []
 
+
+  nodeIsReady: boolean = false
 
   onNodeReady: Subject<any> = new Subject<any>()
 
@@ -43,6 +46,7 @@ export class IpfsService {
       console.log('Online status: ', node.isOnline() ? 'online' : 'offline');
       console.log(node);
       this.onNodeReady.next(node.isOnline());
+      this.nodeIsReady = true;
     });
     node.on('error', error => {
       console.log(error);
@@ -52,10 +56,26 @@ export class IpfsService {
     });
     node.on('start', () => {
       console.log('started IPFS');
+      console.log('Online status: ', node.isOnline() ? 'online' : 'offline');
     });
     node.on('stop', () => {
       console.log('stopped IPFS');
+      console.log('Online status: ', node.isOnline() ? 'online' : 'offline');
     });
+  }
+
+  start(){
+    if (!this.nodeIsReady) return;
+
+    if (this.node.isOnline()) return;
+
+    this.node.start();
+  }
+
+  stop(){
+    if (this.node && this.node.isOnline()) {
+      this.node.stop();
+    }
   }
 
   upload(fileContent, fileObj) {
@@ -69,8 +89,6 @@ export class IpfsService {
 
     stream.on('data', (ipfsFile) => {
       this.onFileUploadEnd.next({ ipfsFile, fileObj });
-
-      console.log(node);
     });
 
     myReadableStreamBuffer.on('data', (chunk) => {

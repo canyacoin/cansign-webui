@@ -34,12 +34,18 @@
         </div>
         <div class="modal-body" *ngIf="onError">
           <h4>There was an error...</h4>
+          <nav>
+            <button class="btn btn-danger btn-outline" (click)="reset()">Close</button>
+          </nav>
         </div>
         <div class="modal-body" *ngIf="onAfterPublishing">
           <h4>All set</h4>
-          <h5>The document was published in this transaction: <a href="{{ eth.networkURL }}/address/{{ eth.txn }}" target="_blank" class="text-truncate d-inline-block" style="width: 120px; margin-bottom: -9px;">{{ eth.txn }}</a></h5>
+          <h5>The document was published in this transaction: <a href="{{ eth.networkURL }}/tx/{{ txn }}" target="_blank" class="text-truncate d-inline-block" style="width: 120px; margin-bottom: -9px;">{{ txn }}</a></h5>
           <p>An email notification was sent to the signers. You will be notified when a signer signs the document.</p>
-          <button class="btn btn-danger btn-outline" (click)="reset()">Cancel</button>
+          <nav>
+            <a [routerLink]="['/documents', currentFile.hash, 'sign']" class="btn btn-danger btn-primary" (click)="reset()">See published document</a>
+            <button class="btn btn-danger btn-outline" (click)="reset()">Close</button>
+          </nav>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from '../../@service/local-storage.service';
 import { EthereumService } from '../../@service/ethereum.service';
@@ -18,6 +18,8 @@ export class PublishDocumentModalComponent implements OnInit {
 
   signers: Array<Signer> = []
 
+  txn: string
+
   display: boolean = false
   onBeforePublish: boolean = false
   onError: boolean = false
@@ -27,7 +29,8 @@ export class PublishDocumentModalComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ls: LocalStorageService,
-    public eth: EthereumService) {
+    public eth: EthereumService,
+    private zone: NgZone) {
 
     eth.onPublishDocument.subscribe(data => {
       this.display = data.displayPublishDocumentModal;
@@ -35,9 +38,10 @@ export class PublishDocumentModalComponent implements OnInit {
       this.onError = data.onError;
       this.onPublishing = data.onPublishing;
       this.onAfterPublishing = data.onAfterPublishing;
-      if (data.currentFile) {
-        this.currentFile = data.currentFile;
-      }
+      this.currentFile = data.currentFile ? data.currentFile : this.currentFile;
+      this.txn = data.receipt ? data.receipt.txn : '';
+
+      this.zone.run(() => console.log('ran'));
     });
 
   }

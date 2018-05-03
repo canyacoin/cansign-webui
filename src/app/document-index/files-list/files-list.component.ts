@@ -30,13 +30,24 @@ export class FilesListComponent implements OnInit {
     });
 
     ipfs.onFileUpload.subscribe(data => {
+      console.log(data, this.fileComponents);
       this.fileComponents[data.index].instance.pctg = data.pctg;
     });
 
     ipfs.onFileUploadEnd.subscribe(({ ipfsFile, fileObj }) => {
-      let file = this.fileComponents[fileObj.index].instance;
-      file.ipfsHash = ipfsFile.hash;
-      file.renderIpfsLink();
+      let fileComponent = this.fileComponents[fileObj.index].instance;
+
+      let fileExists = this.ls.getFile(ipfsFile.hash);
+      if (fileExists) {
+        console.log(fileObj);
+        this.fileComponents[fileObj.index].destroy();
+        this.fileComponents.splice(fileObj.index, 1);
+        this.ipfs.fileCount--;
+        return;
+      }
+
+      fileComponent.ipfsHash = ipfsFile.hash;
+      fileComponent.renderIpfsLink();
 
       let data = {
         hash: ipfsFile.hash,

@@ -27,8 +27,6 @@ export class EthereumService {
 
   CanSignContract: any
 
-  txn: string
-
 
   onPublishDocument: Subject<any> = new Subject<any>()
 
@@ -36,8 +34,13 @@ export class EthereumService {
 
   constructor(
     private http: HttpClient,
-    private ls: LocalStorageService) {
+    private ls: LocalStorageService) {}
 
+  resolve(){
+    this.init();
+  }
+
+  init(){
     if (!this.web3) {
       this.setWeb3Provider();
       this.getNetworkType();
@@ -73,6 +76,8 @@ export class EthereumService {
     let signers = _.flatMap(document.signers, signer => {
       return signer.ETHAddress;
     });
+
+    console.log(hash, expirationDate, signers);
 
     this.CanSignContract.addDocument.estimateGas(
       hash,
@@ -119,8 +124,6 @@ export class EthereumService {
 
     this.ls.storeFile(document.hash, currentFile);
 
-    this.txn = receipt.txn;
-
     this.onPublishDocument.next({
       displayPublishDocumentModal: true,
       onBeforePublish: false,
@@ -128,6 +131,7 @@ export class EthereumService {
       onPublishing: false,
       onAfterPublishing: true,
       currentFile: currentFile,
+      receipt: receipt,
     });
   }
 
