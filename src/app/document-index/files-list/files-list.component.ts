@@ -13,9 +13,11 @@ export class FilesListComponent implements OnInit {
 
   @ViewChild("filesList", { read: ViewContainerRef }) container
 
-  fileComponents: Array<any> = []
+  fileComponents: any = {}
 
   hasNoFiles: boolean = false
+
+  uploadEnded: boolean = false
 
   constructor(
     private ipfs: IpfsService,
@@ -26,6 +28,7 @@ export class FilesListComponent implements OnInit {
 
     ipfs.onFileAdded.subscribe(data => {
       this.hasNoFiles = false;
+      this.uploadEnded = false;
       this.listFile(data);
     });
 
@@ -35,15 +38,16 @@ export class FilesListComponent implements OnInit {
     });
 
     ipfs.onFileUploadEnd.subscribe(({ ipfsFile, fileObj }) => {
+      if (this.uploadEnded) return false;
+
       let fileComponent = this.fileComponents[fileObj.index].instance;
 
       let fileExists = this.ls.getFile(ipfsFile.hash);
       if (fileExists) {
         console.log(fileObj);
         this.fileComponents[fileObj.index].destroy();
-        this.fileComponents.splice(fileObj.index, 1);
-        this.ipfs.fileCount--;
-        return;
+        delete this.fileComponents[fileObj.index];
+        return false;
       }
 
       fileComponent.ipfsHash = ipfsFile.hash;
@@ -63,6 +67,7 @@ export class FilesListComponent implements OnInit {
       }
 
       this.ls.storeFile(ipfsFile.hash, data);
+      this.uploadEnded = true;
     });
   }
 
@@ -77,13 +82,15 @@ export class FilesListComponent implements OnInit {
     }
 
     Object.keys(files).forEach(key => {
+      let fileObj = files[key];
+
       this.ipfs.fileCount++;
 
-      let fileObj = files[key];
-      this.ipfs.files.push(fileObj);
+      fileObj.index = this.ipfs.fileCount;
+
       this.listFile(fileObj);
 
-      let fileComp = this.fileComponents[this.ipfs.fileCount].instance;
+      let fileComp = this.fileComponents[fileObj.index].instance;
       fileComp.ipfsHash = fileObj.hash;
       fileComp.pctg = 0;
       fileComp.renderIpfsLink();
@@ -105,7 +112,7 @@ export class FilesListComponent implements OnInit {
 
     file.instance.pctg = this.ipfs.fileProgressPerimeter;
 
-    this.fileComponents.push(file);
+    this.fileComponents[data.index] = file;
   }
 
 }

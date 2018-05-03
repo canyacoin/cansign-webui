@@ -20,8 +20,6 @@ export class IpfsService {
 
   fileCount: number = -1
 
-  files: Array<any> = []
-
 
   nodeIsReady: boolean = false
 
@@ -94,13 +92,12 @@ export class IpfsService {
     myReadableStreamBuffer.on('data', (chunk) => {
       this.progress += chunk.byteLength;
 
-      let file = this.files[fileObj.index];
-      file.progress += chunk.byteLength;
-      file.pctg = (file.progress >= file.size) ?
+      fileObj.progress += chunk.byteLength;
+      fileObj.pctg = (fileObj.progress >= fileObj.size) ?
         0 :
-        this.fileProgressPerimeter - ((file.progress / file.size) * this.fileProgressPerimeter);
+        this.fileProgressPerimeter - ((fileObj.progress / fileObj.size) * this.fileProgressPerimeter);
 
-      this.onFileUpload.next(file);
+      this.onFileUpload.next(fileObj);
 
       myReadableStreamBuffer.resume();
     });
