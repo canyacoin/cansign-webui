@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
+import { EmailService } from './email.service';
 
 declare let require: any;
 declare var window: any;
@@ -34,7 +35,8 @@ export class EthereumService {
 
   constructor(
     private http: HttpClient,
-    private ls: LocalStorageService) {}
+    private ls: LocalStorageService,
+    private email: EmailService) {}
 
   resolve(){
     this.init();
@@ -63,6 +65,9 @@ export class EthereumService {
 
   publishDocument(document) {
     console.log(document);
+
+    this.email.onAfterPublishing(document);
+    return false;
 
     let txOptions = {
       from: this.ETHAddress,
@@ -133,6 +138,8 @@ export class EthereumService {
       currentFile: currentFile,
       receipt: receipt,
     });
+
+    this.email.onAfterPublishing(document);
   }
 
   onPublishError(){

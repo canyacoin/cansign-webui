@@ -23,6 +23,8 @@ export class DocumentActionsComponent implements OnInit {
 
   @Input() signer: Signer = {}
 
+  @Input() creator: any = {}
+
   signers: Array<Signer> = []
 
   constructor(
@@ -41,11 +43,11 @@ export class DocumentActionsComponent implements OnInit {
       this.currentFile = this.ls.getFile(this.docId);
 
       this.eth.onETHAddress.subscribe(address => {
-        if (!this.currentFile.creatorAddress) {
-          this.currentFile.creatorAddress = this.eth.ETHAddress;
-          this.ls.storeFile(this.docId, this.currentFile);
-        }
+        this.currentFile.creator.ETHAddress = this.eth.ETHAddress;
+        this.ls.storeFile(this.docId, this.currentFile);
       });
+
+      this.creator.email = this.currentFile.creator.email;
 
       Object.keys(this.currentFile.signers).forEach(key => {
         let signer = this.currentFile.signers[key];
@@ -55,7 +57,15 @@ export class DocumentActionsComponent implements OnInit {
     });
   }
 
-  addNotificationEmail(){}
+  addNotificationEmail(){
+    let file = this.ls.getFile(this.docId);
+
+    file.creator.email = this.creator.email;
+
+    this.ls.storeFile(this.docId, file);
+
+    window.$('#btn-add-email').text('Added!');
+  }
 
   addExpirationDate(){}
 

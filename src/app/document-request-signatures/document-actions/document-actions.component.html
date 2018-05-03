@@ -20,9 +20,9 @@
     <article>
       <h6>NOTIFICATION EMAIL</h6>
       <div class="input-group">
-        <input type="email" class="form-control" placeholder="creator@email.com">
+        <input type="email" class="form-control" placeholder="creator@email.com" [(ngModel)]="creator.email">
         <div class="input-group-append">
-          <button class="btn btn-dark" (click)="addNotificationEmail()">Add</button>
+          <button class="btn btn-dark" (click)="addNotificationEmail()" id="btn-add-email">Add</button>
         </div>
       </div>
     </article>

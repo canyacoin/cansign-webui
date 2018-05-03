@@ -33,7 +33,6 @@ export class FilesListComponent implements OnInit {
     });
 
     ipfs.onFileUpload.subscribe(data => {
-      console.log(data, this.fileComponents);
       this.fileComponents[data.index].instance.pctg = data.pctg;
     });
 
@@ -44,7 +43,6 @@ export class FilesListComponent implements OnInit {
 
       let fileExists = this.ls.getFile(ipfsFile.hash);
       if (fileExists) {
-        console.log(fileObj);
         this.fileComponents[fileObj.index].destroy();
         delete this.fileComponents[fileObj.index];
         return false;
@@ -64,6 +62,7 @@ export class FilesListComponent implements OnInit {
         pctg: 0,
         status: fileObj.status,
         signers: fileObj.signers,
+        creator: fileObj.creator,
       }
 
       this.ls.storeFile(ipfsFile.hash, data);

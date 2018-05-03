@@ -14,6 +14,7 @@ import { HeaderComponent } from './header/header.component';
 import { IpfsService } from './@service/ipfs.service';
 import { LocalStorageService } from './@service/local-storage.service';
 import { EthereumService } from './@service/ethereum.service';
+import { EmailService } from './@service/email.service';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { EthereumService } from './@service/ethereum.service';
     IpfsService,
     LocalStorageService,
     EthereumService,
+    EmailService,
   ],
   bootstrap: [AppComponent]
 })
