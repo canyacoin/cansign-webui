@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
+import { HttpModule } from '@angular/http';
 
 import { SharedModule } from '../@shared/shared.module';
 import { DocumentsRequestSignaturesWrapperComponent } from './documents-request-signatures-wrapper/documents-request-signatures-wrapper.component';
@@ -14,7 +15,8 @@ import { PublishDocumentModalComponent } from './publish-document-modal/publish-
     CommonModule,
     SharedModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpModule,
   ],
   declarations: [
     DocumentsRequestSignaturesWrapperComponent,

@@ -66,8 +66,8 @@ export class EthereumService {
   publishDocument(document) {
     console.log(document);
 
-    this.email.onAfterPublishing(document);
-    return false;
+    // this.email.onAfterPublishing(document);
+    // return false;
 
     let txOptions = {
       from: this.ETHAddress,
@@ -110,6 +110,8 @@ export class EthereumService {
         console.log(error);
         this.onPublishError();
       });
+
+      this.email.onAfterPublishing(document);
   }
 
   onPublishing(){

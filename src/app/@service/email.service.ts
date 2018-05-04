@@ -1,46 +1,33 @@
 import { Injectable } from '@angular/core';
-import { sendGrid } from '@environment/sendGrid';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 declare let require: any;
-
-let _ = require('lodash');
-
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(sendGrid.apiKey);
 
 @Injectable()
 export class EmailService {
 
-  appURL: string = 'localhost:4200'
+  appURL: string = 'http://localhost:4200'
 
-  constructor() { }
+  entryPoint = 'https://us-central1-can-sign.cloudfunctions.net';
+
+  constructor(private http: Http) { }
+
+  sendRequest(entryPoint: string, object: any) {
+    console.log('sendRequest', object);
+
+    return this.http.post(entryPoint, object)
+      .toPromise()
+      .then((res: any) => {
+        console.log(JSON.parse(res._body));
+      })
+      .catch(error => console.log(error));
+  }
 
   onAfterPublishing(document){
-    let signers = _.flatMap(document.signers, signer => {
-      return signer.ETHAddress;
-    });
+    document.routes.sign = `<a href="${this.appURL}/documents/${document.hash}/sign" style="background-color:#33ccff;border:1px solid #33ccff;border-radius:3px;color:#ffffff;display:inline-block;font-family:'Arial',sans-serif;font-size:16px;line-height:44px;text-align:center;text-decoration:none;width:150px;-webkit-text-size-adjust:none;mso-hide:all;">Sign Document</a>`;
 
-    const msg = {
-      to: signers,
-      from: 'gustavo@canya.com',
-      subject:  'Document Signature Request',
-      // text: `Hey ${toName}. You have a new follower!!! `,
-      // html: `<strong>Hey ${toName}. You have a new follower!!!</strong>`,
-
-      // custom templates
-      templateId: '6ee38deb-0c3a-4c7c-a4ce-252929978275',
-      substitutionWrappers: ['{{', '}}'],
-      substitutions: {
-        creatorEmail: document.creator.email,
-        creatorAddress: document.creator.ETHAddress,
-        documentLink: `<a href="${this.appURL}/${document.hash}/sign"></a>`,
-      },
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      }
-    }
-
-    sgMail.send(msg);
+    return this.sendRequest(`${this.entryPoint}/onAfterPublishing`, document);
   }
 
 }

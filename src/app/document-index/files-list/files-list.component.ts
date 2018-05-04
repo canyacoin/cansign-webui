@@ -63,6 +63,7 @@ export class FilesListComponent implements OnInit {
         status: fileObj.status,
         signers: fileObj.signers,
         creator: fileObj.creator,
+        routes: fileObj.routes,
       }
 
       this.ls.storeFile(ipfsFile.hash, data);

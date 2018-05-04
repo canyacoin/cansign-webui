@@ -52,6 +52,7 @@ export class DropzoneComponent implements OnInit {
         status: 'uploaded',
         signers: {},
         creator: {},
+        routes: {},
       };
       this.ipfs.onFileAdded.next(f);
       this.ipfs.upload(reader.result, f);
