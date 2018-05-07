@@ -20,7 +20,7 @@ exports.onAfterPublishing = functions.https.onRequest((req, res) => {
             from: 'gustavo@canya.com',
             subject: 'Document Signature Request',
             html: `<h3>Hello</h3><br>
-            <p>${document.creator.email} with ETH address:</p>
+            <p>${document.creator.email} with Ethereum address:</p>
             <p>${document.creator.ETHAddress} requested a digital signature from you via <a href="cansign.io">CanSign</a>.</p><br>
             ${document.routes.sign}
             <br><br><br><p>The CanYa Team</p>`,

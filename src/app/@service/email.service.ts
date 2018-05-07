@@ -25,7 +25,7 @@ export class EmailService {
   }
 
   onAfterPublishing(document){
-    document.routes.sign = `<a href="${this.appURL}/documents/${document.hash}/sign" style="background-color:#33ccff;border:1px solid #33ccff;border-radius:3px;color:#ffffff;display:inline-block;font-family:'Arial',sans-serif;font-size:16px;line-height:44px;text-align:center;text-decoration:none;width:150px;-webkit-text-size-adjust:none;mso-hide:all;">Sign Document</a>`;
+    document.routes.sign = `<a href="${this.appURL}/documents/${document.hash}/sign" style="background-color:#33ccff;border:1px solid #33ccff;border-radius:3px;color:#ffffff;display:inline-block;font-family:'Open Sans','Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif,sans-serif;font-size:16px;line-height:44px;text-align:center;text-decoration:none;width:150px;-webkit-text-size-adjust:none;mso-hide:all;">Sign Document</a>`;
 
     return this.sendRequest(`${this.entryPoint}/onAfterPublishing`, document);
   }

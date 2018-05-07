@@ -24,7 +24,7 @@ export class EthereumService {
 
   networkURL: string = 'https://ropsten.etherscan.io'
 
-  contractAddress: string = '0x0ae7483c7f3d40a7516553bff8e338841ca37a4c';
+  contractAddress: string = '0x3c8f03bde21694783c200fd80bd609df2805c839';
 
   CanSignContract: any
 
