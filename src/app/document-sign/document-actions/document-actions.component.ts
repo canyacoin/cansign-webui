@@ -23,6 +23,8 @@ export class DocumentActionsComponent implements OnInit {
 
   @Input() signer: Signer = {}
 
+  creator: any = {}
+
   signers: Array<Signer> = []
 
   contract: any
@@ -53,6 +55,8 @@ export class DocumentActionsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.docId = params['ipfsHash'];
 
+      this.eth.init();
+
       this.currentFile = this.ls.getFile(this.docId);
     });
   }
@@ -63,6 +67,10 @@ export class DocumentActionsComponent implements OnInit {
     this.signers = [];
 
     let docId = this.docId;
+
+    contract.getDocumentCreator(docId).then(creator => {
+      this.creator.ETHAddress = creator;
+    });
 
     contract.getDocumentSigners(docId).then(_signers => {
       console.log(_signers);
@@ -78,6 +86,7 @@ export class DocumentActionsComponent implements OnInit {
       _.forEach(signers, signer => {
         contract.getSignerEmail(docId, signer.ETHAddress).then(email => signer.email = email);
         contract.getSignerTimestamp(docId, signer.ETHAddress).then(timestamp => signer.timestamp = timestamp.valueOf());
+        contract.getSignerStatus(docId, signer.ETHAddress).then(status => signer.status = status);
         this.signers.push(signer);
       });
 

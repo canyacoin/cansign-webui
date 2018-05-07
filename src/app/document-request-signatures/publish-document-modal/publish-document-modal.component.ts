@@ -51,6 +51,8 @@ export class PublishDocumentModalComponent implements OnInit {
   }
 
   init(){
+    this.signers = [];
+
     this.route.params.subscribe(params => {
       this.docId = params['ipfsHash'];
 

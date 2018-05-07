@@ -24,7 +24,7 @@ export class EthereumService {
 
   networkURL: string = 'https://ropsten.etherscan.io'
 
-  contractAddress: string = '0x3c8f03bde21694783c200fd80bd609df2805c839';
+  contractAddress: string = '0xef698b3cabcce3444fbbb9144e4a65c8a2e6786b';
 
   CanSignContract: any
 
@@ -54,6 +54,8 @@ export class EthereumService {
 
     if (!this.CanSignContract) {
       this.setContract();
+    } else {
+      this.onContractInstanceReady.next(this.CanSignContract);
     }
   }
 
@@ -173,9 +175,6 @@ export class EthereumService {
   publishDocument(document) {
     console.log(document);
 
-    // this.email.onAfterPublishing(document);
-    // return false;
-
     let txOptions = {
       from: this.ETHAddress,
       to: this.contractAddress,
@@ -217,8 +216,6 @@ export class EthereumService {
         console.log(error);
         this.onPublishError();
       });
-
-      this.email.onAfterPublishing(document);
   }
 
   onPublishing(){
