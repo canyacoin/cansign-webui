@@ -23,9 +23,9 @@ export class DocumentActionsComponent implements OnInit {
 
   @Input() signer: Signer = {}
 
-  @Input() creator: any = {}
-
   signers: Array<Signer> = []
+
+  contract: any
 
   constructor(
     private route: ActivatedRoute,
@@ -38,9 +38,14 @@ export class DocumentActionsComponent implements OnInit {
     eth.onSignDocument.subscribe(data => {
       this.currentFile = data.currentFile ? data.currentFile : this.currentFile;
 
-      this.updateSigners();
+      this.getDocumentData();
 
       this.zone.run(() => console.log('ran'));
+    });
+
+    eth.onContractInstanceReady.subscribe(contract => {
+      this.contract = contract;
+      this.getDocumentData();
     });
   }
 
@@ -49,20 +54,35 @@ export class DocumentActionsComponent implements OnInit {
       this.docId = params['ipfsHash'];
 
       this.currentFile = this.ls.getFile(this.docId);
-
-      this.creator.email = this.currentFile.creator.email;
-
-      this.updateSigners();
     });
   }
 
-  updateSigners(){
+  getDocumentData(){
+    let contract = this.contract;
+
     this.signers = [];
 
-    Object.keys(this.currentFile.signers).forEach(key => {
-      let signer = this.currentFile.signers[key];
+    let docId = this.docId;
 
-      this.signers.push(signer);
-    });
+    contract.getDocumentSigners(docId).then(_signers => {
+      console.log(_signers);
+
+      let signers = {};
+
+      _signers.forEach(address => {
+        signers[address] = {
+          ETHAddress: address,
+        };
+      });
+
+      _.forEach(signers, signer => {
+        contract.getSignerEmail(docId, signer.ETHAddress).then(email => signer.email = email);
+        contract.getSignerTimestamp(docId, signer.ETHAddress).then(timestamp => signer.timestamp = timestamp.valueOf());
+        this.signers.push(signer);
+      });
+
+      console.log(signers);
+
+    }).catch(error => console.log(error));
   }
 }

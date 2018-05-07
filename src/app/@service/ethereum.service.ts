@@ -35,6 +35,8 @@ export class EthereumService {
 
   onETHAddress: Subject<any> = new Subject<any>()
 
+  onContractInstanceReady: Subject<any> = new Subject<any>()
+
   constructor(
     private http: HttpClient,
     private ls: LocalStorageService,
@@ -269,6 +271,7 @@ export class EthereumService {
     return c.at(this.contractAddress).then(instance => {
       console.log(instance);
       this.CanSignContract = instance;
+      this.onContractInstanceReady.next(instance);
     }).catch(error => console.log(error));
   }
 
