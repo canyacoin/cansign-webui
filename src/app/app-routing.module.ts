@@ -8,7 +8,12 @@ import { EthereumService } from '@service/ethereum.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/documents/index', pathMatch: 'full' },
-  { path: 'documents/index', component: DocumentsIndexWrapperComponent, },
+  { path: 'documents/index',
+    component: DocumentsIndexWrapperComponent,
+    resolve: {
+      contract: EthereumService
+    }
+  },
   { path: 'documents/new', component: DocumentsNewWrapperComponent, },
   { path: 'documents/:ipfsHash/sign',
     component: DocumentsSignWrapperComponent,

@@ -42,11 +42,6 @@ export class DocumentActionsComponent implements OnInit {
 
       this.currentFile = this.ls.getFile(this.docId);
 
-      this.eth.onETHAddress.subscribe(address => {
-        this.currentFile.creator.ETHAddress = this.eth.ETHAddress;
-        this.ls.storeFile(this.docId, this.currentFile);
-      });
-
       this.creator.email = this.currentFile.creator.email;
 
       Object.keys(this.currentFile.signers).forEach(key => {
@@ -76,6 +71,8 @@ export class DocumentActionsComponent implements OnInit {
 
   addSigner(){
     let file = this.ls.getFile(this.docId);
+
+    this.signer.status = 'pending';
 
     file.signers[this.signer.ETHAddress] = this.signer;
 

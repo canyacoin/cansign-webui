@@ -75,6 +75,8 @@ export class EthereumService {
     });
   }
 
+
+
   signDocument(document){
     console.log(document);
 
@@ -108,12 +110,12 @@ export class EthereumService {
             // TODO Store txn in database linked to user eth address and doc hash
           }).catch(error => {
             console.log(error);
-            this.onPublishError();
+            this.onSignError();
           });
 
       }).catch(error => {
         console.log(error);
-        this.onPublishError();
+        this.onSignError();
       });
   }
 
@@ -130,6 +132,14 @@ export class EthereumService {
   onAfterSigning(receipt, document){
     let currentFile = this.ls.getFile(document.hash);
     currentFile.signers[this.ETHAddress].tx = receipt.tx;
+    currentFile.signers[this.ETHAddress].status = 'signed';
+
+    let allSignersHaveSigned = _.every(currentFile.signers, 'tx');
+    if (allSignersHaveSigned) {
+      currentFile.status = 'signed';
+
+      // TODO notify creator that document has been signed by all signers
+    }
 
     this.ls.storeFile(document.hash, currentFile);
 
@@ -140,8 +150,23 @@ export class EthereumService {
       onSigning: false,
       onAfterSigning: true,
       receipt: receipt,
+      currentFile: currentFile,
+    });
+
+    // TODO notify creator that document has been signed by signer
+  }
+
+  onSignError(){
+    this.onSignDocument.next({
+      displaySignDocumentModal: true,
+      onBeforeSign: false,
+      onError: true,
+      onSigning: false,
+      onAfterSigning: false,
     });
   }
+
+
 
   publishDocument(document) {
     console.log(document);

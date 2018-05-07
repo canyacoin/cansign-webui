@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
 import { IpfsService } from '../../@service/ipfs.service';
+import { EthereumService } from '@service/ethereum.service';
 import { LocalStorageService } from '../../@service/local-storage.service';
 import { FileComponent } from '../file/file.component';
 
@@ -19,12 +20,19 @@ export class FilesListComponent implements OnInit {
 
   uploadEnded: boolean = false
 
+  ETHAddress: string
+
   constructor(
     private ipfs: IpfsService,
     private resolver: ComponentFactoryResolver,
-    private ls: LocalStorageService) {
+    private ls: LocalStorageService,
+    private eth: EthereumService) {
 
     ls.init();
+
+    eth.onETHAddress.subscribe(address => {
+      this.ETHAddress = address;
+    });
 
     ipfs.onFileAdded.subscribe(data => {
       this.hasNoFiles = false;
@@ -51,6 +59,8 @@ export class FilesListComponent implements OnInit {
       fileComponent.ipfsHash = ipfsFile.hash;
       fileComponent.renderIpfsLink();
 
+      fileObj.creator.ETHAddress = this.ETHAddress;
+
       let data = {
         hash: ipfsFile.hash,
         path: ipfsFile.path,
@@ -65,6 +75,7 @@ export class FilesListComponent implements OnInit {
         creator: fileObj.creator,
         routes: fileObj.routes,
       }
+      console.log(data);
 
       this.ls.storeFile(ipfsFile.hash, data);
       this.uploadEnded = true;

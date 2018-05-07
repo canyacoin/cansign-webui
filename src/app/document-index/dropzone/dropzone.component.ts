@@ -41,7 +41,7 @@ export class DropzoneComponent implements OnInit {
 
     reader.onloadend = () => {
       this.ipfs.fileCount++;
-      let f = {
+      let fileObj = {
         index: this.ipfs.fileCount,
         name: file.name,
         type: file.type,
@@ -54,8 +54,8 @@ export class DropzoneComponent implements OnInit {
         creator: {},
         routes: {},
       };
-      this.ipfs.onFileAdded.next(f);
-      this.ipfs.upload(reader.result, f);
+      this.ipfs.onFileAdded.next(fileObj);
+      this.ipfs.upload(reader.result, fileObj);
     }
 
     reader.readAsArrayBuffer(file);

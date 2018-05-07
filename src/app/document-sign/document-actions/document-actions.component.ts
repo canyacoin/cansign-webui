@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from '@service/local-storage.service';
 import { EthereumService } from '@service/ethereum.service';
@@ -30,10 +30,18 @@ export class DocumentActionsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ls: LocalStorageService,
-    public eth: EthereumService) {
+    public eth: EthereumService,
+    private zone: NgZone) {
     this.moment = Moment;
     this.signers = [];
 
+    eth.onSignDocument.subscribe(data => {
+      this.currentFile = data.currentFile ? data.currentFile : this.currentFile;
+
+      this.updateSigners();
+
+      this.zone.run(() => console.log('ran'));
+    });
   }
 
   ngOnInit() {
@@ -44,11 +52,17 @@ export class DocumentActionsComponent implements OnInit {
 
       this.creator.email = this.currentFile.creator.email;
 
-      Object.keys(this.currentFile.signers).forEach(key => {
-        let signer = this.currentFile.signers[key];
+      this.updateSigners();
+    });
+  }
 
-        this.signers.push(signer);
-      });
+  updateSigners(){
+    this.signers = [];
+
+    Object.keys(this.currentFile.signers).forEach(key => {
+      let signer = this.currentFile.signers[key];
+
+      this.signers.push(signer);
     });
   }
 }
