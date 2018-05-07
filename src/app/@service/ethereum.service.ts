@@ -31,6 +31,8 @@ export class EthereumService {
 
   onPublishDocument: Subject<any> = new Subject<any>()
 
+  onSignDocument: Subject<any> = new Subject<any>()
+
   onETHAddress: Subject<any> = new Subject<any>()
 
   constructor(
@@ -64,7 +66,81 @@ export class EthereumService {
   }
 
   openSignDocumentModal(){
+    this.onSignDocument.next({
+      displaySignDocumentModal: true,
+      onBeforeSign: true,
+      onError: false,
+      onSigning: false,
+      onAfterSigning: false,
+    });
+  }
 
+  signDocument(document){
+    console.log(document);
+
+    let txOptions = {
+      from: this.ETHAddress,
+      to: this.contractAddress,
+      gas: 6000000,
+      gasPrice: 21000000000,
+    };
+
+    let hash = document.hash;
+    let signatureTimestamp = (new Date()).getTime();
+    let signerEmail = document.signers[this.ETHAddress].email;
+
+    this.CanSignContract.sign.estimateGas(
+      hash,
+      signatureTimestamp,
+      signerEmail,
+      txOptions).then(gas => {
+        txOptions.gas = gas;
+
+        this.onSigning();
+
+        this.CanSignContract.sign(
+          hash,
+          signatureTimestamp,
+          signerEmail,
+          txOptions).then(receipt => {
+            console.log(receipt);
+            this.onAfterSigning(receipt, document);
+            // TODO Store txn in database linked to user eth address and doc hash
+          }).catch(error => {
+            console.log(error);
+            this.onPublishError();
+          });
+
+      }).catch(error => {
+        console.log(error);
+        this.onPublishError();
+      });
+  }
+
+  onSigning(){
+    this.onSignDocument.next({
+      displaySignDocumentModal: true,
+      onBeforeSign: false,
+      onError: false,
+      onSigning: true,
+      onAfterSigning: false,
+    });
+  }
+
+  onAfterSigning(receipt, document){
+    let currentFile = this.ls.getFile(document.hash);
+    currentFile.signers[this.ETHAddress].tx = receipt.tx;
+
+    this.ls.storeFile(document.hash, currentFile);
+
+    this.onSignDocument.next({
+      displaySignDocumentModal: true,
+      onBeforeSign: false,
+      onError: false,
+      onSigning: false,
+      onAfterSigning: true,
+      receipt: receipt,
+    });
   }
 
   publishDocument(document) {
@@ -130,7 +206,7 @@ export class EthereumService {
 
   onAfterPublishing(receipt, document){
     let currentFile = this.ls.getFile(document.hash);
-    currentFile.txn = receipt.txn;
+    currentFile.tx = receipt.tx;
     currentFile.status = 'published';
 
     this.ls.storeFile(document.hash, currentFile);

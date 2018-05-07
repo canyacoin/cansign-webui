@@ -40,7 +40,7 @@
         </div>
         <div class="modal-body" *ngIf="onAfterPublishing">
           <h4>All set</h4>
-          <h5>The document was published in this transaction: <a href="{{ eth.networkURL }}/tx/{{ txn }}" target="_blank" class="text-truncate d-inline-block" style="width: 120px; margin-bottom: -9px;">{{ txn }}</a></h5>
+          <h5>The document was published in this transaction: <a href="{{ eth.networkURL }}/tx/{{ tx }}" target="_blank" class="text-truncate d-inline-block" style="width: 120px; margin-bottom: -9px;">{{ tx }}</a></h5>
           <p>An email notification was sent to the signers. You will be notified when a signer signs the document.</p>
           <nav>
             <a [routerLink]="['/documents', currentFile.hash, 'sign']" class="btn btn-danger btn-primary" (click)="reset()">See published document</a>

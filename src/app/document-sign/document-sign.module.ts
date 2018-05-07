@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../@shared/shared.module';
 import { DocumentsSignWrapperComponent } from './documents-sign-wrapper/documents-sign-wrapper.component';
 import { DocumentActionsComponent } from './document-actions/document-actions.component';
+import { SignDocumentModalComponent } from './sign-document-modal/sign-document-modal.component';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule
   ],
-  declarations: [DocumentsSignWrapperComponent, DocumentActionsComponent]
+  declarations: [DocumentsSignWrapperComponent, DocumentActionsComponent, SignDocumentModalComponent]
 })
 export class DocumentSignModule { }

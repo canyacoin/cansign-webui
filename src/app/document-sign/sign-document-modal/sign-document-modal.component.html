@@ -1,0 +1,37 @@
+<div class="modal" *ngIf="display">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <div class="modal-body" *ngIf="onBeforeSign">
+          <h4>IMPORTANT</h4>
+          <small>Note: you are connected to the <em>{{ eth.networkType }}</em> Ethereum network using this Ethereum address: <strong>{{ eth.ETHAddress }}</strong></small>
+          <p class="mt-3">By signing the document <strong>{{ currentFile.name }}</strong>:</p>
+          <ul>
+            <li>You will create a new immutable record in this smart contract: <a href="{{ eth.networkURL }}/address/{{ eth.contractAddress }}" target="_blank" class="text-truncate d-inline-block" style="width: 120px; margin-bottom: -9px;">{{ eth.contractAddress }}</a></li>
+            <li>A fee of 1% CAN or ETH will be charged in order to sign the document</li>
+          </ul>
+          <nav class="mt-3">
+            <button class="btn btn-primary" (click)="eth.signDocument(currentFile)">Confirm &amp; Sign</button>
+            <button class="btn btn-danger btn-outline" (click)="reset()">Cancel</button>
+          </nav>
+        </div>
+        <div class="modal-body" *ngIf="onSigning">
+          <h4>Waiting for confirmation</h4>
+        </div>
+        <div class="modal-body" *ngIf="onError">
+          <h4>There was an error...</h4>
+          <nav>
+            <button class="btn btn-danger btn-outline" (click)="reset()">Close</button>
+          </nav>
+        </div>
+        <div class="modal-body" *ngIf="onAfterSigning">
+          <h4>All set</h4>
+          <h5>The document was signed in this transaction: <a href="{{ eth.networkURL }}/tx/{{ tx }}" target="_blank" class="text-truncate d-inline-block" style="width: 120px; margin-bottom: -9px;">{{ tx }}</a></h5>
+          <nav>
+            <button class="btn btn-danger btn-outline" (click)="reset()">Close</button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

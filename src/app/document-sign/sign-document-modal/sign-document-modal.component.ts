@@ -5,12 +5,11 @@ import { EthereumService } from '../../@service/ethereum.service';
 import { Signer } from '../../@model/signer.model';
 
 @Component({
-  selector: 'app-publish-document-modal',
-  templateUrl: './publish-document-modal.component.html',
-  styleUrls: ['./publish-document-modal.component.css']
+  selector: 'app-sign-document-modal',
+  templateUrl: './sign-document-modal.component.html',
+  styleUrls: ['./sign-document-modal.component.css']
 })
-
-export class PublishDocumentModalComponent implements OnInit {
+export class SignDocumentModalComponent implements OnInit {
 
   currentFile: any
 
@@ -21,10 +20,10 @@ export class PublishDocumentModalComponent implements OnInit {
   tx: string
 
   display: boolean = false
-  onBeforePublish: boolean = false
+  onBeforeSign: boolean = false
   onError: boolean = false
-  onPublishing: boolean = false
-  onAfterPublishing: boolean = false
+  onSigning: boolean = false
+  onAfterSigning: boolean = false
 
   constructor(
     private route: ActivatedRoute,
@@ -32,12 +31,12 @@ export class PublishDocumentModalComponent implements OnInit {
     public eth: EthereumService,
     private zone: NgZone) {
 
-    eth.onPublishDocument.subscribe(data => {
-      this.display = data.displayPublishDocumentModal;
-      this.onBeforePublish = data.onBeforePublish;
+    eth.onSignDocument.subscribe(data => {
+      this.display = data.displaySignDocumentModal;
+      this.onBeforeSign = data.onBeforeSign;
       this.onError = data.onError;
-      this.onPublishing = data.onPublishing;
-      this.onAfterPublishing = data.onAfterPublishing;
+      this.onSigning = data.onSigning;
+      this.onAfterSigning = data.onAfterSigning;
       this.currentFile = data.currentFile ? data.currentFile : this.currentFile;
       this.tx = data.receipt ? data.receipt.tx : '';
 
@@ -65,10 +64,10 @@ export class PublishDocumentModalComponent implements OnInit {
 
   reset(){
     this.display = false;
-    this.onBeforePublish = false;
+    this.onBeforeSign = false;
     this.onError = false;
-    this.onPublishing = false;
-    this.onAfterPublishing = false;
+    this.onSigning = false;
+    this.onAfterSigning = false;
   }
 
 }
