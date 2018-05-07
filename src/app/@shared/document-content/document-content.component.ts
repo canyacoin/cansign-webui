@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IpfsService } from '../../@service/ipfs.service';
-import { EthereumService } from '../../@service/ethereum.service';
+import { IpfsService } from '@service/ipfs.service';
+import { EthereumService } from '@service/ethereum.service';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 

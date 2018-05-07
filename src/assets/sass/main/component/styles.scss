@@ -15,40 +15,47 @@ body {
   min-height: 100vh;
 }
 
+#document-content {
+  padding-top: $site-wrapper-padding-top;
+  height: 100vh;
+  width: 100%;
+}
+
 #document-request-signatures {
   padding-bottom: 35px;
   position: relative;
   padding-top: 0;
-  #document-content {
-    padding-top: $site-wrapper-padding-top;
-    height: 100vh;
-    width: 100%;
-  }
+}
 
-  $size: 3;
-  #document-actions {
-    @include make-col($size);
-    width: percentage($size / $grid-columns);
-    padding-top: $site-wrapper-padding-top;
-    overflow-y: scroll;
-    position: absolute;
-    background: white;
-    height: 100%;
-    bottom: 0;
-    right: 0;
-    top: 0;
-    p {
-      margin-bottom: get-spacer(0);
+#document-sign {
+  padding-bottom: 35px;
+  position: relative;
+  padding-top: 0;
+}
+
+$size: 3;
+#document-actions {
+  @include make-col($size);
+  width: percentage($size / $grid-columns);
+  padding-top: $site-wrapper-padding-top;
+  overflow-y: scroll;
+  position: absolute;
+  background: white;
+  height: 100%;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  p {
+    margin-bottom: get-spacer(0);
+  }
+  article {
+    h6 {
+      font-weight: $bold;
     }
-    article {
-      h6 {
-        font-weight: $bold;
-      }
-      margin-bottom: get-spacer(4);
-    }
-    .signer {
-      margin-top: get-spacer(3);
-    }
+    margin-bottom: get-spacer(4);
+  }
+  .signer {
+    margin-top: get-spacer(3);
   }
 }
 

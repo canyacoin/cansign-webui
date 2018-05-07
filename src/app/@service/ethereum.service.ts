@@ -63,6 +63,10 @@ export class EthereumService {
     });
   }
 
+  openSignDocumentModal(){
+
+  }
+
   publishDocument(document) {
     console.log(document);
 

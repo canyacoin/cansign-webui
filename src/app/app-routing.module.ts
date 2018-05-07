@@ -10,7 +10,12 @@ const routes: Routes = [
   { path: '', redirectTo: '/documents/index', pathMatch: 'full' },
   { path: 'documents/index', component: DocumentsIndexWrapperComponent, },
   { path: 'documents/new', component: DocumentsNewWrapperComponent, },
-  { path: 'documents/:ipfsHash/sign', component: DocumentsSignWrapperComponent, },
+  { path: 'documents/:ipfsHash/sign',
+    component: DocumentsSignWrapperComponent,
+    resolve: {
+      contract: EthereumService
+    }
+  },
   { path: 'documents/:ipfsHash/request-signatures',
     component: DocumentsRequestSignaturesWrapperComponent,
     resolve: {

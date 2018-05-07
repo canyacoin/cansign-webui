@@ -1,0 +1,33 @@
+<aside id="document-actions">
+  <div class="container-fluid">
+    <article>
+      <h6>DOCUMENT ACTIONS</h6>
+      <button class="btn btn-primary btn-block" (click)="eth.openSignDocumentModal()">Sign</button>
+    </article>
+    <article>
+      <h6>DOCUMENT INFO</h6>
+      <small>Creator</small>
+      <a href="{{ eth.networkURL }}/address/{{ currentFile.creator.ETHAddress }}" target="_blank" class="text-truncate d-block" style="width: 280px;">{{ currentFile.creator.ETHAddress }}</a>
+      <small>Name</small>
+      <p>{{ currentFile.name }}</p>
+      <small>Last modified</small>
+      <p>{{ moment(currentFile.lastModified).format('dddd, MMMM Do YYYY') }}</p>
+      <small>Uploaded at</small>
+      <p>{{ moment(currentFile.uploadedAt).format('dddd, MMMM Do YYYY') }}</p>
+      <small>Status</small>
+      <p class="capitalize">{{ currentFile.status }}</p>
+    </article>
+    <article>
+      <h6>EXPIRATION DATE</h6>
+    </article>
+    <article>
+      <h6>SIGNERS</h6>
+      <div class="signer" *ngFor="let signer of signers">
+        <small>ETH Address</small>
+        <p class="text-truncate" style="width: 280px">{{ signer.ETHAddress }}</p>
+        <small>Email</small>
+        <p>{{ signer.email }}</p>
+      </div>
+    </article>
+  </div>
+</aside>
