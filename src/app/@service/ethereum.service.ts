@@ -43,20 +43,19 @@ export class EthereumService {
     private email: EmailService) {}
 
   resolve(){
-    this.init();
-  }
-
-  init(){
     if (!this.web3) {
-      this.setWeb3Provider();
-      this.getNetworkType();
+      this.initWeb3();
     }
 
     if (!this.CanSignContract) {
       this.setContract();
-    } else {
-      this.onContractInstanceReady.next(this.CanSignContract);
     }
+  }
+
+  initWeb3(){
+    this.setWeb3Provider();
+    this.getETHAddress();
+    this.getNetworkType();
   }
 
   openPublishDocumentModal(){
@@ -83,6 +82,8 @@ export class EthereumService {
 
   signDocument(document){
     console.log(document);
+
+    this.initWeb3();
 
     let txOptions = {
       from: this.ETHAddress,
@@ -275,6 +276,9 @@ export class EthereumService {
   setWeb3Provider() {
     this.web3 = new Web3(Web3.givenProvider);
     console.log(this.web3);
+  }
+
+  getETHAddress(){
     this.web3.eth.getAccounts().then(accounts => {
       console.log(accounts);
       this.ETHAddress = accounts[0];

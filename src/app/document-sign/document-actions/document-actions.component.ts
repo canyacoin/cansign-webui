@@ -41,12 +41,9 @@ export class DocumentActionsComponent implements OnInit {
       this.currentFile = data.currentFile ? data.currentFile : this.currentFile;
 
       this.getDocumentData();
-
-      this.zone.run(() => console.log('ran'));
     });
 
     eth.onContractInstanceReady.subscribe(contract => {
-      this.contract = contract;
       this.getDocumentData();
     });
   }
@@ -55,14 +52,18 @@ export class DocumentActionsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.docId = params['ipfsHash'];
 
-      this.eth.init();
+      if (this.eth.CanSignContract) {
+        this.getDocumentData();
+      } else {
+        this.eth.setContract();
+      }
 
       this.currentFile = this.ls.getFile(this.docId);
     });
   }
 
   getDocumentData(){
-    let contract = this.contract;
+    let contract = this.eth.CanSignContract;
 
     this.signers = [];
 
@@ -91,6 +92,7 @@ export class DocumentActionsComponent implements OnInit {
       });
 
       console.log(signers);
+      this.zone.run(() => console.log('ran'));
 
     }).catch(error => console.log(error));
   }
