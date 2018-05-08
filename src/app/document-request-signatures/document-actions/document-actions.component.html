@@ -7,8 +7,10 @@
     </article>
     <article>
       <h6>DOCUMENT INFO</h6>
+      <small>IPFS location</small>
+      <a href="https://ipfs.io/ipfs/{{ currentFile.hash }}" target="_blank" class="text-truncate d-block" style="width: 280px;">{{ currentFile.hash }}</a>
       <small>Creator</small>
-      <p class="text-truncate" style="width: 280px;">{{ eth.ETHAddress }}</p>
+      <a href="{{ eth.networkURL }}/address/{{ eth.ETHAddress }}" target="_blank" class="text-truncate d-block" style="width: 280px;">{{ eth.ETHAddress }}</a>
       <small>Name</small>
       <p>{{ currentFile.name }}</p>
       <small>Last modified</small>
