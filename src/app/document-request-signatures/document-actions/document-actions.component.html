@@ -2,7 +2,8 @@
   <div class="container-fluid">
     <article>
       <h6>DOCUMENT ACTIONS</h6>
-      <button class="btn btn-primary btn-block" (click)="eth.openPublishDocumentModal()">Request signatures</button>
+      <button class="btn btn-primary btn-block" (click)="openPublishDocumentModal()">Request signatures</button>
+      <p *ngIf="!canRequestSignatures" class="text-danger">{{ onRequestSignaturesFailMessage }}</p>
     </article>
     <article>
       <h6>DOCUMENT INFO</h6>
@@ -42,10 +43,12 @@
         <fieldset class="form-group">
           <label for="signerEthAddress">Signer ETH address</label>
           <input type="text" name="signerEthAddress" class="form-control" [(ngModel)]="signer.ETHAddress">
+          <p class="text-danger" *ngIf="!isValidSignerAddress">{{ invalidSignerAddressMessage }}</p>
         </fieldset>
         <fieldset class="form-group">
           <label for="signerEmail">Signer email</label>
           <input type="text" name="signerEmail" class="form-control" [(ngModel)]="signer.email">
+          <p class="text-danger" *ngIf="!isValidSignerEmail">{{ invalidSignerEmailMessage }}</p>
         </fieldset>
         <fieldset class="form-group">
           <button class="btn btn-dark" (click)="addSigner()">Add</button>
@@ -54,7 +57,7 @@
       </div>
       <div class="signer" *ngFor="let signer of signers">
         <small>ETH Address</small>
-        <p class="text-truncate" style="width: 280px">{{ signer.ETHAddress }}</p>
+        <a href="{{ eth.networkURL }}/address/{{ signer.ETHAddress }}" target="_blank" class="text-truncate d-block" style="width: 280px;">{{ signer.ETHAddress }}</a>
         <small>Email</small>
         <p>{{ signer.email }}</p>
       </div>
