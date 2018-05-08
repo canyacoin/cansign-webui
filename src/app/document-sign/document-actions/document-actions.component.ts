@@ -74,6 +74,8 @@ export class DocumentActionsComponent implements OnInit {
 
     let docId = this.docId;
 
+    let canSignDocument = false;
+
     contract.getDocumentCreator(docId).then(creator => {
       this.creator.ETHAddress = creator;
     });
@@ -81,6 +83,21 @@ export class DocumentActionsComponent implements OnInit {
     contract.getDocumentSigners(docId).then(_signers => {
       this.signers = [];
       let signers = {};
+
+      _signers.push(this.creator.ETHAddress);
+
+      canSignDocument = _signers.map(address => address.toUpperCase()).indexOf(this.eth.ETHAddress.toUpperCase()) != -1;
+
+      _signers.pop();
+
+      if (!canSignDocument) {
+        this.eth.onSignatureDenial.next({
+          displayOnSignatureDenialModal: true,
+          denyDocumentView: true,
+        });
+
+        return false;
+      }
 
       _signers.forEach(address => {
         signers[address] = {

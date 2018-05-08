@@ -1,0 +1,19 @@
+<div class="modal" *ngIf="display">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <div class="modal-body" *ngIf="onSignatureDenial">
+          <h4>Forbidden</h4>
+          <h5 class="mt-3">You are not allowed to view or sign this document because:</h5>
+          <ul>
+            <li>Your Ethereum address does not match the document creator address</li>
+            <li>Your Ethereum address does not match any of the signers addresses</li>
+          </ul>
+          <nav class="mt-3">
+            <button class="btn btn-danger btn-outline" (click)="exit()">Exit</button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

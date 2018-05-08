@@ -38,6 +38,8 @@ export class EthereumService {
 
   onContractInstanceReady: Subject<any> = new Subject<any>()
 
+  onSignatureDenial: Subject<any> = new Subject<any>()
+
   constructor(
     private http: HttpClient,
     private ls: LocalStorageService,
