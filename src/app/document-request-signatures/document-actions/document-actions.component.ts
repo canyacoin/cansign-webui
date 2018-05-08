@@ -74,7 +74,7 @@ export class DocumentActionsComponent implements OnInit {
 
     this.signer.status = 'pending';
 
-    file.signers[this.signer.ETHAddress] = this.signer;
+    file.signers[this.signer.ETHAddress.toUpperCase()] = this.signer;
 
     this.signers.push(this.signer);
 

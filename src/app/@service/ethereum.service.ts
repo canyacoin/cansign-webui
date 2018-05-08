@@ -94,7 +94,7 @@ export class EthereumService {
 
     let hash = document.hash;
     let signatureTimestamp = (new Date()).getTime();
-    let signerEmail = document.signers[this.ETHAddress].email;
+    let signerEmail = document.signers[this.ETHAddress.toUpperCase()].email;
 
     this.CanSignContract.sign.estimateGas(
       hash,
@@ -136,8 +136,8 @@ export class EthereumService {
 
   onAfterSigning(receipt, document){
     let currentFile = this.ls.getFile(document.hash);
-    currentFile.signers[this.ETHAddress].tx = receipt.tx;
-    currentFile.signers[this.ETHAddress].status = 'signed';
+    currentFile.signers[this.ETHAddress.toUpperCase()].tx = receipt.tx;
+    currentFile.signers[this.ETHAddress.toUpperCase()].status = 'signed';
 
     let allSignersHaveSigned = _.every(currentFile.signers, 'tx');
     if (allSignersHaveSigned) {

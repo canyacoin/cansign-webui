@@ -6,6 +6,9 @@ import { Signer } from '../../@model/signer.model';
 import * as Moment from 'moment';
 
 declare let window: any;
+declare let require: any;
+
+const _ = require('lodash');
 
 @Component({
   selector: 'app-document-actions',
@@ -52,20 +55,22 @@ export class DocumentActionsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.docId = params['ipfsHash'];
 
+      this.currentFile = this.ls.getFile(this.docId);
+
       if (this.eth.CanSignContract) {
         this.getDocumentData();
       } else {
         this.eth.setContract();
       }
-
-      this.currentFile = this.ls.getFile(this.docId);
     });
+  }
+
+  isSigned(){
+    return this.currentFile.status === 'signed';
   }
 
   getDocumentData(){
     let contract = this.eth.CanSignContract;
-
-    this.signers = [];
 
     let docId = this.docId;
 
@@ -74,8 +79,7 @@ export class DocumentActionsComponent implements OnInit {
     });
 
     contract.getDocumentSigners(docId).then(_signers => {
-      console.log(_signers);
-
+      this.signers = [];
       let signers = {};
 
       _signers.forEach(address => {
@@ -84,14 +88,14 @@ export class DocumentActionsComponent implements OnInit {
         };
       });
 
-      _.forEach(signers, signer => {
-        contract.getSignerEmail(docId, signer.ETHAddress).then(email => signer.email = email);
-        contract.getSignerTimestamp(docId, signer.ETHAddress).then(timestamp => signer.timestamp = timestamp.valueOf());
-        contract.getSignerStatus(docId, signer.ETHAddress).then(status => signer.status = status);
+      _.forEach(signers, (signer, address) => {
+        contract.getSignerEmail(docId, address).then(email => signer.email = email);
+        contract.getSignerTimestamp(docId, address).then(timestamp => signer.timestamp = timestamp.valueOf());
+        contract.getSignerStatus(docId, address).then(status => signer.status = status);
+        signer.tx = this.currentFile.signers[address.toUpperCase()].tx;
         this.signers.push(signer);
       });
 
-      console.log(signers);
       this.zone.run(() => console.log('ran'));
 
     }).catch(error => console.log(error));
