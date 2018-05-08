@@ -3,8 +3,10 @@
 @import "./src/assets/sass/common/dropzone-component";
 @import "./src/assets/sass/common/files-list-component";
 @import "./src/assets/sass/common/file-component";
+@import "./src/assets/sass/common/cards-component";
 
 body {
+  background-color: $gray-100;
   position: relative;
 }
 
@@ -63,6 +65,9 @@ $size: 3;
   text-transform: capitalize;
 }
 
+#bancor-wc {
+  background-color: white;
+}
 
 .modal {
   @include flex-column-center;

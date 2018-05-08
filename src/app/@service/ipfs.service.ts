@@ -44,7 +44,7 @@ export class IpfsService {
       console.log('Online status: ', node.isOnline() ? 'online' : 'offline');
       console.log(node);
       this.onNodeReady.next(node.isOnline());
-      this.nodeIsReady = true;
+      this.nodeIsReady = node.isOnline();
     });
     node.on('error', error => {
       console.log(error);
