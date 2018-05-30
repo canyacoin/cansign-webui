@@ -11,8 +11,6 @@ export class DocumentsRequestSignaturesWrapperComponent implements OnInit {
   constructor(
     private ipfs: IpfsService) { }
 
-  ngOnInit() {
-    this.ipfs.stop();
-  }
+  ngOnInit() {}
 
 }

@@ -13,7 +13,8 @@
         <h6>DOCUMENT</h6>
         <span class="name">{{ name }}</span>
         <nav>
-          <div [innerHtml]="ipfsLink"></div>
+          <em class="still-working" *ngIf="streamEnded">still working...</em>
+          <div [innerHtml]="ipfsLink" *ngIf="!streamEnded"></div>
         </nav>
       </div>
     </div>

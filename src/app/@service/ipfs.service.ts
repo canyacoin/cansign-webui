@@ -5,11 +5,9 @@ import { Buffer } from 'buffer';
 declare let require: any;
 
 const streamBuffers = require('stream-buffers');
-const IPFS = require('ipfs');
-const node = new IPFS({
-  repo: '../assets/ipfs',
-  start: false,
-});
+
+const ipfsAPI = require('ipfs-api');
+const ipfs = ipfsAPI({host: 'ipfs.infura.io', port: '5001', protocol: 'https'});
 
 @Injectable()
 export class IpfsService {
@@ -20,6 +18,9 @@ export class IpfsService {
 
   fileCount: number = -1
 
+  files: Array<any> = []
+
+  fileIsUploading: boolean = false
 
   nodeIsReady: boolean = false
 
@@ -34,65 +35,40 @@ export class IpfsService {
 
   onFileAdded: Subject<any> = new Subject<any>()
 
+  onStreamEnd: Subject<any> = new Subject<any>()
+
+
+  gatewayURL: string = 'https://ipfs.infura.io/ipfs'
+
 
   fileProgressPerimeter: number = 263.89
 
-  constructor() {
-    this.node = node;
+  constructor() {}
 
-    node.on('ready', () => {
-      console.log('Online status: ', node.isOnline() ? 'online' : 'offline');
-      console.log(node);
-      this.onNodeReady.next(node.isOnline());
-      this.nodeIsReady = node.isOnline();
-    });
-    node.on('error', error => {
-      console.log(error);
-    });
-    node.on('init', () => {
-      console.log('init IPFS');
-    });
-    node.on('start', () => {
-      console.log('started IPFS');
-      console.log('Online status: ', node.isOnline() ? 'online' : 'offline');
-    });
-    node.on('stop', () => {
-      console.log('stopped IPFS');
-      console.log('Online status: ', node.isOnline() ? 'online' : 'offline');
-    });
+  queue(fileContent, fileObj){
+    this.files.push({ fileContent, fileObj });
+
+    if (this.fileIsUploading) return false;
+
+    this.upload(this.files.shift());
   }
 
-  start(){
-    if (!this.nodeIsReady) return;
-
-    if (this.node.isOnline()) return;
-
-    this.node.start();
-  }
-
-  stop(){
-    if (this.node && this.node.isOnline()) {
-      this.node.stop();
-    }
-  }
-
-  upload(fileContent, fileObj) {
-    this.progress = 0;
+  upload({fileContent, fileObj}) {
+    this.fileIsUploading = true;
 
     let myReadableStreamBuffer = new streamBuffers.ReadableStreamBuffer({
       chunkSize: 25000
     });
 
-    let stream = node.files.addReadableStream();
+    let stream = ipfs.addReadableStream();
 
     stream.on('data', (ipfsFile) => {
       this.onFileUploadEnd.next({ ipfsFile, fileObj });
     });
 
     myReadableStreamBuffer.on('data', (chunk) => {
-      this.progress += chunk.byteLength;
-
       fileObj.progress += chunk.byteLength;
+
       fileObj.pctg = (fileObj.progress >= fileObj.size) ?
         0 :
         this.fileProgressPerimeter - ((fileObj.progress / fileObj.size) * this.fileProgressPerimeter);
@@ -108,11 +84,20 @@ export class IpfsService {
     myReadableStreamBuffer.stop();
 
     myReadableStreamBuffer.on('end', () => {
-      console.log('END');
       stream.end();
+      this.onStreamEnd.next(fileObj);
+
+      setTimeout(() => {
+        if (this.files.length <= 0) {
+          this.fileIsUploading = false;
+          console.log('END');
+          return false;
+        }
+
+        this.upload(this.files.shift());
+      }, 2000);
     });
 
     myReadableStreamBuffer.resume();
   }
-
 }

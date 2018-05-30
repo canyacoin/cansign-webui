@@ -44,6 +44,10 @@ export class FilesListComponent implements OnInit {
       this.fileComponents[data.index].instance.pctg = data.pctg;
     });
 
+    ipfs.onStreamEnd.subscribe(data => {
+      this.fileComponents[data.index].instance.streamEnded = true;
+    });
+
     ipfs.onFileUploadEnd.subscribe(({ ipfsFile, fileObj }) => {
       if (this.uploadEnded) return false;
 
@@ -58,6 +62,8 @@ export class FilesListComponent implements OnInit {
 
       fileComponent.ipfsHash = ipfsFile.hash;
       fileComponent.renderIpfsLink();
+      fileComponent.isUploading = false;
+      fileComponent.streamEnded = false;
 
       fileObj.creator.ETHAddress = this.ETHAddress;
 

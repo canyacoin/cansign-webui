@@ -25,9 +25,12 @@ export class FileComponent implements OnInit {
 
   progress: number
 
-  ipfsLink: string = '<span class="link-placeholder">[ipfs link will appear here]</span>'
+  ipfsLink: string
 
   ipfsHash: string
+
+  isUploading: boolean = true
+  streamEnded: boolean = false
 
   constructor(
     private zone: NgZone,

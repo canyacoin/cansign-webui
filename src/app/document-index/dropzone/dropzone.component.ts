@@ -55,7 +55,7 @@ export class DropzoneComponent implements OnInit {
         routes: {},
       };
       this.ipfs.onFileAdded.next(fileObj);
-      this.ipfs.upload(reader.result, fileObj);
+      this.ipfs.queue(reader.result, fileObj);
     }
 
     reader.readAsArrayBuffer(file);

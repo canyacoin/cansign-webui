@@ -1,3 +1,9 @@
+@keyframes flash {
+  0% { opacity: 1; }
+  50% { opacity: .1; }
+  100% { opacity: 1; }
+}
+
 .file {
   background-color: white;
   .progress,
@@ -37,6 +43,10 @@
   .link-placeholder {
     font-size: $font-size-sm;
     color: $gray-300;
+  }
+  .still-working {
+    animation: flash linear 1.5s infinite;
+    color: $gray-500;
   }
   .copy {
     border-radius: $border-radius-sm;

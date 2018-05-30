@@ -11,17 +11,9 @@ declare var BancorConvertWidget: any;
 
 export class DocumentsIndexWrapperComponent implements OnInit {
 
-  constructor(private ipfs: IpfsService) {
-    ipfs.onNodeReady.subscribe(isReady => {
-      if (isReady) {
-        ipfs.start();
-      }
-    });
-  }
+  constructor(private ipfs: IpfsService) {}
 
-  ngOnInit() {
-    this.ipfs.start();
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     BancorConvertWidget.init({
