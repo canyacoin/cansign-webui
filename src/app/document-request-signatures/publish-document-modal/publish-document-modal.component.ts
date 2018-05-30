@@ -1,8 +1,9 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LocalStorageService } from '../../@service/local-storage.service';
-import { EthereumService } from '../../@service/ethereum.service';
-import { Signer } from '../../@model/signer.model';
+import { LocalStorageService } from '@service/local-storage.service';
+import { EthereumService } from '@service/ethereum.service';
+import { SharedService } from '@service/shared.service';
+import { Signer } from '@model/signer.model';
 
 @Component({
   selector: 'app-publish-document-modal',
@@ -16,8 +17,6 @@ export class PublishDocumentModalComponent implements OnInit {
 
   docId: string
 
-  signers: Array<Signer> = []
-
   tx: string
 
   display: boolean = false
@@ -30,6 +29,7 @@ export class PublishDocumentModalComponent implements OnInit {
     private route: ActivatedRoute,
     private ls: LocalStorageService,
     public eth: EthereumService,
+    public shared: SharedService,
     private zone: NgZone) {
 
     eth.onPublishDocument.subscribe(data => {
@@ -51,17 +51,10 @@ export class PublishDocumentModalComponent implements OnInit {
   }
 
   init(){
-    this.signers = [];
-
     this.route.params.subscribe(params => {
       this.docId = params['ipfsHash'];
 
       this.currentFile = this.ls.getFile(this.docId);
-
-      Object.keys(this.currentFile.signers).forEach(key => {
-        let signer = this.currentFile.signers[key];
-        this.signers.push(signer);
-      });
     });
   }
 
