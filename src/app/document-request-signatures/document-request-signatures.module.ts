@@ -8,6 +8,7 @@ import { SharedModule } from '../@shared/shared.module';
 import { DocumentsRequestSignaturesWrapperComponent } from './documents-request-signatures-wrapper/documents-request-signatures-wrapper.component';
 import { DocumentActionsComponent } from './document-actions/document-actions.component';
 import { PublishDocumentModalComponent } from './publish-document-modal/publish-document-modal.component';
+import { AddSignerModalComponent } from './add-signer-modal/add-signer-modal.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { PublishDocumentModalComponent } from './publish-document-modal/publish-
   declarations: [
     DocumentsRequestSignaturesWrapperComponent,
     DocumentActionsComponent,
-    PublishDocumentModalComponent
+    PublishDocumentModalComponent,
+    AddSignerModalComponent
   ]
 })
 export class DocumentRequestSignaturesModule { }

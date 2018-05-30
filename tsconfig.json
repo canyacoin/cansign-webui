@@ -22,6 +22,9 @@
       "@service/*": [
         "app/@service/*"
       ],
+      "@model/*": [
+        "app/@model/*"
+      ],
       "@environment/*": [
         "environments/*"
       ]

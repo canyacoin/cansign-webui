@@ -2,8 +2,18 @@
   <div class="container-fluid">
     <article>
       <h6>DOCUMENT ACTIONS</h6>
-      <button class="btn btn-primary btn-block" (click)="openPublishDocumentModal()">Request signatures</button>
-      <p *ngIf="!canRequestSignatures" class="text-danger">{{ onRequestSignaturesFailMessage }}</p>
+      <div>
+        <button class="btn btn-primary btn-block" (click)="openPublishDocumentModal()">Request signatures</button>
+        <p *ngIf="!canRequestSignatures" class="text-danger">{{ onRequestSignaturesFailMessage }}</p>
+      </div>
+      <nav class="row mt-3">
+        <div class="col-sm-6">
+          <button class="btn btn-dark btn-block" (click)="shared.openAddSignerModal()">Add signer</button>
+        </div>
+        <div class="col-sm-6">
+          <button class="btn btn-outline-dark btn-block" (click)="shared.openSignersListModal()">See signers</button>
+        </div>
+      </nav>
     </article>
     <article>
       <h6>DOCUMENT INFO</h6>
@@ -36,32 +46,6 @@
         <div class="input-group-append">
           <button class="btn btn-dark" (click)="addExpirationDate()">Add</button>
         </div>
-      </div>
-    </article>
-    <article>
-      <h6>SIGNERS</h6>
-      <button class="btn btn-dark btn-block" id="add-signer-btn" (click)="displaySignersForm()">Add a signer</button>
-      <div id="new-signer-form" class="d-none">
-        <fieldset class="form-group">
-          <label for="signerEthAddress">Signer ETH address</label>
-          <input type="text" name="signerEthAddress" class="form-control" [(ngModel)]="signer.ETHAddress">
-          <p class="text-danger" *ngIf="!isValidSignerAddress">{{ invalidSignerAddressMessage }}</p>
-        </fieldset>
-        <fieldset class="form-group">
-          <label for="signerEmail">Signer email</label>
-          <input type="text" name="signerEmail" class="form-control" [(ngModel)]="signer.email">
-          <p class="text-danger" *ngIf="!isValidSignerEmail">{{ invalidSignerEmailMessage }}</p>
-        </fieldset>
-        <fieldset class="form-group">
-          <button class="btn btn-dark" (click)="addSigner()">Add</button>
-          <button class="btn btn-outline btn-danger" (click)="displaySignersForm()">Cancel</button>
-        </fieldset>
-      </div>
-      <div class="signer" *ngFor="let signer of signers">
-        <small>ETH Address</small>
-        <a href="{{ eth.networkURL }}/address/{{ signer.ETHAddress }}" target="_blank" class="text-truncate d-block" style="width: 280px;">{{ signer.ETHAddress }}</a>
-        <small>Email</small>
-        <p>{{ signer.email }}</p>
       </div>
     </article>
   </div>

@@ -1,0 +1,47 @@
+<div class="modal" *ngIf="display">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-6">
+        <div class="modal-body" *ngIf="onAddSigner">
+          <h2>Add a signer</h2>
+          <hr class="mt-0">
+
+          <div id="new-signer-form">
+            <fieldset class="form-group">
+              <label for="signerEthAddress">Signer ETH address</label>
+              <input type="text" name="signerEthAddress" class="form-control" [(ngModel)]="signer.ETHAddress">
+              <p class="text-danger" *ngIf="!isValidSignerAddress">{{ invalidSignerAddressMessage }}</p>
+            </fieldset>
+            <fieldset class="form-group">
+              <label for="signerEmail">Signer email</label>
+              <input type="text" name="signerEmail" class="form-control" [(ngModel)]="signer.email">
+              <p class="text-danger" *ngIf="!isValidSignerEmail">{{ invalidSignerEmailMessage }}</p>
+            </fieldset>
+          </div>
+
+          <nav>
+            <button class="btn btn-dark" (click)="addSigner()">Add signer</button>
+            <button class="btn btn-outline-danger" (click)="display = false">Cancel</button>
+          </nav>
+        </div>
+        <div class="modal-body" *ngIf="onSignersList">
+          <h2>Signers</h2>
+          <hr class="mt-0">
+
+          <div class="row">
+            <div class="col-sm-6 signer" *ngFor="let signer of signers">
+              <small>ETH Address</small>
+              <a href="{{ eth.networkURL }}/address/{{ signer.ETHAddress }}" target="_blank" class="text-truncate d-block" style="width: 180px;">{{ signer.ETHAddress }}</a>
+              <small>Email</small>
+              <p>{{ signer.email }}</p>
+            </div>
+          </div>
+
+          <nav>
+            <button class="btn btn-outline-dark" (click)="display = false">Close</button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
