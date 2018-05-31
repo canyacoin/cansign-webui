@@ -1,3 +1,1 @@
-<object [attr.data]="filePath" type="application/pdf" id="document-content">
-  <embed [attr.src]="filePath" type="application/pdf" />
-</object>
+<iframe [attr.src]="filePath" id="document-content" #documentContent frameborder="0"></iframe>

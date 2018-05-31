@@ -29,15 +29,25 @@
           <hr class="mt-0">
 
           <div class="row">
-            <div class="col-sm-6 signer" *ngFor="let signer of signers">
+            <div class="col-6">
               <small>ETH Address</small>
-              <a href="{{ eth.networkURL }}/address/{{ signer.ETHAddress }}" target="_blank" class="text-truncate d-block" style="width: 180px;">{{ signer.ETHAddress }}</a>
+            </div>
+            <div class="col-6">
               <small>Email</small>
+            </div>
+          </div>
+
+          <div class="row signer" *ngFor="let signer of signers">
+            <div class="col-6">
+              <a href="{{ eth.networkURL }}/address/{{ signer.ETHAddress }}" target="_blank" class="text-truncate d-block" style="width: 180px;">{{ signer.ETHAddress }}</a>
+            </div>
+            <div class="col-6">
               <p>{{ signer.email }}</p>
             </div>
           </div>
 
           <nav class="mt-3">
+            <button class="btn btn-dark" (click)="shared.openAddSignerModal()">Add signer</button>
             <button class="btn btn-outline-dark" (click)="display = false">Close</button>
           </nav>
         </div>
