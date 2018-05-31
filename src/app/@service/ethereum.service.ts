@@ -82,6 +82,42 @@ export class EthereumService {
   }
 
 
+  canSignDocument(docId: string){
+    this.getETHAddress()
+
+    let contract = this.CanSignContract
+
+    let canSignDocument = false
+
+    let result = {
+      creator: {
+        ETHAddress: null
+      },
+      signers: []
+    }
+
+    return new Promise((resolve, reject) => {
+      contract.getDocumentCreator(docId).then(creator => {
+        console.log(creator)
+        result.creator.ETHAddress = creator
+
+        contract.getDocumentSigners(docId).then(signers => {
+          console.log(signers)
+          signers.push(creator)
+
+          canSignDocument = signers.map(address => address.toUpperCase()).indexOf(this.ETHAddress.toUpperCase()) != -1;
+
+          signers.pop()
+
+          if (!canSignDocument) reject(false)
+
+          result.signers = signers
+
+          return resolve(result)
+        })
+      })
+    })
+  }
 
   signDocument(document){
     console.log(document);

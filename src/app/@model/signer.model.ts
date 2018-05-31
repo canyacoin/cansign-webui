@@ -3,4 +3,6 @@ export class Signer {
   ETHAddress?: string;
   email?: string;
   status?: string;
+  timestamp?: number;
+  tx?: string;
 }

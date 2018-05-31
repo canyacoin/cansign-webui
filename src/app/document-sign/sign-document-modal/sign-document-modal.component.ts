@@ -62,6 +62,19 @@ export class SignDocumentModalComponent implements OnInit {
     });
   }
 
+  onSignDocument(){
+    this.eth.canSignDocument(this.docId).then(({creator, _signers}) => {
+
+      this.eth.signDocument(this.currentFile)
+
+    }).catch(error => {
+      this.eth.onSignatureDenial.next({
+        displayOnSignatureDenialModal: true,
+        denyDocumentView: true,
+      })
+    })
+  }
+
   reset(){
     this.display = false;
     this.onBeforeSign = false;

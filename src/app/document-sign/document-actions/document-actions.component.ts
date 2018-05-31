@@ -69,52 +69,50 @@ export class DocumentActionsComponent implements OnInit {
     return this.currentFile.status === 'signed';
   }
 
+  onSignDocument(){
+    this.eth.canSignDocument(this.docId).then(({creator, signers}) => {
+
+      this.eth.openSignDocumentModal()
+
+    }).catch(error => {
+      this.eth.onSignatureDenial.next({
+        displayOnSignatureDenialModal: true,
+        denyDocumentView: true,
+      })
+    })
+  }
+
   getDocumentData(){
-    let contract = this.eth.CanSignContract;
+    let contract = this.eth.CanSignContract
 
-    let docId = this.docId;
+    let docId = this.docId
 
-    let canSignDocument = false;
+    this.eth.canSignDocument(docId).then(({creator, signers}) => {
+      this.creator = creator
 
-    contract.getDocumentCreator(docId).then(creator => {
-      this.creator.ETHAddress = creator;
-    });
+      this.signers = []
 
-    contract.getDocumentSigners(docId).then(_signers => {
-      this.signers = [];
-      let signers = {};
+      _.forEach(signers, address => {
+        let signer: Signer = {}
 
-      _signers.push(this.creator.ETHAddress);
+        signer.ETHAddress = address
 
-      canSignDocument = _signers.map(address => address.toUpperCase()).indexOf(this.eth.ETHAddress.toUpperCase()) != -1;
+        contract.getSignerEmail(docId, address).then(email => signer.email = email)
+        contract.getSignerTimestamp(docId, address).then(timestamp => signer.timestamp = timestamp.valueOf())
+        contract.getSignerStatus(docId, address).then(status => signer.status = status)
 
-      _signers.pop();
+        signer.tx = this.currentFile.signers[address.toUpperCase()].tx
 
-      if (!canSignDocument) {
-        this.eth.onSignatureDenial.next({
-          displayOnSignatureDenialModal: true,
-          denyDocumentView: true,
-        });
+        this.signers.push(signer)
+      })
 
-        return false;
-      }
+      this.zone.run(() => console.log('ran'))
 
-      _signers.forEach(address => {
-        signers[address] = {
-          ETHAddress: address,
-        };
-      });
-
-      _.forEach(signers, (signer, address) => {
-        contract.getSignerEmail(docId, address).then(email => signer.email = email);
-        contract.getSignerTimestamp(docId, address).then(timestamp => signer.timestamp = timestamp.valueOf());
-        contract.getSignerStatus(docId, address).then(status => signer.status = status);
-        signer.tx = this.currentFile.signers[address.toUpperCase()].tx;
-        this.signers.push(signer);
-      });
-
-      this.zone.run(() => console.log('ran'));
-
-    }).catch(error => console.log(error));
+    }).catch(error => {
+      this.eth.onSignatureDenial.next({
+        displayOnSignatureDenialModal: true,
+        denyDocumentView: true,
+      })
+    })
   }
 }
