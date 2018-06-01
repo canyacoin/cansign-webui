@@ -39,13 +39,15 @@ export class DocumentActionsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.docId = params['ipfsHash'];
 
-      this.currentFile = this.ls.getFile(this.docId);
+      this.currentFile = this.ls.getFile(this.docId)
 
       this.creator.email = this.currentFile.creator.email;
     });
   }
 
   openPublishDocumentModal(){
+    this.currentFile = this.ls.getFile(this.docId)
+
     if (Object.keys(this.currentFile.signers).length <= 0) {
       this.canRequestSignatures = false;
       this.onRequestSignaturesFailMessage = 'At least 1 signer needs to be added in order to request signatures';

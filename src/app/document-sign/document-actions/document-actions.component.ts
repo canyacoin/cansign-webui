@@ -2,6 +2,7 @@ import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from '@service/local-storage.service';
 import { EthereumService } from '@service/ethereum.service';
+import { IpfsService } from '@service/ipfs.service';
 import { Signer } from '@model/signer.model';
 import * as Moment from 'moment';
 
@@ -36,17 +37,13 @@ export class DocumentActionsComponent implements OnInit {
     private route: ActivatedRoute,
     private ls: LocalStorageService,
     public eth: EthereumService,
+    public ipfs: IpfsService,
     private zone: NgZone) {
     this.moment = Moment;
-    this.signers = [];
 
     eth.onSignDocument.subscribe(data => {
       this.currentFile = data.currentFile ? data.currentFile : this.currentFile;
 
-      this.getDocumentData();
-    });
-
-    eth.onContractInstanceReady.subscribe(contract => {
       this.getDocumentData();
     });
   }
@@ -57,11 +54,9 @@ export class DocumentActionsComponent implements OnInit {
 
       this.currentFile = this.ls.getFile(this.docId);
 
-      if (this.eth.CanSignContract) {
-        this.getDocumentData();
-      } else {
-        this.eth.setContract();
-      }
+      this.eth.setContract().then(() => {
+        this.getDocumentData()
+      })
     });
   }
 
@@ -87,8 +82,6 @@ export class DocumentActionsComponent implements OnInit {
         return signer.status == Signer.STATUS_SIGNED
       }).map(signer => signer.ETHAddress.toUpperCase())
 
-      console.log(existingSignatures)
-
       let signatureExists = existingSignatures.indexOf(this.eth.ETHAddress.toUpperCase()) != -1
       if (signatureExists) {
         this.eth.onSignatureDenial.next({
@@ -111,30 +104,15 @@ export class DocumentActionsComponent implements OnInit {
   }
 
   getDocumentData(){
-    let contract = this.eth.CanSignContract
-
     let docId = this.docId
 
     this.eth.canSignDocument(docId).then(({creator, signers}) => {
+
       this.creator = creator
 
       this.signers = []
 
-      _.forEach(signers, address => {
-        let signer: Signer = {}
-
-        signer.ETHAddress = address
-
-        contract.getSignerEmail(docId, address).then(email => signer.email = email)
-        contract.getSignerTimestamp(docId, address).then(timestamp => signer.timestamp = timestamp.valueOf())
-        contract.getSignerStatus(docId, address).then(status => signer.status = status)
-
-        signer.tx = this.currentFile.signers[address.toUpperCase()].tx
-
-        this.signers.push(signer)
-      })
-
-      this.zone.run(() => console.log('ran'))
+      this.getSignersData(signers)
 
     }).catch(error => {
       this.eth.onSignatureDenial.next({
@@ -142,5 +120,39 @@ export class DocumentActionsComponent implements OnInit {
         denyDocumentView: true,
       })
     })
+  }
+
+  getSignersData(signers){
+    if (signers.length <= 0) return false
+
+    let docId = this.docId
+
+    let contract = this.eth.CanSignContract
+
+    let signer: Signer = {}
+
+    let address = signers.pop()
+
+    signer.ETHAddress = address
+
+    Promise.all([
+      contract.getSignerEmail(docId, address),
+      contract.getSignerTimestamp(docId, address),
+      contract.getSignerStatus(docId, address)
+      ]).then(values => {
+        let [email, timestamp, status] = values
+
+        signer.email = email
+        signer.timestamp = timestamp.valueOf()
+        signer.status = status
+
+        signer.tx = this.currentFile.signers[address.toUpperCase()].tx
+
+        this.signers.push(signer)
+
+        this.zone.run(() => console.log('ran'))
+
+        this.getSignersData(signers)
+      }).catch(error => console.log(error))
   }
 }

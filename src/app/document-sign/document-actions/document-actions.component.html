@@ -7,7 +7,7 @@
     <article>
       <h6>DOCUMENT INFO</h6>
       <small>IPFS location</small>
-      <a href="https://ipfs.io/ipfs/{{ docId }}" target="_blank" class="text-truncate d-block" style="width: 280px;">{{ docId }}</a>
+      <a href="{{ ipfs.gatewayURL }}/{{ docId }}" target="_blank" class="text-truncate d-block" style="width: 280px;">{{ docId }}</a>
       <small>Creator</small>
       <a href="{{ eth.networkURL }}/address/{{ creator.ETHAddress }}" target="_blank" class="text-truncate d-block" style="width: 280px;">{{ creator.ETHAddress }}</a>
       <small>Name</small>
@@ -19,9 +19,9 @@
       <small>Status</small>
       <p class="capitalize">{{ currentFile.status }}</p>
     </article>
-    <article>
+    <!-- <article>
       <h6>EXPIRATION DATE</h6>
-    </article>
+    </article> -->
     <article>
       <h6>SIGNERS</h6>
       <div class="signer" *ngFor="let signer of signers">

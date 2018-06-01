@@ -31,7 +31,7 @@ export class DocumentContentComponent implements OnInit {
   }
 
   makeFilePath(){
-    return `https://gateway.ipfs.io/ipfs/${this.docId}`;
+    return `${this.ipfs.gatewayURL}/${this.docId}`;
   }
 
 }
