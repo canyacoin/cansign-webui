@@ -90,3 +90,13 @@ $size: 3;
     margin-bottom: get-spacer(2);
   }
 }
+
+.on-error {
+  border-radius: $border-radius;
+  margin-top: get-spacer(1);
+  font-size: $font-size-sm;
+  background-color: $red;
+  padding: get-spacer(2);
+  font-weight: $bold;
+  color: white;
+}

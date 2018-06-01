@@ -4,7 +4,7 @@
       <h6>DOCUMENT ACTIONS</h6>
       <div>
         <button class="btn btn-primary btn-block" (click)="openPublishDocumentModal()">Request signatures</button>
-        <p *ngIf="!canRequestSignatures" class="text-danger">{{ onRequestSignaturesFailMessage }}</p>
+        <p *ngIf="!canRequestSignatures" class="on-error">{{ onRequestSignaturesFailMessage }}</p>
       </div>
       <nav class="row mt-3">
         <div class="col-sm-6">
@@ -38,6 +38,7 @@
           <button class="btn btn-dark" (click)="addNotificationEmail()" id="btn-add-email">Add</button>
         </div>
       </div>
+      <p *ngIf="!isValidCreatorEmail" class="on-error">{{ invalidCreatorEmailMessage }}</p>
     </article>
     <!-- <article>
       <h6>EXPIRATION DATE</h6>

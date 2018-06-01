@@ -10,12 +10,12 @@
             <fieldset class="form-group">
               <label for="signerEthAddress">Signer ETH address</label>
               <input type="text" name="signerEthAddress" class="form-control" [(ngModel)]="signer.ETHAddress">
-              <p class="text-danger" *ngIf="!isValidSignerAddress">{{ invalidSignerAddressMessage }}</p>
+              <p class="on-error" *ngIf="!isValidSignerAddress">{{ invalidSignerAddressMessage }}</p>
             </fieldset>
             <fieldset class="form-group">
               <label for="signerEmail">Signer email</label>
               <input type="text" name="signerEmail" class="form-control" [(ngModel)]="signer.email">
-              <p class="text-danger" *ngIf="!isValidSignerEmail">{{ invalidSignerEmailMessage }}</p>
+              <p class="on-error" *ngIf="!isValidSignerEmail">{{ invalidSignerEmailMessage }}</p>
             </fieldset>
           </div>
 

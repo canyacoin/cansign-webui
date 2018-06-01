@@ -6,6 +6,9 @@ import { SharedService } from '@service/shared.service';
 import * as Moment from 'moment';
 
 declare let window: any;
+declare let require: any;
+
+const validator = require('validator');
 
 @Component({
   selector: 'app-document-actions',
@@ -26,6 +29,9 @@ export class DocumentActionsComponent implements OnInit {
   canRequestSignatures: boolean = true
 
   onRequestSignaturesFailMessage: string
+
+  isValidCreatorEmail: boolean = true
+  invalidCreatorEmailMessage: string
 
   constructor(
     private route: ActivatedRoute,
@@ -67,13 +73,43 @@ export class DocumentActionsComponent implements OnInit {
   }
 
   addNotificationEmail(){
-    let file = this.ls.getFile(this.docId);
+    if (!this._isValidCreatorEmail()) return false
 
-    file.creator.email = this.creator.email;
+    this.isValidCreatorEmail = true
+    this.invalidCreatorEmailMessage = ''
 
-    this.ls.storeFile(this.docId, file);
+    let file = this.ls.getFile(this.docId)
 
-    window.$('#btn-add-email').text('Added!');
+    file.creator.email = this.creator.email
+
+    this.ls.storeFile(this.docId, file)
+
+    window.$('#btn-add-email').text('Added!')
+  }
+
+  _isValidCreatorEmail(): boolean {
+    if (typeof this.creator.email != 'string' || !validator.isEmail(this.creator.email)) {
+      this.isValidCreatorEmail = false
+      this.invalidCreatorEmailMessage = 'Email is not a valid email address'
+
+      return false
+    }
+
+    let signers = Object.keys(this.currentFile.signers)
+
+    let emailExists = signers.map(address => {
+      let signer = this.currentFile.signers[address]
+      return signer.email;
+    }).indexOf(this.creator.email) != -1
+
+    if (emailExists) {
+      this.isValidCreatorEmail = false
+      this.invalidCreatorEmailMessage = 'Email should not match another signer email'
+
+      return false
+    }
+
+    return true
   }
 
   addExpirationDate(){}

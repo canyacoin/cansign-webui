@@ -24,7 +24,7 @@ export class EthereumService {
 
   networkURL: string = 'https://ropsten.etherscan.io'
 
-  contractAddress: string = '0x6a1a91205edd96fa2807f914ff06e178de22596a'; // local
+  contractAddress: string = '0x7d16e9b8524e37e95da29865940b91c0dc430d55'; // local
   // contractAddress: string = '0x16094108ea1291004876430d9e9c71bd53cb8a1e'; // ropsten
 
   CanSignContract: any
@@ -239,6 +239,8 @@ export class EthereumService {
 
         this.onPublishing();
 
+        // TODO contract should return error event if document hash already exists
+
         this.CanSignContract.addDocument(
           hash,
           expirationDate,
@@ -270,6 +272,7 @@ export class EthereumService {
 
   onAfterPublishing(receipt, document){
     let currentFile = this.ls.getFile(document.hash);
+    currentFile.creator.ETHAddress = this.ETHAddress
     currentFile.tx = receipt.tx;
     currentFile.status = 'published';
 
@@ -285,7 +288,7 @@ export class EthereumService {
       receipt: receipt,
     });
 
-    this.email.onAfterPublishing(document);
+    this.email.onAfterPublishing(currentFile);
   }
 
   onPublishError(){

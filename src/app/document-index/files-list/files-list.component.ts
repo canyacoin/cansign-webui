@@ -20,8 +20,6 @@ export class FilesListComponent implements OnInit {
 
   uploadEnded: boolean = false
 
-  ETHAddress: string
-
   constructor(
     private ipfs: IpfsService,
     private resolver: ComponentFactoryResolver,
@@ -29,10 +27,6 @@ export class FilesListComponent implements OnInit {
     private eth: EthereumService) {
 
     ls.init();
-
-    eth.onETHAddress.subscribe(address => {
-      this.ETHAddress = address;
-    });
 
     ipfs.onFileAdded.subscribe(data => {
       this.hasNoFiles = false;
@@ -64,8 +58,6 @@ export class FilesListComponent implements OnInit {
       fileComponent.renderIpfsLink();
       fileComponent.isUploading = false;
       fileComponent.streamEnded = false;
-
-      fileObj.creator.ETHAddress = this.ETHAddress;
 
       let data = {
         hash: ipfsFile.hash,
