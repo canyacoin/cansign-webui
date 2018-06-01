@@ -12,14 +12,18 @@ export class DenySignatureModalComponent implements OnInit {
 
   display: boolean = false
   onSignatureDenial: boolean = false
+  onSignatureExists: boolean = false
+  onSignerIsCreator: boolean = false
 
   constructor(
     private eth: EthereumService,
     private router: Router) {
 
     eth.onSignatureDenial.subscribe(data => {
-      this.display = data.displayOnSignatureDenialModal;
-      this.onSignatureDenial = data.denyDocumentView;
+      this.display = data.displayOnSignatureDenialModal
+      this.onSignatureDenial = data.denyDocumentView
+      this.onSignatureExists = data.signatureExists
+      this.onSignerIsCreator = data.signerIsCreator
     });
 
   }

@@ -13,6 +13,20 @@
             <button class="btn btn-danger btn-outline" (click)="exit()">Exit</button>
           </nav>
         </div>
+        <div class="modal-body" *ngIf="onSignatureExists">
+          <h4>Forbidden</h4>
+          <h5 class="mt-3">You already signed this document</h5>
+          <nav class="mt-3">
+            <button class="btn btn-outline-dark" (click)="display = false">Close</button>
+          </nav>
+        </div>
+        <div class="modal-body" *ngIf="onSignerIsCreator">
+          <h4>Forbidden</h4>
+          <h5 class="mt-3">As the document creator, you already signed this document</h5>
+          <nav class="mt-3">
+            <button class="btn btn-outline-dark" (click)="display = false">Close</button>
+          </nav>
+        </div>
       </div>
     </div>
   </div>

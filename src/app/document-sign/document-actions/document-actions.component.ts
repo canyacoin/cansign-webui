@@ -2,7 +2,7 @@ import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from '@service/local-storage.service';
 import { EthereumService } from '@service/ethereum.service';
-import { Signer } from '../../@model/signer.model';
+import { Signer } from '@model/signer.model';
 import * as Moment from 'moment';
 
 declare let window: any;
@@ -71,6 +71,34 @@ export class DocumentActionsComponent implements OnInit {
 
   onSignDocument(){
     this.eth.canSignDocument(this.docId).then(({creator, signers}) => {
+
+      if (creator.ETHAddress.toUpperCase() == this.eth.ETHAddress.toUpperCase()) {
+        this.eth.onSignatureDenial.next({
+          displayOnSignatureDenialModal: true,
+          denyDocumentView: false,
+          signatureExists: false,
+          signerIsCreator: true,
+        })
+
+        return false
+      }
+
+      let existingSignatures = this.signers.filter(signer => {
+        return signer.status == Signer.STATUS_SIGNED
+      }).map(signer => signer.ETHAddress.toUpperCase())
+
+      console.log(existingSignatures)
+
+      let signatureExists = existingSignatures.indexOf(this.eth.ETHAddress.toUpperCase()) != -1
+      if (signatureExists) {
+        this.eth.onSignatureDenial.next({
+          displayOnSignatureDenialModal: true,
+          denyDocumentView: false,
+          signatureExists: true,
+        })
+
+        return false
+      }
 
       this.eth.openSignDocumentModal()
 
