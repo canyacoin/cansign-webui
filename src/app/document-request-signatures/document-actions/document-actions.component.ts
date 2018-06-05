@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from '@service/local-storage.service';
 import { EthereumService } from '@service/ethereum.service';
 import { SharedService } from '@service/shared.service';
+import { Document } from '@model/document.model';
 import * as Moment from 'moment';
 
 declare let window: any;
@@ -20,7 +21,7 @@ export class DocumentActionsComponent implements OnInit {
 
   docId: string
 
-  currentFile: any
+  currentFile: Document = new Document
 
   moment: any
 

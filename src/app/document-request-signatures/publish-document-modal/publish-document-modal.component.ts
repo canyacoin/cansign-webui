@@ -4,6 +4,7 @@ import { LocalStorageService } from '@service/local-storage.service';
 import { EthereumService } from '@service/ethereum.service';
 import { SharedService } from '@service/shared.service';
 import { Signer } from '@model/signer.model';
+import { Document } from '@model/document.model';
 
 @Component({
   selector: 'app-publish-document-modal',
@@ -13,7 +14,7 @@ import { Signer } from '@model/signer.model';
 
 export class PublishDocumentModalComponent implements OnInit {
 
-  currentFile: any
+  currentFile: Document = new Document
 
   docId: string
 
@@ -33,16 +34,16 @@ export class PublishDocumentModalComponent implements OnInit {
     private zone: NgZone) {
 
     eth.onPublishDocument.subscribe(data => {
-      this.display = data.displayPublishDocumentModal;
-      this.onBeforePublish = data.onBeforePublish;
-      this.onError = data.onError;
-      this.onPublishing = data.onPublishing;
-      this.onAfterPublishing = data.onAfterPublishing;
-      this.currentFile = data.currentFile ? data.currentFile : this.currentFile;
-      this.tx = data.receipt ? data.receipt.tx : '';
+      this.display = data.displayPublishDocumentModal
+      this.onBeforePublish = data.onBeforePublish
+      this.onError = data.onError
+      this.onPublishing = data.onPublishing
+      this.onAfterPublishing = data.onAfterPublishing
+      this.currentFile = data.currentFile ? data.currentFile : this.currentFile
+      this.tx = data.receipt ? data.receipt.tx : ''
 
-      this.init();
-      this.zone.run(() => console.log('ran'));
+      this.init()
+      this.zone.run(() => console.log('ran'))
     });
 
   }
@@ -52,18 +53,20 @@ export class PublishDocumentModalComponent implements OnInit {
 
   init(){
     this.route.params.subscribe(params => {
-      this.docId = params['ipfsHash'];
+      this.docId = params['ipfsHash']
 
-      this.currentFile = this.ls.getFile(this.docId);
+      this.ls.getDocument(this.docId).subscribe(doc => {
+        this.currentFile = doc
+      })
     });
   }
 
   reset(){
-    this.display = false;
-    this.onBeforePublish = false;
-    this.onError = false;
-    this.onPublishing = false;
-    this.onAfterPublishing = false;
+    this.display = false
+    this.onBeforePublish = false
+    this.onError = false
+    this.onPublishing = false
+    this.onAfterPublishing = false
   }
 
 }

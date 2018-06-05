@@ -278,9 +278,10 @@ export class EthereumService {
     let currentFile = this.ls.getFile(document.hash);
     currentFile.creator.ETHAddress = this.ETHAddress
     currentFile.tx = receipt.tx;
-    currentFile.status = 'published';
+    currentFile.status = Document.STATUS_PUBLISHED;
 
     this.ls.storeFile(document.hash, currentFile);
+    this.ls.updateDocument(document.hash, currentFile);
 
     this.onPublishDocument.next({
       displayPublishDocumentModal: true,
