@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { EmailService } from './email.service';
+import { Signer } from '@model/signer.model';
+import { Document } from '@model/document.model';
 
 declare let require: any;
 declare var window: any;
@@ -22,9 +24,15 @@ export class EthereumService {
 
   networkType: string
 
-  networkURL: string = 'https://ropsten.etherscan.io'
+  networkURL: string = 'https://ropsten.etherscan.io' // ropsten
+  // networkURL: string = 'https://etherscan.io' // prod
 
-  contractAddress: string = '0x9b23f8667210154cf5a6a79712191ec3e9c78b4f'; // local
+  apiURL: string = 'https://ropsten.etherscan.io/api' // ropsten
+  // apiURL: string = 'https://api.etherscan.io/api' // prod
+
+  apiKey: string = 'TX6HH57IVP95H4SWRM97SY57AAHA24KAXU'
+
+  contractAddress: string = '0x7b0e7c7420de7bc53d10cf50d9ef11745d429644'; // local
   // contractAddress: string = '0x16094108ea1291004876430d9e9c71bd53cb8a1e'; // ropsten
 
   CanSignContract: any
@@ -174,18 +182,18 @@ export class EthereumService {
   }
 
   onAfterSigning(receipt, document){
-    let currentFile = this.ls.getFile(document.hash);
-    currentFile.signers[this.ETHAddress.toUpperCase()].tx = receipt.tx;
-    currentFile.signers[this.ETHAddress.toUpperCase()].status = 'signed';
+    // let currentFile = this.ls.getFile(document.hash);
+    document.signers[this.ETHAddress.toUpperCase()].tx = receipt.tx;
+    document.signers[this.ETHAddress.toUpperCase()].status = Signer.STATUS_SIGNED;
 
-    let allSignersHaveSigned = _.every(currentFile.signers, 'tx');
+    let allSignersHaveSigned = _.every(document.signers, 'tx');
     if (allSignersHaveSigned) {
-      currentFile.status = 'signed';
+      document.status = Document.STATUS_SIGNED;
 
       // TODO notify creator that document has been signed by all signers
     }
 
-    this.ls.storeFile(document.hash, currentFile);
+    // this.ls.storeFile(document.hash, currentFile);
 
     this.onSignDocument.next({
       displaySignDocumentModal: true,
@@ -194,7 +202,7 @@ export class EthereumService {
       onSigning: false,
       onAfterSigning: true,
       receipt: receipt,
-      currentFile: currentFile,
+      currentFile: document,
     });
 
     // TODO notify creator that document has been signed by signer
@@ -223,6 +231,9 @@ export class EthereumService {
     };
 
     let hash = document.hash;
+    let name = document.name;
+    let lastModified = document.lastModified;
+    let uploadedAt = document.uploadedAt;
     let expirationDate = 0;
     let signers = _.flatMap(document.signers, signer => {
       return signer.ETHAddress;
@@ -232,6 +243,9 @@ export class EthereumService {
 
     this.CanSignContract.addDocument.estimateGas(
       hash,
+      name,
+      lastModified,
+      uploadedAt,
       expirationDate,
       signers,
       txOptions).then(gas => {
@@ -243,6 +257,9 @@ export class EthereumService {
 
         this.CanSignContract.addDocument(
           hash,
+          name,
+          lastModified,
+          uploadedAt,
           expirationDate,
           signers,
           txOptions).then(receipt => {
@@ -302,36 +319,86 @@ export class EthereumService {
   }
 
   setContract() {
+    if (this.CanSignContract) {
+      return new Promise((resolve, reject) => {
+        resolve(this.CanSignContract)
+      })
+    }
+
     console.log(CANSIGN);
 
-    let c = contract({abi: CANSIGN.abi});
+    let c = contract({abi: CANSIGN.abi})
 
-    c.setProvider(this.web3.currentProvider);
+    c.setProvider(this.web3.currentProvider)
 
     return c.at(this.contractAddress).then(instance => {
-      console.log(instance);
-      this.CanSignContract = instance;
-      this.onContractInstanceReady.next(instance);
-    }).catch(error => console.log(error));
+
+      console.log(instance)
+      this.CanSignContract = instance
+      this.onContractInstanceReady.next(instance)
+    }).catch(error => console.log(error))
   }
 
   setWeb3Provider() {
-    this.web3 = new Web3(Web3.givenProvider);
-    console.log(this.web3);
+    return new Promise((resolve, reject) => {
+      if (this.web3) resolve(this.web3)
+
+      this.web3 = new Web3(Web3.givenProvider)
+      console.log(this.web3)
+    })
   }
 
   getETHAddress(){
-    this.web3.eth.getAccounts().then(accounts => {
-      console.log(accounts);
-      this.ETHAddress = accounts[0];
-      this.onETHAddress.next(this.ETHAddress);
-    });
+    return new Promise((resolve, reject) => {
+      if (this.ETHAddress) {
+        resolve(this.ETHAddress)
+      }
+
+      this.web3.eth.getAccounts().then(accounts => {
+        console.log(accounts)
+        resolve(accounts[0])
+        this.ETHAddress = accounts[0]
+        this.onETHAddress.next(this.ETHAddress)
+      })
+    })
   }
 
   getNetworkType(){
-    this.web3.eth.net.getNetworkType().then(type => {
+    return this.web3.eth.net.getNetworkType().then(type => {
       this.networkType = type;
     }).catch(console.log);
+  }
+
+  getSignature(signer, blockNumber){
+    return new Promise((resolve, reject) => {
+      this.getContractTransactions(blockNumber, blockNumber).then(({result}) => {
+        _.forEach(result, tx => {
+          console.log(tx)
+          if (tx.from.toUpperCase() == signer.toUpperCase()) {
+            resolve(tx.hash)
+            return false
+          }
+        })
+      }).catch(error => console.log(error))
+    })
+  }
+
+  getContractTransactions(startBlock: number = 1, endBlock: number = 99999998){
+    // let url = `${this.networkURL}?module=account&action=txlist&address=${this.contractAddress}&startblock=0&endblock=99999999&sort=desc&apikey=${this.apiKey}`
+    let url = `${this.apiURL}?module=account&action=txlist&address=0x16094108ea1291004876430d9e9c71bd53cb8a1e&startblock=${startBlock - 1}&endblock=${endBlock + 1}&sort=desc&apikey=${this.apiKey}`
+    return new Promise((resolve, reject) => {
+      this.http.get(url)
+        .toPromise()
+        .then((res: any) => {
+          console.log(res)
+          resolve(res)
+          // console.log(JSON.parse(res._body));
+        })
+        .catch(error => {
+          reject(error)
+          console.log(error)
+        })
+    })
   }
 
 }

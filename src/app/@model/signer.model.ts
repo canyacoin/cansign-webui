@@ -8,4 +8,5 @@ export class Signer {
   status?: string;
   timestamp?: number;
   tx?: string;
+  blockNumber?: number;
 }

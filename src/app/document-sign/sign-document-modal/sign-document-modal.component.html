@@ -8,7 +8,6 @@
           <p class="mt-3">By signing the document <strong>{{ currentFile.name }}</strong>:</p>
           <ul>
             <li>You will create a new immutable record in this smart contract: <a href="{{ eth.networkURL }}/address/{{ eth.contractAddress }}" target="_blank" class="text-truncate d-inline-block" style="width: 120px; margin-bottom: -9px;">{{ eth.contractAddress }}</a></li>
-            <li>A fee of 1% CAN or ETH will be charged in order to sign the document</li>
           </ul>
           <nav class="mt-3">
             <button class="btn btn-primary" (click)="onSignDocument()">Confirm &amp; Sign</button>

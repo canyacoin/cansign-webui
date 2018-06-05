@@ -1,9 +1,12 @@
 import { Component, OnInit, Input, NgZone } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from '@service/local-storage.service';
 import { EthereumService } from '@service/ethereum.service';
 import { IpfsService } from '@service/ipfs.service';
+import { SharedService } from '@service/shared.service';
 import { Signer } from '@model/signer.model';
+import { Document } from '@model/document.model';
 import * as Moment from 'moment';
 
 declare let window: any;
@@ -21,11 +24,10 @@ export class DocumentActionsComponent implements OnInit {
 
   docId: string
 
-  currentFile: any = {
-    name: null,
-    lastModified: null,
-    uploadedAt: null
-  }
+  currentFile: Document = new Document()
+
+  lastModified: string
+  uploadedAt: string
 
   moment: any
 
@@ -37,11 +39,14 @@ export class DocumentActionsComponent implements OnInit {
 
   contract: any
 
+  onAllSigners: Subject<any> = new Subject<any>()
+
   constructor(
     private route: ActivatedRoute,
     private ls: LocalStorageService,
     public eth: EthereumService,
     public ipfs: IpfsService,
+    public shared: SharedService,
     private zone: NgZone) {
     this.moment = Moment;
 
@@ -50,6 +55,13 @@ export class DocumentActionsComponent implements OnInit {
 
       this.getDocumentData();
     });
+
+    this.onAllSigners.subscribe(signers => {
+      let allSignersHaveSigned = _.every(signers, ['status', Signer.STATUS_SIGNED])
+      if (allSignersHaveSigned) {
+        this.currentFile.status = Document.STATUS_SIGNED
+      }
+    })
   }
 
   ngOnInit() {
@@ -131,22 +143,29 @@ export class DocumentActionsComponent implements OnInit {
   getDocumentMeta(docId){
     let contract = this.eth.CanSignContract
 
-    Promise.all([
+    return Promise.all([
       contract.getDocumentName(docId),
       contract.getDocumentLastModifiedDate(docId),
       contract.getDocumentUploadedAtDate(docId),
       ]).then(([name, lastModified, uploadedAt]) => {
 
+        console.log(name, lastModified.valueOf(), uploadedAt.valueOf())
+
         this.currentFile.name = name
         this.currentFile.lastModified = lastModified.valueOf()
         this.currentFile.uploadedAt = uploadedAt.valueOf()
+        this.lastModified = this.moment.unix(lastModified.valueOf()).format(this.shared.dateFormats.long)
+        this.uploadedAt = this.moment.unix(uploadedAt.valueOf()).format(this.shared.dateFormats.long)
 
         this.zone.run(() => console.log('ran'))
       }).catch(error => console.log(error))
   }
 
   getSignersData(signers){
-    if (signers.length <= 0) return false
+    if (signers.length <= 0) {
+      this.onAllSigners.next(this.signers)
+      return false
+    }
 
     let docId = this.docId
 
@@ -158,18 +177,22 @@ export class DocumentActionsComponent implements OnInit {
 
     signer.ETHAddress = address
 
-    Promise.all([
+    return Promise.all([
       contract.getSignerEmail(docId, address),
       contract.getSignerTimestamp(docId, address),
-      contract.getSignerStatus(docId, address)
-      ]).then(values => {
-        let [email, timestamp, status] = values
+      contract.getSignerStatus(docId, address),
+      contract.getSignerBlockNumber(docId, address),
+      ]).then(([email, timestamp, status, blockNumber]) => {
 
         signer.email = email
         signer.timestamp = timestamp.valueOf()
         signer.status = status
+        signer.blockNumber = blockNumber.valueOf()
 
-        signer.tx = this.currentFile.signers[address.toUpperCase()].tx
+        this.eth.getSignature("0x9e12180f4c5fa8e31ad50fef854e9720001d96c3", 3374825).then(hash => {
+          console.log(hash)
+          signer.tx = hash
+        })
 
         this.signers.push(signer)
 

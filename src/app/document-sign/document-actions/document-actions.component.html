@@ -13,9 +13,9 @@
       <small>Name</small>
       <p>{{ currentFile.name }}</p>
       <small>Last modified</small>
-      <p>{{ moment(currentFile.lastModified).format('dddd, MMMM Do YYYY') }}</p>
+      <p>{{ lastModified }}</p>
       <small>Uploaded at</small>
-      <p>{{ moment(currentFile.uploadedAt).format('dddd, MMMM Do YYYY') }}</p>
+      <p>{{ uploadedAt }}</p>
       <small>Status</small>
       <p class="capitalize">{{ currentFile.status }}</p>
     </article>
