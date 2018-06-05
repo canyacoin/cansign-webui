@@ -89,6 +89,12 @@ $size: 3;
     @include normalize-text;
     margin-bottom: get-spacer(2);
   }
+  .remove-signer {
+    color: $red;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .on-error {

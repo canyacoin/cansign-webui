@@ -8,6 +8,7 @@ import { Signer } from '@model/signer.model';
 declare let window: any;
 declare let require: any;
 
+const _ = require('lodash');
 const Web3 = require('web3');
 const validator = require('validator');
 
@@ -71,6 +72,18 @@ export class AddSignerModalComponent implements OnInit {
         this.signers.push(signer);
       });
     });
+  }
+
+  removeSigner(signer: Signer){
+    let file = this.ls.getFile(this.docId)
+
+    delete file.signers[signer.ETHAddress.toUpperCase()]
+
+    this.ls.storeFile(this.docId, file)
+
+    _.remove(this.signers, _signer => {
+      return _signer.ETHAddress.toUpperCase() == signer.ETHAddress.toUpperCase()
+    })
   }
 
   addSigner(){

@@ -29,20 +29,26 @@
           <hr class="mt-0">
 
           <div class="row">
-            <div class="col-6">
+            <div class="col-5">
               <small>ETH Address</small>
             </div>
-            <div class="col-6">
+            <div class="col-5">
               <small>Email</small>
+            </div>
+            <div class="col-2">
+              <small>Remove</small>
             </div>
           </div>
 
           <div class="row signer" *ngFor="let signer of signers">
-            <div class="col-6">
+            <div class="col-5">
               <a href="{{ eth.networkURL }}/address/{{ signer.ETHAddress }}" target="_blank" class="text-truncate d-block" style="width: 180px;">{{ signer.ETHAddress }}</a>
             </div>
-            <div class="col-6">
+            <div class="col-5">
               <p>{{ signer.email }}</p>
+            </div>
+            <div class="col-2">
+              <span class="remove-signer" (click)="removeSigner(signer)">remove</span>
             </div>
           </div>
 
