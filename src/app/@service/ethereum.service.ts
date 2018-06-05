@@ -182,6 +182,12 @@ export class EthereumService {
   }
 
   onAfterSigning(receipt, document){
+    let signer = document.signers[this.ETHAddress.toUpperCase()]
+    signer.tx = receipt.tx
+    signer.status = Signer.STATUS_SIGNED
+
+    this.ls.updateDocument(document.hash, document)
+
     this.onSignDocument.next({
       displaySignDocumentModal: true,
       onBeforeSign: false,
