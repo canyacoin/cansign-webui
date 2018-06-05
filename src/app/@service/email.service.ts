@@ -7,7 +7,9 @@ declare let require: any;
 @Injectable()
 export class EmailService {
 
-  appURL: string = 'http://localhost:4200'
+  // appURL: string = 'http://localhost:4200' // localhost
+  appURL: string = 'https://can-sign.firebaseapp.com' // dev
+  // appURL: string = 'http://localhost:4200' // prod
 
   entryPoint = 'https://us-central1-can-sign.cloudfunctions.net';
 

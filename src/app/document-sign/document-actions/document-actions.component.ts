@@ -21,7 +21,11 @@ export class DocumentActionsComponent implements OnInit {
 
   docId: string
 
-  currentFile: any
+  currentFile: any = {
+    name: null,
+    lastModified: null,
+    uploadedAt: null
+  }
 
   moment: any
 
@@ -52,7 +56,7 @@ export class DocumentActionsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.docId = params['ipfsHash'];
 
-      this.currentFile = this.ls.getFile(this.docId);
+      // this.currentFile = this.ls.getFile(this.docId);
 
       this.eth.setContract().then(() => {
         this.getDocumentData()
@@ -112,6 +116,8 @@ export class DocumentActionsComponent implements OnInit {
 
       this.signers = []
 
+      this.getDocumentMeta(docId)
+
       this.getSignersData(signers)
 
     }).catch(error => {
@@ -120,6 +126,23 @@ export class DocumentActionsComponent implements OnInit {
         denyDocumentView: true,
       })
     })
+  }
+
+  getDocumentMeta(docId){
+    let contract = this.eth.CanSignContract
+
+    Promise.all([
+      contract.getDocumentName(docId),
+      contract.getDocumentLastModifiedDate(docId),
+      contract.getDocumentUploadedAtDate(docId),
+      ]).then(([name, lastModified, uploadedAt]) => {
+
+        this.currentFile.name = name
+        this.currentFile.lastModified = lastModified.valueOf()
+        this.currentFile.uploadedAt = uploadedAt.valueOf()
+
+        this.zone.run(() => console.log('ran'))
+      }).catch(error => console.log(error))
   }
 
   getSignersData(signers){
