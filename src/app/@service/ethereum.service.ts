@@ -182,19 +182,6 @@ export class EthereumService {
   }
 
   onAfterSigning(receipt, document){
-    // let currentFile = this.ls.getFile(document.hash);
-    document.signers[this.ETHAddress.toUpperCase()].tx = receipt.tx;
-    document.signers[this.ETHAddress.toUpperCase()].status = Signer.STATUS_SIGNED;
-
-    let allSignersHaveSigned = _.every(document.signers, 'tx');
-    if (allSignersHaveSigned) {
-      document.status = Document.STATUS_SIGNED;
-
-      // TODO notify creator that document has been signed by all signers
-    }
-
-    // this.ls.storeFile(document.hash, currentFile);
-
     this.onSignDocument.next({
       displaySignDocumentModal: true,
       onBeforeSign: false,

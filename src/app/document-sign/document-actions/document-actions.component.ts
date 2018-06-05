@@ -60,6 +60,7 @@ export class DocumentActionsComponent implements OnInit {
       let allSignersHaveSigned = _.every(signers, ['status', Signer.STATUS_SIGNED])
       if (allSignersHaveSigned) {
         this.currentFile.status = Document.STATUS_SIGNED
+        // TODO notify creator that document has been signed by all signers
       }
     })
   }
@@ -67,8 +68,6 @@ export class DocumentActionsComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.docId = params['ipfsHash'];
-
-      // this.currentFile = this.ls.getFile(this.docId);
 
       this.eth.setContract().then(() => {
         this.getDocumentData()
