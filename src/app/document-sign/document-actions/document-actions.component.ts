@@ -189,10 +189,11 @@ export class DocumentActionsComponent implements OnInit {
         signer.status = status
         signer.blockNumber = blockNumber.valueOf()
 
-        this.eth.getSignature("0x9e12180f4c5fa8e31ad50fef854e9720001d96c3", 3374825).then(hash => {
-          console.log(hash)
-          signer.tx = hash
-        })
+        if (!signer.tx) {
+          this.eth.getSignature(address, blockNumber.valueOf()).then(hash => {
+            signer.tx = hash
+          })
+        }
 
         this.signers.push(signer)
 

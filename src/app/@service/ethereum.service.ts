@@ -32,8 +32,8 @@ export class EthereumService {
 
   apiKey: string = 'TX6HH57IVP95H4SWRM97SY57AAHA24KAXU'
 
-  contractAddress: string = '0x7b0e7c7420de7bc53d10cf50d9ef11745d429644'; // local
-  // contractAddress: string = '0x16094108ea1291004876430d9e9c71bd53cb8a1e'; // ropsten
+  // contractAddress: string = '0x7b0e7c7420de7bc53d10cf50d9ef11745d429644'; // local
+  contractAddress: string = '0xfb0a401e0b124323fa57f66d0c9a962759289af5'; // ropsten
 
   CanSignContract: any
 
@@ -373,7 +373,6 @@ export class EthereumService {
     return new Promise((resolve, reject) => {
       this.getContractTransactions(blockNumber, blockNumber).then(({result}) => {
         _.forEach(result, tx => {
-          console.log(tx)
           if (tx.from.toUpperCase() == signer.toUpperCase()) {
             resolve(tx.hash)
             return false
@@ -384,8 +383,8 @@ export class EthereumService {
   }
 
   getContractTransactions(startBlock: number = 1, endBlock: number = 99999998){
-    // let url = `${this.networkURL}?module=account&action=txlist&address=${this.contractAddress}&startblock=0&endblock=99999999&sort=desc&apikey=${this.apiKey}`
-    let url = `${this.apiURL}?module=account&action=txlist&address=0x16094108ea1291004876430d9e9c71bd53cb8a1e&startblock=${startBlock - 1}&endblock=${endBlock + 1}&sort=desc&apikey=${this.apiKey}`
+    // let url = `${this.apiURL}?module=account&action=txlist&address=0x16094108ea1291004876430d9e9c71bd53cb8a1e&startblock=${startBlock - 1}&endblock=${endBlock + 1}&sort=desc&apikey=${this.apiKey}`
+    let url = `${this.apiURL}?module=account&action=txlist&address=${this.contractAddress}&startblock=${startBlock - 1}&endblock=${endBlock + 1}&sort=desc&apikey=${this.apiKey}`
     return new Promise((resolve, reject) => {
       this.http.get(url)
         .toPromise()
