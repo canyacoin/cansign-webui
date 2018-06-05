@@ -45,31 +45,35 @@ export class DocumentActionsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.docId = params['ipfsHash'];
 
-      this.currentFile = this.ls.getFile(this.docId)
-
-      this.creator.email = this.currentFile.creator.email;
+      this.ls.getDocument(this.docId).subscribe(doc => {
+        this.currentFile = doc
+        this.creator.email = this.currentFile.creator.email
+      })
     });
   }
 
   openPublishDocumentModal(){
-    this.currentFile = this.ls.getFile(this.docId)
+    this.ls.getDocument(this.docId).subscribe(doc => {
 
-    if (Object.keys(this.currentFile.signers).length <= 0) {
-      this.canRequestSignatures = false;
-      this.onRequestSignaturesFailMessage = 'At least 1 signer needs to be added in order to request signatures';
-      return false;
-    }
+      this.currentFile = doc
 
-    if (!this.creator.email) {
-      this.canRequestSignatures = false;
-      this.onRequestSignaturesFailMessage = 'You need to add a notification email';
-      return false;
-    }
+      if (Object.keys(this.currentFile.signers).length <= 0) {
+        this.canRequestSignatures = false
+        this.onRequestSignaturesFailMessage = 'At least 1 signer needs to be added in order to request signatures'
+        return false
+      }
 
-    this.canRequestSignatures = true;
-    this.onRequestSignaturesFailMessage = '';
+      if (!this.creator.email) {
+        this.canRequestSignatures = false
+        this.onRequestSignaturesFailMessage = 'You need to add a notification email'
+        return false
+      }
 
-    this.eth.openPublishDocumentModal();
+      this.canRequestSignatures = true
+      this.onRequestSignaturesFailMessage = ''
+
+      this.eth.openPublishDocumentModal()
+    })
   }
 
   addNotificationEmail(){
@@ -84,6 +88,8 @@ export class DocumentActionsComponent implements OnInit {
 
     this.ls.storeFile(this.docId, file)
 
+    this.ls.updateDocument(this.docId, {creator: this.creator})
+
     window.$('#btn-add-email').text('Added!')
   }
 
@@ -95,7 +101,7 @@ export class DocumentActionsComponent implements OnInit {
       return false
     }
 
-    let signers = Object.keys(this.currentFile.signers)
+    let signers = this.currentFile.signers ? Object.keys(this.currentFile.signers) : []
 
     let emailExists = signers.map(address => {
       let signer = this.currentFile.signers[address]

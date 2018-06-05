@@ -1,9 +1,18 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { environment } from '@environment/environment';
 
 @Injectable()
 export class LocalStorageService {
 
-  constructor() { }
+  endpoints: any = {
+    documents: 'documents'
+  }
+
+  constructor(
+    private db: AngularFireDatabase) {
+  }
 
   init() {
     let storage = localStorage.getItem('cansign');
@@ -23,6 +32,15 @@ export class LocalStorageService {
     return this.get().files;
   }
 
+  getDocument(hash){
+    return this.db.object(`${this.endpoints.documents}/${hash}`).valueChanges()
+  }
+
+  updateDocument(hash, data){
+    return this.db.object(`${this.endpoints.documents}/${hash}`)
+      .update(data)
+  }
+
   getFile(hash) {
     return this.getFiles()[hash];
   }
@@ -32,6 +50,10 @@ export class LocalStorageService {
   }
 
   storeFile(hash, data) {
+    this.db
+      .object(`${this.endpoints.documents}/${hash}`)
+      .update(data)
+
     let files = this.getFiles();
 
     files[hash] = data;

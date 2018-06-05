@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +18,7 @@ import { LocalStorageService } from './@service/local-storage.service';
 import { EthereumService } from './@service/ethereum.service';
 import { EmailService } from './@service/email.service';
 import { SharedService } from './@service/shared.service';
+import { environment } from '@environment/environment';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,8 @@ import { SharedService } from './@service/shared.service';
     DocumentSignModule,
     DocumentRequestSignaturesModule,
     HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule
   ],
   providers: [
     IpfsService,
