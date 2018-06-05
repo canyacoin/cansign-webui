@@ -49,8 +49,6 @@ export class AddSignerModalComponent implements OnInit {
     public eth: EthereumService,
     private ls: LocalStorageService) {
 
-    this.signers = [];
-
     shared.onSignersModal.subscribe(data => {
       this.display = data.display
       this.onAddSigner = data.onAddSigner
@@ -62,15 +60,20 @@ export class AddSignerModalComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.docId = params['ipfsHash'];
 
-      this.currentFile = this.ls.getFile(this.docId);
+      this.ls.getDocument(this.docId).subscribe(doc => {
+        this.currentFile = doc
+        this.creator.email = this.currentFile.creator.email
 
-      this.creator.email = this.currentFile.creator.email;
+        if (this.currentFile.signers) {
+          this.signers = []
 
-      Object.keys(this.currentFile.signers).forEach(key => {
-        let signer = this.currentFile.signers[key];
+          Object.keys(this.currentFile.signers).forEach(key => {
+            let signer = this.currentFile.signers[key]
 
-        this.signers.push(signer);
-      });
+            this.signers.push(signer)
+          })
+        }
+      })
     });
   }
 
@@ -80,6 +83,7 @@ export class AddSignerModalComponent implements OnInit {
     delete file.signers[signer.ETHAddress.toUpperCase()]
 
     this.ls.storeFile(this.docId, file)
+    this.ls.updateDocument(this.docId, file)
 
     _.remove(this.signers, _signer => {
       return _signer.ETHAddress.toUpperCase() == signer.ETHAddress.toUpperCase()
@@ -87,30 +91,31 @@ export class AddSignerModalComponent implements OnInit {
   }
 
   addSigner(){
-    if (!this._isValidSignerAddress()) return false;
+    if (!this._isValidSignerAddress()) return false
 
-    this.isValidSignerAddress = true;
-    this.invalidSignerAddressMessage = '';
+    this.isValidSignerAddress = true
+    this.invalidSignerAddressMessage = ''
 
-    if (!this._isValidSignerEmail()) return false;
+    if (!this._isValidSignerEmail()) return false
 
-    this.isValidSignerEmail = true;
-    this.invalidSignerEmailMessage = '';
+    this.isValidSignerEmail = true
+    this.invalidSignerEmailMessage = ''
 
-    let file = this.ls.getFile(this.docId);
+    let file = this.ls.getFile(this.docId)
 
-    this.signer.status = 'pending';
+    this.signer.status = Signer.STATUS_PENDING
 
-    file.signers[this.signer.ETHAddress.toUpperCase()] = this.signer;
+    file.signers[this.signer.ETHAddress.toUpperCase()] = this.signer
 
-    this.signers.push(this.signer);
+    this.signers.push(this.signer)
 
-    this.ls.storeFile(this.docId, file);
+    this.ls.storeFile(this.docId, file)
+    this.ls.updateDocument(this.docId, file)
 
-    this.signer = {};
+    this.signer = {}
 
-    this.onAddSigner = false;
-    this.onSignersList = true;
+    this.onAddSigner = false
+    this.onSignersList = true
   }
 
   _isValidSignerAddress(): boolean {
