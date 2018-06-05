@@ -17,7 +17,7 @@ exports.onAfterPublishing = functions.https.onRequest((req, res) => {
         });
         let msg = {
             to: emails,
-            from: 'gustavo@canya.com',
+            from: document.creator.email,
             subject: 'Document Signature Request',
             html: `<h3>Hello</h3><br>
             <p>${document.creator.email} with Ethereum address:</p>

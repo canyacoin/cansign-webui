@@ -148,13 +148,14 @@ export class DocumentActionsComponent implements OnInit {
       contract.getDocumentUploadedAtDate(docId),
       ]).then(([name, lastModified, uploadedAt]) => {
 
-        console.log(name, lastModified.valueOf(), uploadedAt.valueOf())
+        // console.log(name, lastModified.valueOf(), uploadedAt.valueOf())
 
         this.currentFile.name = name
-        this.currentFile.lastModified = lastModified.valueOf()
-        this.currentFile.uploadedAt = uploadedAt.valueOf()
-        this.lastModified = this.moment.unix(lastModified.valueOf()).format(this.shared.dateFormats.long)
-        this.uploadedAt = this.moment.unix(uploadedAt.valueOf()).format(this.shared.dateFormats.long)
+        // this.currentFile.lastModified = lastModified.valueOf()
+        // this.currentFile.uploadedAt = uploadedAt.valueOf()
+
+        // this.lastModified = this.moment.unix(lastModified.valueOf()).format(this.shared.dateFormats.long)
+        // this.uploadedAt = this.moment.unix(uploadedAt.valueOf()).format(this.shared.dateFormats.long)
 
         this.zone.run(() => console.log('ran'))
       }).catch(error => console.log(error))
