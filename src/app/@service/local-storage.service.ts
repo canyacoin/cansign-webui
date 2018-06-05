@@ -50,10 +50,6 @@ export class LocalStorageService {
   }
 
   storeFile(hash, data) {
-    this.db
-      .object(`${this.endpoints.documents}/${hash}`)
-      .update(data)
-
     let files = this.getFiles();
 
     files[hash] = data;

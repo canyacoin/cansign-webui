@@ -18,7 +18,7 @@
         </nav>
       </div>
     </div>
-    <div class="col-4 actions">
+    <div class="col-4 actions" *ngIf="!isUploading && !streamEnded">
       <div>
         <h6>Status</h6>
         <span class="status text-capitalize">{{ status }}</span>

@@ -47,36 +47,72 @@ export class FilesListComponent implements OnInit {
 
       let fileComponent = this.fileComponents[fileObj.index].instance;
 
-      let fileExists = this.ls.getFile(ipfsFile.hash);
-      if (fileExists) {
-        this.fileComponents[fileObj.index].destroy();
-        delete this.fileComponents[fileObj.index];
-        return false;
-      }
+      this.ls.getDocument(ipfsFile.hash).subscribe(doc => {
+        console.log(doc)
+        let fileExists = doc != undefined
 
-      fileComponent.ipfsHash = ipfsFile.hash;
-      fileComponent.renderIpfsLink();
-      fileComponent.isUploading = false;
-      fileComponent.streamEnded = false;
+        if (fileExists) {
+          this.fileComponents[fileObj.index].destroy()
+          delete this.fileComponents[fileObj.index]
+          return false
+        }
 
-      let data = {
-        hash: ipfsFile.hash,
-        path: ipfsFile.path,
-        size: ipfsFile.size,
-        name: fileObj.name,
-        type: fileObj.type,
-        lastModified: fileObj.lastModified,
-        uploadedAt: fileObj.uploadedAt,
-        pctg: 0,
-        status: fileObj.status,
-        signers: fileObj.signers,
-        creator: fileObj.creator,
-        routes: fileObj.routes,
-      }
-      console.log(data);
+        fileComponent.ipfsHash = ipfsFile.hash
+        fileComponent.renderIpfsLink()
+        fileComponent.isUploading = false
+        fileComponent.streamEnded = false
 
-      this.ls.storeFile(ipfsFile.hash, data);
-      this.uploadEnded = true;
+        let data = {
+          hash: ipfsFile.hash,
+          path: ipfsFile.path,
+          size: ipfsFile.size,
+          name: fileObj.name,
+          type: fileObj.type,
+          lastModified: fileObj.lastModified,
+          uploadedAt: fileObj.uploadedAt,
+          pctg: 0,
+          status: fileObj.status,
+          signers: fileObj.signers,
+          creator: fileObj.creator,
+          routes: fileObj.routes,
+        }
+        console.log(data)
+
+        this.ls.storeFile(ipfsFile.hash, data)
+        this.ls.updateDocument(ipfsFile.hash, data)
+        this.uploadEnded = true
+      }).unsubscribe()
+
+      // let fileExists = this.ls.getFile(ipfsFile.hash);
+      // if (fileExists) {
+      //   this.fileComponents[fileObj.index].destroy();
+      //   delete this.fileComponents[fileObj.index];
+      //   return false;
+      // }
+
+      // fileComponent.ipfsHash = ipfsFile.hash;
+      // fileComponent.renderIpfsLink();
+      // fileComponent.isUploading = false;
+      // fileComponent.streamEnded = false;
+
+      // let data = {
+      //   hash: ipfsFile.hash,
+      //   path: ipfsFile.path,
+      //   size: ipfsFile.size,
+      //   name: fileObj.name,
+      //   type: fileObj.type,
+      //   lastModified: fileObj.lastModified,
+      //   uploadedAt: fileObj.uploadedAt,
+      //   pctg: 0,
+      //   status: fileObj.status,
+      //   signers: fileObj.signers,
+      //   creator: fileObj.creator,
+      //   routes: fileObj.routes,
+      // }
+      // console.log(data);
+
+      // this.ls.storeFile(ipfsFile.hash, data);
+      // this.uploadEnded = true;
     });
   }
 
