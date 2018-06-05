@@ -19,6 +19,12 @@
         </div>
         <div class="modal-body" *ngIf="onPublishing">
           <h4>Waiting for confirmation</h4>
+          <div class="spinner-wrapper">
+            <svg class="svg" xmlns="http://www.w3.org/2000/svg">
+              <circle class="circle" r="42" cx="50%" cy="50%" fill="transparent" stroke-dasharray="0"></circle>
+              <circle class="bar" r="42" cx="50%" cy="50%" fill="transparent" stroke-dasharray="263.89" [style.stroke-dashoffset]="15"></circle>
+            </svg>
+          </div>
         </div>
         <div class="modal-body" *ngIf="onError">
           <h4>There was an error...</h4>

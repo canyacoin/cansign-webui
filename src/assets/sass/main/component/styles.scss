@@ -5,6 +5,11 @@
 @import "./src/assets/sass/common/file-component";
 @import "./src/assets/sass/common/cards-component";
 
+@keyframes spin {
+  from {transform:rotate(0deg);}
+  to {transform:rotate(360deg);}
+}
+
 body {
   background-color: $gray-100;
   position: relative;
@@ -93,6 +98,24 @@ $size: 3;
     color: $red;
     &:hover {
       cursor: pointer;
+    }
+  }
+  .spinner-wrapper {
+    @include flex-column-center;
+    min-height: 240px;
+    .svg {
+      animation: spin 2s infinite linear;
+      height: 100%;
+      width: 100%;
+      circle {
+        transition: stroke-dashoffset 1s linear;
+        stroke-dashoffset: 0;
+        stroke-width: 5px;
+        stroke: $gray-100;
+      }
+      .bar {
+        stroke: theme-color('primary');
+      }
     }
   }
 }
