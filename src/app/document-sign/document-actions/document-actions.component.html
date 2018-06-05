@@ -12,10 +12,10 @@
       <a href="{{ eth.networkURL }}/address/{{ creator.ETHAddress }}" target="_blank" class="text-truncate d-block" style="width: 280px;">{{ creator.ETHAddress }}</a>
       <small>Name</small>
       <p>{{ currentFile.name }}</p>
-      <!-- <small>Last modified</small>
-      <p>{{ lastModified }}</p>
+      <small>Last modified</small>
+      <p>{{ moment(currentFile.lastModified).format(shared.dateFormats.long) }}</p>
       <small>Uploaded at</small>
-      <p>{{ uploadedAt }}</p> -->
+      <p>{{ moment(currentFile.uploadedAt).format(shared.dateFormats.long) }}</p>
       <small>Status</small>
       <p class="capitalize">{{ currentFile.status }}</p>
     </article>

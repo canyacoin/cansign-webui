@@ -76,7 +76,7 @@ export class DocumentActionsComponent implements OnInit {
   }
 
   isSigned(){
-    return this.currentFile.status === 'signed';
+    return this.currentFile.status === Document.STATUS_SIGNED;
   }
 
   onSignDocument(){
@@ -127,9 +127,17 @@ export class DocumentActionsComponent implements OnInit {
 
       this.signers = []
 
-      this.getDocumentMeta(docId)
+      this.ls.getDocument(docId).subscribe(doc => {
+        this.currentFile = doc
 
-      this.getSignersData(signers)
+        this.signers = Object.keys(this.currentFile.signers).map(signer => {
+          return this.currentFile.signers[signer]
+        })
+      })
+
+      // this.getDocumentMeta(docId)
+
+      // this.getSignersData(signers)
 
     }).catch(error => {
       this.eth.onSignatureDenial.next({
