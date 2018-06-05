@@ -51,18 +51,19 @@ export class DocumentActionsComponent implements OnInit {
     this.moment = Moment;
 
     eth.onSignDocument.subscribe(data => {
-      this.currentFile = data.currentFile ? data.currentFile : this.currentFile;
+      this.currentFile = data.currentFile ? data.currentFile : this.currentFile
 
-      this.getDocumentData();
-    });
+      this.getDocumentData()
 
-    this.onAllSigners.subscribe(signers => {
-      let allSignersHaveSigned = _.every(signers, ['status', Signer.STATUS_SIGNED])
-      if (allSignersHaveSigned) {
-        this.currentFile.status = Document.STATUS_SIGNED
-        // TODO notify creator that document has been signed by all signers
+      if (data.onAfterSigning) {
+        let allSignersHaveSigned = _.every(this.currentFile.signers, ['status', Signer.STATUS_SIGNED])
+        if (allSignersHaveSigned) {
+          this.currentFile.status = Document.STATUS_SIGNED
+          this.ls.updateDocument(this.currentFile.hash, this.currentFile)
+          // TODO notify creator that document has been signed by all signers
+        }
       }
-    })
+    });
   }
 
   ngOnInit() {
@@ -135,79 +136,11 @@ export class DocumentActionsComponent implements OnInit {
         })
       })
 
-      // this.getDocumentMeta(docId)
-
-      // this.getSignersData(signers)
-
     }).catch(error => {
       this.eth.onSignatureDenial.next({
         displayOnSignatureDenialModal: true,
         denyDocumentView: true,
       })
     })
-  }
-
-  getDocumentMeta(docId){
-    let contract = this.eth.CanSignContract
-
-    return Promise.all([
-      contract.getDocumentName(docId),
-      contract.getDocumentLastModifiedDate(docId),
-      contract.getDocumentUploadedAtDate(docId),
-      ]).then(([name, lastModified, uploadedAt]) => {
-
-        // console.log(name, lastModified.valueOf(), uploadedAt.valueOf())
-
-        this.currentFile.name = name
-        // this.currentFile.lastModified = lastModified.valueOf()
-        // this.currentFile.uploadedAt = uploadedAt.valueOf()
-
-        // this.lastModified = this.moment.unix(lastModified.valueOf()).format(this.shared.dateFormats.long)
-        // this.uploadedAt = this.moment.unix(uploadedAt.valueOf()).format(this.shared.dateFormats.long)
-
-        this.zone.run(() => console.log('ran'))
-      }).catch(error => console.log(error))
-  }
-
-  getSignersData(signers){
-    if (signers.length <= 0) {
-      this.onAllSigners.next(this.signers)
-      return false
-    }
-
-    let docId = this.docId
-
-    let contract = this.eth.CanSignContract
-
-    let signer: Signer = {}
-
-    let address = signers.pop()
-
-    signer.ETHAddress = address
-
-    return Promise.all([
-      contract.getSignerEmail(docId, address),
-      contract.getSignerTimestamp(docId, address),
-      contract.getSignerStatus(docId, address),
-      contract.getSignerBlockNumber(docId, address),
-      ]).then(([email, timestamp, status, blockNumber]) => {
-
-        signer.email = email
-        signer.timestamp = timestamp.valueOf()
-        signer.status = status
-        signer.blockNumber = blockNumber.valueOf()
-
-        if (!signer.tx) {
-          this.eth.getSignature(address, blockNumber.valueOf()).then(hash => {
-            signer.tx = hash
-          })
-        }
-
-        this.signers.push(signer)
-
-        this.zone.run(() => console.log('ran'))
-
-        this.getSignersData(signers)
-      }).catch(error => console.log(error))
   }
 }

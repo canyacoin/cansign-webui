@@ -1,8 +1,9 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LocalStorageService } from '../../@service/local-storage.service';
-import { EthereumService } from '../../@service/ethereum.service';
-import { Signer } from '../../@model/signer.model';
+import { LocalStorageService } from '@service/local-storage.service';
+import { EthereumService } from '@service/ethereum.service';
+import { Signer } from '@model/signer.model';
+import { Document } from '@model/document.model';
 
 @Component({
   selector: 'app-sign-document-modal',
@@ -11,7 +12,7 @@ import { Signer } from '../../@model/signer.model';
 })
 export class SignDocumentModalComponent implements OnInit {
 
-  currentFile: any
+  currentFile: Document = new Document()
 
   docId: string
 
@@ -53,12 +54,9 @@ export class SignDocumentModalComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.docId = params['ipfsHash'];
 
-      this.currentFile = this.ls.getFile(this.docId);
-
-      Object.keys(this.currentFile.signers).forEach(key => {
-        let signer = this.currentFile.signers[key];
-        this.signers.push(signer);
-      });
+      this.ls.getDocument(this.docId).subscribe(doc => {
+        this.currentFile = doc
+      })
     });
   }
 
