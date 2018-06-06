@@ -7,6 +7,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { SharedModule } from './@shared/shared.module';
+
 import { DocumentIndexModule } from './document-index/document-index.module';
 import { DocumentNewModule } from './document-new/document-new.module';
 import { DocumentSignModule } from './document-sign/document-sign.module';
@@ -34,7 +36,8 @@ import { environment } from '@environment/environment';
     DocumentRequestSignaturesModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    SharedModule
   ],
   providers: [
     IpfsService,

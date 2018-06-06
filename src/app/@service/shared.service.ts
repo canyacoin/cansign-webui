@@ -11,6 +11,8 @@ export class SharedService {
 
   onCancelUpload: Subject<any> = new Subject<any>()
 
+  onAboutClick: Subject<any> = new Subject<any>()
+
   dateFormats: any = {
     long: 'dddd, MMMM Do YYYY'
   }
@@ -34,6 +36,13 @@ export class SharedService {
       display: true,
       onAddSigner: true,
       onSignersList: false,
+    })
+  }
+
+  displayAboutModal(){
+    this.onAboutClick.next({
+      display: true,
+      onAbout: true,
     })
   }
 

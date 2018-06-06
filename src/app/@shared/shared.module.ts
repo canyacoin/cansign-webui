@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FooterComponent } from './footer/footer.component';
 import { CardsComponent } from './cards/cards.component';
 import { DocumentContentComponent } from './document-content/document-content.component';
+import { AboutModalComponent } from './about-modal/about-modal.component';
 
 @NgModule({
   imports: [
@@ -11,12 +12,14 @@ import { DocumentContentComponent } from './document-content/document-content.co
   exports: [
     FooterComponent,
     DocumentContentComponent,
-    CardsComponent
+    CardsComponent,
+    AboutModalComponent,
   ],
   declarations: [
     FooterComponent,
     DocumentContentComponent,
     CardsComponent,
+    AboutModalComponent,
   ]
 })
 
