@@ -58,7 +58,7 @@ export class DocumentActionsComponent implements OnInit {
 
       this.currentFile = doc
 
-      if (Object.keys(this.currentFile.signers).length <= 0) {
+      if (!this.currentFile.signers || Object.keys(this.currentFile.signers).length <= 0) {
         this.canRequestSignatures = false
         this.onRequestSignaturesFailMessage = 'At least 1 signer needs to be added in order to request signatures'
         return false

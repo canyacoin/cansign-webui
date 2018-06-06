@@ -362,36 +362,4 @@ export class EthereumService {
       this.networkType = type;
     }).catch(console.log);
   }
-
-  getSignature(signer, blockNumber){
-    return new Promise((resolve, reject) => {
-      this.getContractTransactions(blockNumber, blockNumber).then(({result}) => {
-        _.forEach(result, tx => {
-          if (tx.from.toUpperCase() == signer.toUpperCase()) {
-            resolve(tx.hash)
-            return false
-          }
-        })
-      }).catch(error => console.log(error))
-    })
-  }
-
-  getContractTransactions(startBlock: number = 1, endBlock: number = 99999998){
-    // let url = `${this.apiURL}?module=account&action=txlist&address=0x16094108ea1291004876430d9e9c71bd53cb8a1e&startblock=${startBlock - 1}&endblock=${endBlock + 1}&sort=desc&apikey=${this.apiKey}`
-    let url = `${this.apiURL}?module=account&action=txlist&address=${this.contractAddress}&startblock=${startBlock - 1}&endblock=${endBlock + 1}&sort=desc&apikey=${this.apiKey}`
-    return new Promise((resolve, reject) => {
-      this.http.get(url)
-        .toPromise()
-        .then((res: any) => {
-          console.log(res)
-          resolve(res)
-          // console.log(JSON.parse(res._body));
-        })
-        .catch(error => {
-          reject(error)
-          console.log(error)
-        })
-    })
-  }
-
 }

@@ -41,9 +41,38 @@ exports.onAfterPublishing = functions.https.onRequest( (req, res) => {
       msg: msg,
     });
   });
+});
 
+exports.onDocumentSigned = functions.https.onRequest( (req, res) => {
+  cors(req, res, () => {
+    let document = req.body;
 
-  // res.status(200).json({ success: true });
+    let signers = _.flatMap(document.signers, signer => {
+      return signer.ETHAddress;
+    });
 
+    let emails = _.flatMap(document.signers, signer => {
+      return signer.email;
+    });
+
+    let msg = {
+      to: document.creator.email,
+      from: 'team@canya.com',
+      subject:  'Your Document is Signed',
+      html: `<h3>Hello</h3><br>
+            <p>The document you uploaded via <a href="cansign.io">CanSign</a>, has been signed by all recipients.</p><br>
+            ${document.routes.sign}
+            <br><br><br><p>The CanYa Team</p>`,
+      templateId: '6ee38deb-0c3a-4c7c-a4ce-252929978275',
+    }
+
+    sgMail.send(msg);
+
+    res.status(200).json({
+      document: document,
+      signers: signers,
+      msg: msg,
+    });
+  });
 });
 

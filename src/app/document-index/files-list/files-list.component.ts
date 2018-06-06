@@ -1,8 +1,13 @@
 import { Component, OnInit, ViewChild, ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
-import { IpfsService } from '../../@service/ipfs.service';
+import { IpfsService } from '@service/ipfs.service';
 import { EthereumService } from '@service/ethereum.service';
-import { LocalStorageService } from '../../@service/local-storage.service';
+import { SharedService } from '@service/shared.service';
+import { LocalStorageService } from '@service/local-storage.service';
 import { FileComponent } from '../file/file.component';
+
+declare var require: any
+
+const _ = require('lodash')
 
 @Component({
   selector: 'app-files-list',
@@ -24,9 +29,37 @@ export class FilesListComponent implements OnInit {
     private ipfs: IpfsService,
     private resolver: ComponentFactoryResolver,
     private ls: LocalStorageService,
+    private shared: SharedService,
     private eth: EthereumService) {
 
     ls.init();
+
+    shared.onCancelUpload.subscribe(fileIndex => {
+      _.each(this.fileComponents, comp => {
+        if (comp.instance.index == fileIndex) {
+          comp.destroy()
+          delete this.fileComponents[comp.instance.index]
+          return false
+        }
+      });
+    });
+
+    shared.onRemoveFiles.subscribe(filesIndexes => {
+      let files = ls.getFiles()
+
+      filesIndexes.forEach(index => {
+        _.each(this.fileComponents, comp => {
+          if (comp.instance.ipfsHash == index) {
+            delete files[comp.instance.ipfsHash]
+            comp.destroy()
+            delete this.fileComponents[comp.instance.index]
+            return false
+          }
+        })
+      })
+
+      ls.store({ files })
+    });
 
     ipfs.onFileAdded.subscribe(data => {
       this.hasNoFiles = false;
@@ -47,72 +80,30 @@ export class FilesListComponent implements OnInit {
 
       let fileComponent = this.fileComponents[fileObj.index].instance;
 
-      this.ls.getDocument(ipfsFile.hash).subscribe(doc => {
-        console.log(doc)
-        let fileExists = doc != undefined
+      fileComponent.ipfsHash = ipfsFile.hash
+      fileComponent.isUploading = false
+      fileComponent.streamEnded = false
+      fileComponent.renderIpfsLink()
 
-        if (fileExists) {
-          this.fileComponents[fileObj.index].destroy()
-          delete this.fileComponents[fileObj.index]
-          return false
-        }
+      let data = {
+        hash: ipfsFile.hash,
+        path: ipfsFile.path,
+        size: ipfsFile.size,
+        name: fileObj.name,
+        type: fileObj.type,
+        lastModified: fileObj.lastModified,
+        uploadedAt: fileObj.uploadedAt,
+        pctg: 0,
+        status: fileObj.status,
+        signers: fileObj.signers,
+        creator: fileObj.creator,
+        routes: fileObj.routes,
+      }
+      console.log(data)
 
-        fileComponent.ipfsHash = ipfsFile.hash
-        fileComponent.renderIpfsLink()
-        fileComponent.isUploading = false
-        fileComponent.streamEnded = false
-
-        let data = {
-          hash: ipfsFile.hash,
-          path: ipfsFile.path,
-          size: ipfsFile.size,
-          name: fileObj.name,
-          type: fileObj.type,
-          lastModified: fileObj.lastModified,
-          uploadedAt: fileObj.uploadedAt,
-          pctg: 0,
-          status: fileObj.status,
-          signers: fileObj.signers,
-          creator: fileObj.creator,
-          routes: fileObj.routes,
-        }
-        console.log(data)
-
-        this.ls.storeFile(ipfsFile.hash, data)
-        this.ls.updateDocument(ipfsFile.hash, data)
-        this.uploadEnded = true
-      }).unsubscribe()
-
-      // let fileExists = this.ls.getFile(ipfsFile.hash);
-      // if (fileExists) {
-      //   this.fileComponents[fileObj.index].destroy();
-      //   delete this.fileComponents[fileObj.index];
-      //   return false;
-      // }
-
-      // fileComponent.ipfsHash = ipfsFile.hash;
-      // fileComponent.renderIpfsLink();
-      // fileComponent.isUploading = false;
-      // fileComponent.streamEnded = false;
-
-      // let data = {
-      //   hash: ipfsFile.hash,
-      //   path: ipfsFile.path,
-      //   size: ipfsFile.size,
-      //   name: fileObj.name,
-      //   type: fileObj.type,
-      //   lastModified: fileObj.lastModified,
-      //   uploadedAt: fileObj.uploadedAt,
-      //   pctg: 0,
-      //   status: fileObj.status,
-      //   signers: fileObj.signers,
-      //   creator: fileObj.creator,
-      //   routes: fileObj.routes,
-      // }
-      // console.log(data);
-
-      // this.ls.storeFile(ipfsFile.hash, data);
-      // this.uploadEnded = true;
+      this.ls.storeFile(ipfsFile.hash, data)
+      this.ls.updateDocument(ipfsFile.hash, data)
+      this.uploadEnded = true
     });
   }
 

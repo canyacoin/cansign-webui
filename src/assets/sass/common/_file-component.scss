@@ -78,6 +78,15 @@
     }
   }
 
+  .remove-file {
+    margin-right: get-spacer(2);
+    display: inline-block;
+    color: $red;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   .svg {
     height: 100%;
     width: 100%;

@@ -13,8 +13,10 @@
         <h6>DOCUMENT</h6>
         <span class="name">{{ name }}</span>
         <nav>
+          <span class="remove-file" *ngIf="!streamEnded" (click)="shared.removeFiles([ipfsHash])">remove</span>
+          <!-- <span class="remove-file" *ngIf="streamEnded" (click)="shared.cancelUpload(index)">cancel upload</span> -->
           <em class="still-working" *ngIf="streamEnded">still working...</em>
-          <div [innerHtml]="ipfsLink" *ngIf="!streamEnded"></div>
+          <span [innerHtml]="ipfsLink" *ngIf="!streamEnded"></span>
         </nav>
       </div>
     </div>

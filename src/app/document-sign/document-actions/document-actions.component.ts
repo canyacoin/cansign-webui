@@ -5,6 +5,7 @@ import { LocalStorageService } from '@service/local-storage.service';
 import { EthereumService } from '@service/ethereum.service';
 import { IpfsService } from '@service/ipfs.service';
 import { SharedService } from '@service/shared.service';
+import { EmailService } from '@service/email.service';
 import { Signer } from '@model/signer.model';
 import { Document } from '@model/document.model';
 import * as Moment from 'moment';
@@ -47,6 +48,7 @@ export class DocumentActionsComponent implements OnInit {
     public eth: EthereumService,
     public ipfs: IpfsService,
     public shared: SharedService,
+    public email: EmailService,
     private zone: NgZone) {
     this.moment = Moment;
 
@@ -60,7 +62,11 @@ export class DocumentActionsComponent implements OnInit {
         if (allSignersHaveSigned) {
           this.currentFile.status = Document.STATUS_SIGNED
           this.ls.updateDocument(this.currentFile.hash, this.currentFile)
-          // TODO notify creator that document has been signed by all signers
+
+          let document = this.currentFile
+          document.routes = {}
+
+          this.email.onDocumentSigned(document)
         }
       }
     });

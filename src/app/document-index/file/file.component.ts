@@ -1,5 +1,7 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { IpfsService } from '../../@service/ipfs.service';
+import { IpfsService } from '@service/ipfs.service';
+import { SharedService } from '@service/shared.service';
+import { Document } from '@model/document.model';
 
 declare var require: any;
 
@@ -29,12 +31,13 @@ export class FileComponent implements OnInit {
 
   ipfsHash: string
 
-  isUploading: boolean = true
+  isUploading: boolean = false
   streamEnded: boolean = false
 
   constructor(
     private zone: NgZone,
-    public ipfs: IpfsService) {}
+    public ipfs: IpfsService,
+    public shared: SharedService) {}
 
   ngOnInit() {
   }
@@ -61,15 +64,15 @@ export class FileComponent implements OnInit {
   }
 
   isUploaded(){
-    return this.status === 'uploaded';
+    return this.status === Document.STATUS_UPLOADED;
   }
 
   isPublished(){
-    return this.status === 'published';
+    return this.status === Document.STATUS_PUBLISHED;
   }
 
   isSigned(){
-    return this.status === 'signed';
+    return this.status === Document.STATUS_SIGNED;
   }
 
 

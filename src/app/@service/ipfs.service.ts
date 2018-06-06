@@ -63,6 +63,7 @@ export class IpfsService {
     let stream = ipfs.addReadableStream();
 
     stream.on('data', (ipfsFile) => {
+      console.log(ipfsFile)
       this.onFileUploadEnd.next({ ipfsFile, fileObj });
     });
 
