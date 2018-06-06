@@ -134,7 +134,7 @@ export class DocumentActionsComponent implements OnInit {
 
       this.signers = []
 
-      this.ls.getDocument(docId).subscribe(doc => {
+      this.ls.getDocument(docId).then(doc => {
         this.currentFile = doc
 
         this.signers = Object.keys(this.currentFile.signers).map(signer => {

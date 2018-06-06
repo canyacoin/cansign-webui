@@ -53,23 +53,27 @@ export class DocumentActionsComponent implements OnInit {
     });
   }
 
-  openPublishDocumentModal(document){
-    if (!document.signers || Object.keys(document.signers).length <= 0) {
-      this.canRequestSignatures = false
-      this.onRequestSignaturesFailMessage = 'At least 1 signer needs to be added in order to request signatures'
-      return false
-    }
+  openPublishDocumentModal(){
+    this.eth.getETHAddress()
 
-    if (!this.creator.email) {
-      this.canRequestSignatures = false
-      this.onRequestSignaturesFailMessage = 'You need to add a notification email'
-      return false
-    }
+    this.ls.getDocument(this.docId).then((document: Document) => {
+      if (!document.signers || Object.keys(document.signers).length <= 0) {
+        this.canRequestSignatures = false
+        this.onRequestSignaturesFailMessage = 'At least 1 signer needs to be added in order to request signatures'
+        return false
+      }
 
-    this.canRequestSignatures = true
-    this.onRequestSignaturesFailMessage = ''
+      if (!this.creator.email) {
+        this.canRequestSignatures = false
+        this.onRequestSignaturesFailMessage = 'You need to add a notification email'
+        return false
+      }
 
-    this.eth.openPublishDocumentModal()
+      this.canRequestSignatures = true
+      this.onRequestSignaturesFailMessage = ''
+
+      this.eth.openPublishDocumentModal()
+    })
   }
 
   addNotificationEmail(){

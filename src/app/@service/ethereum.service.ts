@@ -146,7 +146,6 @@ export class EthereumService {
     this.CanSignContract.sign.estimateGas(
       hash,
       signatureTimestamp,
-      signerEmail,
       txOptions).then(gas => {
         txOptions.gas = gas;
 
@@ -155,7 +154,6 @@ export class EthereumService {
         this.CanSignContract.sign(
           hash,
           signatureTimestamp,
-          signerEmail,
           txOptions).then(receipt => {
             console.log(receipt);
             this.onAfterSigning(receipt, document);

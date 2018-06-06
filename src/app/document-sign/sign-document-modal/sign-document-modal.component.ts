@@ -2,6 +2,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from '@service/local-storage.service';
 import { EthereumService } from '@service/ethereum.service';
+import { SharedService } from '@service/shared.service';
 import { Signer } from '@model/signer.model';
 import { Document } from '@model/document.model';
 
@@ -30,6 +31,7 @@ export class SignDocumentModalComponent implements OnInit {
     private route: ActivatedRoute,
     private ls: LocalStorageService,
     public eth: EthereumService,
+    public shared: SharedService,
     private zone: NgZone) {
 
     eth.onSignDocument.subscribe(data => {
@@ -48,16 +50,13 @@ export class SignDocumentModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.docId = params['ipfsHash']
+    })
   }
 
   init(){
-    this.route.params.subscribe(params => {
-      this.docId = params['ipfsHash'];
-
-      this.ls.getDocument(this.docId).subscribe(doc => {
-        this.currentFile = doc
-      })
-    });
+    this.currentFile = this.shared.currentFile
   }
 
   onSignDocument(){
