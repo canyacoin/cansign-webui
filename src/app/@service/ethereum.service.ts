@@ -32,7 +32,7 @@ export class EthereumService {
 
   apiKey: string = 'TX6HH57IVP95H4SWRM97SY57AAHA24KAXU'
 
-  contractAddress: string = '0x7b0e7c7420de7bc53d10cf50d9ef11745d429644'; // local
+  contractAddress: string = '0xc136c27f1618381c8b3a0c8d4b87a845ac8ee701'; // local
   // contractAddress: string = '0xfb0a401e0b124323fa57f66d0c9a962759289af5'; // ropsten
 
   CanSignContract: any
