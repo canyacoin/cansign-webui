@@ -136,7 +136,7 @@ export class EthereumService {
       from: this.ETHAddress,
       to: this.contractAddress,
       gas: 6000000,
-      gasPrice: 21000000000,
+      gasPrice: 32000000000,
     };
 
     let hash = document.hash;
@@ -147,7 +147,7 @@ export class EthereumService {
       hash,
       signatureTimestamp,
       txOptions).then(gas => {
-        txOptions.gas = gas;
+        txOptions.gas = gas + 2000;
 
         this.onSigning();
 
@@ -218,7 +218,7 @@ export class EthereumService {
       from: this.ETHAddress,
       to: this.contractAddress,
       gas: 6000000,
-      gasPrice: 21000000000,
+      gasPrice: 32000000000,
     };
 
     let hash = document.hash;
@@ -240,7 +240,7 @@ export class EthereumService {
       expirationDate,
       signers,
       txOptions).then(gas => {
-        txOptions.gas = gas;
+        txOptions.gas = gas + 2000;
 
         this.onPublishing();
 

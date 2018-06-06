@@ -55,7 +55,7 @@ export class DocumentActionsComponent implements OnInit {
     eth.onSignDocument.subscribe(data => {
       this.currentFile = data.currentFile ? data.currentFile : this.currentFile
 
-      this.getDocumentData()
+      // this.getDocumentData()
 
       if (data.onAfterSigning) {
         let allSignersHaveSigned = _.every(this.currentFile.signers, ['status', Signer.STATUS_SIGNED])
