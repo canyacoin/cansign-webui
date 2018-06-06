@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Document } from '@model/document.model';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable()
@@ -14,7 +15,9 @@ export class SharedService {
     long: 'dddd, MMMM Do YYYY'
   }
 
-  constructor() { }
+  currentFile: Document = new Document()
+
+  constructor() {}
 
   removeFiles(filesIndexes){
     console.log(filesIndexes)

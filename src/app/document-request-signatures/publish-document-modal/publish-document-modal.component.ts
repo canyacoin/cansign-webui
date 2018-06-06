@@ -49,16 +49,13 @@ export class PublishDocumentModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.docId = params['ipfsHash']
+    });
   }
 
   init(){
-    this.route.params.subscribe(params => {
-      this.docId = params['ipfsHash']
-
-      this.ls.getDocument(this.docId).subscribe(doc => {
-        this.currentFile = doc
-      })
-    });
+    this.currentFile = this.shared.currentFile
   }
 
   reset(){

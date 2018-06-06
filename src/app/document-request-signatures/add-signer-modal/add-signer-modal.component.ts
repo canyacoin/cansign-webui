@@ -53,28 +53,30 @@ export class AddSignerModalComponent implements OnInit {
       this.display = data.display
       this.onAddSigner = data.onAddSigner
       this.onSignersList = data.onSignersList
+
+      this.init()
     })
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.docId = params['ipfsHash'];
-
-      this.ls.getDocument(this.docId).subscribe(doc => {
-        this.currentFile = doc
-        this.creator.email = this.currentFile.creator.email
-
-        if (this.currentFile.signers) {
-          this.signers = []
-
-          Object.keys(this.currentFile.signers).forEach(key => {
-            let signer = this.currentFile.signers[key]
-
-            this.signers.push(signer)
-          })
-        }
-      })
+      this.docId = params['ipfsHash']
     });
+  }
+
+  init(){
+    this.currentFile = this.shared.currentFile
+    this.creator.email = this.currentFile.creator.email
+
+    if (this.currentFile.signers) {
+      this.signers = []
+
+      Object.keys(this.currentFile.signers).forEach(key => {
+        let signer = this.currentFile.signers[key]
+
+        this.signers.push(signer)
+      })
+    }
   }
 
   removeSigner(signer: Signer){

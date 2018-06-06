@@ -46,35 +46,30 @@ export class DocumentActionsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.docId = params['ipfsHash'];
 
-      this.ls.getDocument(this.docId).subscribe(doc => {
+      this.ls.getDocument(this.docId).then(doc => {
         this.currentFile = doc
         this.creator.email = this.currentFile.creator.email
       })
     });
   }
 
-  openPublishDocumentModal(){
-    this.ls.getDocument(this.docId).subscribe(doc => {
+  openPublishDocumentModal(document){
+    if (!document.signers || Object.keys(document.signers).length <= 0) {
+      this.canRequestSignatures = false
+      this.onRequestSignaturesFailMessage = 'At least 1 signer needs to be added in order to request signatures'
+      return false
+    }
 
-      this.currentFile = doc
+    if (!this.creator.email) {
+      this.canRequestSignatures = false
+      this.onRequestSignaturesFailMessage = 'You need to add a notification email'
+      return false
+    }
 
-      if (!this.currentFile.signers || Object.keys(this.currentFile.signers).length <= 0) {
-        this.canRequestSignatures = false
-        this.onRequestSignaturesFailMessage = 'At least 1 signer needs to be added in order to request signatures'
-        return false
-      }
+    this.canRequestSignatures = true
+    this.onRequestSignaturesFailMessage = ''
 
-      if (!this.creator.email) {
-        this.canRequestSignatures = false
-        this.onRequestSignaturesFailMessage = 'You need to add a notification email'
-        return false
-      }
-
-      this.canRequestSignatures = true
-      this.onRequestSignaturesFailMessage = ''
-
-      this.eth.openPublishDocumentModal()
-    })
+    this.eth.openPublishDocumentModal()
   }
 
   addNotificationEmail(){

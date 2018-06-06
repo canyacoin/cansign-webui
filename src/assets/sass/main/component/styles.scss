@@ -129,15 +129,3 @@ $size: 3;
   font-weight: $bold;
   color: white;
 }
-
-.topbar-nav {
-  .nav-link {
-    font-size: $font-size-base;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: $gray-700;
-    &:hover {
-      color: $gray-900;
-    }
-  }
-}

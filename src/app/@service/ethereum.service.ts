@@ -32,8 +32,8 @@ export class EthereumService {
 
   apiKey: string = 'TX6HH57IVP95H4SWRM97SY57AAHA24KAXU'
 
-  contractAddress: string = '0xc136c27f1618381c8b3a0c8d4b87a845ac8ee701'; // local
-  // contractAddress: string = '0xfb0a401e0b124323fa57f66d0c9a962759289af5'; // ropsten
+  // contractAddress: string = '0xc136c27f1618381c8b3a0c8d4b87a845ac8ee701'; // local
+  contractAddress: string = '0x35ec167a042f8db5ccc6966c531c7869f809a23e'; // ropsten
 
   CanSignContract: any
 
@@ -258,7 +258,6 @@ export class EthereumService {
           txOptions).then(receipt => {
             console.log(receipt);
             this.onAfterPublishing(receipt, document);
-            // TODO Store txn in database linked to user eth address and doc hash
           }).catch(error => {
             console.log(error);
             this.onPublishError();

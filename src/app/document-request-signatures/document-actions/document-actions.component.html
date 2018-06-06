@@ -39,7 +39,7 @@
     </article>
     <article>
       <div>
-        <button class="btn btn-primary btn-block" (click)="openPublishDocumentModal()">Request signatures</button>
+        <button class="btn btn-primary btn-block" (click)="openPublishDocumentModal(currentFile)">Request signatures</button>
         <p *ngIf="!canRequestSignatures" class="on-error">{{ onRequestSignaturesFailMessage }}</p>
       </div>
     </article>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { environment } from '@environment/environment';
+import { SharedService } from '@service/shared.service';
 
 @Injectable()
 export class LocalStorageService {
@@ -11,7 +12,8 @@ export class LocalStorageService {
   }
 
   constructor(
-    private db: AngularFireDatabase) {
+    private db: AngularFireDatabase,
+    private shared: SharedService) {
   }
 
   init() {
@@ -33,7 +35,15 @@ export class LocalStorageService {
   }
 
   getDocument(hash){
-    return this.db.object(`${this.endpoints.documents}/${hash}`).valueChanges()
+    return new Promise((resolve, reject) => {
+      let subscription = this.db.object(`${this.endpoints.documents}/${hash}`)
+        .valueChanges()
+        .subscribe(doc => {
+          subscription.unsubscribe()
+          this.shared.currentFile = doc
+          resolve(doc)
+        })
+    })
   }
 
   updateDocument(hash, data){
