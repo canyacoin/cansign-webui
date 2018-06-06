@@ -78,47 +78,46 @@ export class FilesListComponent implements OnInit {
     ipfs.onFileUploadEnd.subscribe(({ ipfsFile, fileObj }) => {
       if (this.uploadEnded) return false;
 
-      let contract = this.eth.CanSignContract
+      this.eth.setContract().then(contract => {
+        contract.getDocumentId(ipfsFile.hash).then(id => {
+          let fileExists = id != ''
+          if (fileExists) {
+            this.fileComponents[fileObj.index].destroy()
+            delete this.fileComponents[fileObj.index]
+            let files = ls.getFiles()
+            delete files[ipfsFile.hash]
+            this.ls.store({ files })
+            return false
+          }
 
-      contract.getDocumentId(ipfsFile.hash).then(id => {
-        let fileExists = id != ''
-        if (fileExists) {
-          this.fileComponents[fileObj.index].destroy()
-          delete this.fileComponents[fileObj.index]
-          let files = ls.getFiles()
-          delete files[ipfsFile.hash]
-          this.ls.store({ files })
-          return false
-        }
+          let fileComponent = this.fileComponents[fileObj.index].instance;
 
-        let fileComponent = this.fileComponents[fileObj.index].instance;
+          fileComponent.ipfsHash = ipfsFile.hash
+          fileComponent.isUploading = false
+          fileComponent.streamEnded = false
+          fileComponent.renderIpfsLink()
 
-        fileComponent.ipfsHash = ipfsFile.hash
-        fileComponent.isUploading = false
-        fileComponent.streamEnded = false
-        fileComponent.renderIpfsLink()
+          let data = {
+            hash: ipfsFile.hash,
+            path: ipfsFile.path,
+            size: ipfsFile.size,
+            name: fileObj.name,
+            type: fileObj.type,
+            lastModified: fileObj.lastModified,
+            uploadedAt: fileObj.uploadedAt,
+            pctg: 0,
+            status: fileObj.status,
+            signers: fileObj.signers,
+            creator: fileObj.creator,
+            routes: fileObj.routes,
+          }
+          console.log(data)
 
-        let data = {
-          hash: ipfsFile.hash,
-          path: ipfsFile.path,
-          size: ipfsFile.size,
-          name: fileObj.name,
-          type: fileObj.type,
-          lastModified: fileObj.lastModified,
-          uploadedAt: fileObj.uploadedAt,
-          pctg: 0,
-          status: fileObj.status,
-          signers: fileObj.signers,
-          creator: fileObj.creator,
-          routes: fileObj.routes,
-        }
-        console.log(data)
-
-        this.ls.storeFile(ipfsFile.hash, data)
-        this.ls.updateDocument(ipfsFile.hash, data)
-        this.uploadEnded = true
+          this.ls.storeFile(ipfsFile.hash, data)
+          this.ls.updateDocument(ipfsFile.hash, data)
+          this.uploadEnded = true
+        })
       })
-
     });
   }
 
