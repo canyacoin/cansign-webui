@@ -147,7 +147,7 @@ export class EthereumService {
     this.CanSignContract.sign.estimateGas(
       hash,
       txOptions).then(gas => {
-        txOptions.gas = gas + 2000;
+        txOptions.gas = gas;
 
         this.onSigning();
 
@@ -217,7 +217,7 @@ export class EthereumService {
       from: this.ETHAddress,
       to: this.contractAddress,
       gas: 6000000,
-      gasPrice: 32000000000,
+      gasPrice: 15000000000,
     };
 
     let hash = document.hash;
@@ -235,7 +235,7 @@ export class EthereumService {
       hash,
       signers,
       txOptions).then(gas => {
-        txOptions.gas = gas + 2000;
+        txOptions.gas = gas;
 
         this.onPublishing();
 
