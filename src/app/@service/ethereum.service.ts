@@ -32,8 +32,8 @@ export class EthereumService {
 
   apiKey: string = 'TX6HH57IVP95H4SWRM97SY57AAHA24KAXU'
 
-  // contractAddress: string = '0xc136c27f1618381c8b3a0c8d4b87a845ac8ee701'; // local
-  contractAddress: string = '0x35ec167a042f8db5ccc6966c531c7869f809a23e'; // ropsten
+  // contractAddress: string = '0x281ee0acc734597562929e810a98c49cd820664d'; // local
+  contractAddress: string = '0x9119667d3a3473c1e05334702557add274dafb32'; // ropsten
 
   CanSignContract: any
 
@@ -136,16 +136,16 @@ export class EthereumService {
       from: this.ETHAddress,
       to: this.contractAddress,
       gas: 6000000,
-      gasPrice: 32000000000,
+      gasPrice: 15000000000,
     };
 
     let hash = document.hash;
     let signatureTimestamp = (new Date()).getTime();
     let signerEmail = document.signers[this.ETHAddress.toUpperCase()].email;
 
+    console.log(hash)
     this.CanSignContract.sign.estimateGas(
       hash,
-      signatureTimestamp,
       txOptions).then(gas => {
         txOptions.gas = gas + 2000;
 
@@ -153,7 +153,6 @@ export class EthereumService {
 
         this.CanSignContract.sign(
           hash,
-          signatureTimestamp,
           txOptions).then(receipt => {
             console.log(receipt);
             this.onAfterSigning(receipt, document);
@@ -234,10 +233,6 @@ export class EthereumService {
 
     this.CanSignContract.addDocument.estimateGas(
       hash,
-      name,
-      lastModified,
-      uploadedAt,
-      expirationDate,
       signers,
       txOptions).then(gas => {
         txOptions.gas = gas + 2000;
@@ -248,10 +243,6 @@ export class EthereumService {
 
         this.CanSignContract.addDocument(
           hash,
-          name,
-          lastModified,
-          uploadedAt,
-          expirationDate,
           signers,
           txOptions).then(receipt => {
             console.log(receipt);
