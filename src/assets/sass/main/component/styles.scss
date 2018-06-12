@@ -129,3 +129,8 @@ $size: 3;
   font-weight: $bold;
   color: white;
 }
+
+#missing-metamask {
+  @include flex-column-center;
+  text-align: center;
+}

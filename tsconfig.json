@@ -25,6 +25,9 @@
       "@model/*": [
         "app/@model/*"
       ],
+      "@guard/*": [
+        "app/@guard/*"
+      ],
       "@environment/*": [
         "environments/*"
       ]

@@ -22,6 +22,9 @@ import { EmailService } from './@service/email.service';
 import { SharedService } from './@service/shared.service';
 import { environment } from '@environment/environment';
 
+import { MissingMetamaskGuard } from '@guard/missing-metamask.guard';
+import { MissingMetamaskModule } from './missing-metamask/missing-metamask.module'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +40,8 @@ import { environment } from '@environment/environment';
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    SharedModule
+    SharedModule,
+    MissingMetamaskModule
   ],
   providers: [
     IpfsService,
@@ -45,6 +49,7 @@ import { environment } from '@environment/environment';
     EthereumService,
     EmailService,
     SharedService,
+    MissingMetamaskGuard,
   ],
   bootstrap: [AppComponent]
 })
