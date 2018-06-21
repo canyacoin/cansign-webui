@@ -30,11 +30,9 @@ export class DropzoneComponent implements OnInit {
     console.log($evt);
   }
 
-  onUploadSuccess(file, $evt) {
-    console.log(file, $evt);
-  }
+  onUploadSuccess(file) {}
 
-  onFileAdded(file, $evt?) {
+  onFileAdded(file) {
     console.log(file);
 
     let reader = new FileReader();

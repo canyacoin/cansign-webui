@@ -20,12 +20,14 @@ const routes: Routes = [
   { path: 'documents/new', component: DocumentsNewWrapperComponent, },
   { path: 'documents/:ipfsHash/sign',
     component: DocumentsSignWrapperComponent,
+    canActivate: [MissingMetamaskGuard],
     resolve: {
       contract: EthereumService
     }
   },
   { path: 'documents/:ipfsHash/request-signatures',
     component: DocumentsRequestSignaturesWrapperComponent,
+    canActivate: [MissingMetamaskGuard],
     resolve: {
       contract: EthereumService
     }
