@@ -11,8 +11,7 @@ export class AppComponent {
   title = 'app';
 
   constructor(translate: TranslateService) {
-    translate.setDefaultLang('en');
-
-    translate.use('es');
+    translate.setDefaultLang('en')
+    translate.use('es')
   }
 }

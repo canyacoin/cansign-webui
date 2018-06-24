@@ -3,7 +3,7 @@
     <div class="wrapper">
       <template #filesList></template>
       <div class="message" *ngIf="hasNoFiles">
-        <p>You have uploaded no documents</p>
+        <p>{{ 'documents-index.no-docs-uploaded' | translate }}</p>
       </div>
     </div>
   </div>

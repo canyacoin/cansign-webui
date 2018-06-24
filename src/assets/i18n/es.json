@@ -1,5 +1,17 @@
 {
   "documents-index": {
-    "site-wide-notice": "Sube documentos a IPFS y fírmalos con tu dirección de Ethereum."
-  }
+    "site-wide-notice": "Sube documentos a IPFS y fírmalos con tu dirección de Ethereum.",
+    "dropzone-message": "<i class='fa fa-cloud-upload-alt'></i> <h4>Arrastra un documento para cargarlo</h4> <p>- ó -</p> <span class='btn btn-primary'>Búscalo</span>",
+    "no-docs-uploaded": "No has subido documentos"
+  },
+  "published": "publicado",
+  "signed": "firmado",
+  "pending": "pendiente",
+  "uploaded": "subido",
+  "document": "DOCUMENTO",
+  "remove": "remover",
+  "still-working": "aún en progreso...",
+  "status": "Estatus",
+  "request-signatures": "Solicitar firmas",
+  "see-document": "Ver documento"
 }

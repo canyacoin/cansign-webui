@@ -9,12 +9,12 @@ import { IpfsService } from '../../@service/ipfs.service';
 
 export class DropzoneComponent implements OnInit {
 
-  dzMessage: string = `
+  dzMessage: any = {value: `
     <i class="fa fa-cloud-upload-alt"></i>
     <h4>Drag a document to upload</h4>
     <p>- or -</p>
     <span class="btn btn-primary">Browse</span>
-  `
+  `}
 
   nodeIsReady: boolean = false
 

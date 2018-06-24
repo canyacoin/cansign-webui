@@ -10,33 +10,33 @@
     </div>
     <div class="col-6 content">
       <div>
-        <h6>DOCUMENT</h6>
+        <h6>{{ 'document' | translate }}</h6>
         <span class="name">{{ name }}</span>
         <nav>
-          <span class="remove-file" *ngIf="!streamEnded" (click)="shared.removeFiles([ipfsHash])">remove</span>
+          <span class="remove-file" *ngIf="!streamEnded" (click)="shared.removeFiles([ipfsHash])">{{ 'remove' | translate }}</span>
           <!-- <span class="remove-file" *ngIf="streamEnded" (click)="shared.cancelUpload(index)">cancel upload</span> -->
-          <em class="still-working" *ngIf="streamEnded">still working...</em>
+          <em class="still-working" *ngIf="streamEnded">{{ 'still-working' | translate }}</em>
           <span [innerHtml]="ipfsLink" *ngIf="!streamEnded"></span>
         </nav>
       </div>
     </div>
     <div class="col-4 actions" *ngIf="!isUploading && !streamEnded">
       <div>
-        <h6>Status</h6>
-        <span class="status text-capitalize">{{ status }}</span>
+        <h6>{{ 'status' | translate }}</h6>
+        <span class="status text-capitalize">{{ status | translate }}</span>
         <nav>
           <a
             *ngIf="isUploaded()"
             [routerLink]="['/documents', ipfsHash, 'request-signatures']"
-            class="btn btn-sm btn-primary">Request signatures</a>
+            class="btn btn-sm btn-primary">{{ 'request-signatures' | translate }}</a>
           <a
             *ngIf="isPublished()"
             [routerLink]="['/documents', ipfsHash, 'sign']"
-            class="btn btn-sm btn-primary">See document</a>
+            class="btn btn-sm btn-primary">{{ 'see-document' | translate }}</a>
           <a
             *ngIf="isSigned()"
             [routerLink]="['/documents', ipfsHash, 'sign']"
-            class="btn btn-sm btn-primary">See document</a>
+            class="btn btn-sm btn-primary">{{ 'see-document' | translate }}</a>
         </nav>
       </div>
     </div>
