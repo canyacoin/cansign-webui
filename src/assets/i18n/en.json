@@ -4,6 +4,16 @@
     "dropzone-message": "<i class='fa fa-cloud-upload-alt'></i> <h4>Drag a document to upload</h4> <p>- or -</p> <span class='btn btn-primary'>Browse</span>",
     "no-docs-uploaded": "You have uploaded no documents"
   },
+  "documents-sign": {
+    "not-allowed": "You are not allowed to view or sign this document because",
+    "unmatched-address": "Your Ethereum address does not match the document creator address",
+    "unmatched-signers": "Your Ethereum address does not match any of the signers addresses",
+    "already-signed": "You already signed this document",
+    "is-document-creator": "As the document creator, you already signed this document"
+  },
+  "close": "Close",
+  "exit": "Exit",
+  "forbidden": "Forbidden",
   "published": "published",
   "signed": "signed",
   "pending": "pending",

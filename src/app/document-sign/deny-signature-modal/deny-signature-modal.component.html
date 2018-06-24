@@ -3,28 +3,28 @@
     <div class="row justify-content-center">
       <div class="col-8">
         <div class="modal-body" *ngIf="onSignatureDenial">
-          <h4>Forbidden</h4>
-          <h5 class="mt-3">You are not allowed to view or sign this document because:</h5>
+          <h4>{{ 'forbidden' | translate }}</h4>
+          <h5 class="mt-3">{{ 'documents-sign.not-allowed' | translate }}:</h5>
           <ul>
-            <li>Your Ethereum address does not match the document creator address</li>
-            <li>Your Ethereum address does not match any of the signers addresses</li>
+            <li>{{ 'documents-sign.unmatched-address' | translate }}</li>
+            <li>{{ 'documents-sign.unmatched-signers' | translate }}</li>
           </ul>
           <nav class="mt-3">
-            <button class="btn btn-danger btn-outline" (click)="exit()">Exit</button>
+            <button class="btn btn-danger btn-outline" (click)="exit()">{{ 'exit' | translate }}</button>
           </nav>
         </div>
         <div class="modal-body" *ngIf="onSignatureExists">
-          <h4>Forbidden</h4>
-          <h5 class="mt-3">You already signed this document</h5>
+          <h4>{{ 'forbidden' | translate }}</h4>
+          <h5 class="mt-3">{{ 'documents-sign.already-signed' | translate }}</h5>
           <nav class="mt-3">
-            <button class="btn btn-outline-dark" (click)="display = false">Close</button>
+            <button class="btn btn-outline-dark" (click)="display = false">{{ 'close' | translate }}</button>
           </nav>
         </div>
         <div class="modal-body" *ngIf="onSignerIsCreator">
-          <h4>Forbidden</h4>
-          <h5 class="mt-3">As the document creator, you already signed this document</h5>
+          <h4>{{ 'forbidden' | translate }}</h4>
+          <h5 class="mt-3">{{ 'documents-sign.is-document-creator' | translate }}</h5>
           <nav class="mt-3">
-            <button class="btn btn-outline-dark" (click)="display = false">Close</button>
+            <button class="btn btn-outline-dark" (click)="display = false">{{ 'close' | translate }}</button>
           </nav>
         </div>
       </div>

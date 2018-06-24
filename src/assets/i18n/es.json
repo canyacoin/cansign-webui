@@ -4,6 +4,16 @@
     "dropzone-message": "<i class='fa fa-cloud-upload-alt'></i> <h4>Arrastra un documento para cargarlo</h4> <p>- ó -</p> <span class='btn btn-primary'>Búscalo</span>",
     "no-docs-uploaded": "No has subido documentos"
   },
+  "documents-sign": {
+    "not-allowed": "No puedes ver o firmar este documento porque",
+    "unmatched-address": "Tu dirección de Ethereum no es la del creador del documento",
+    "unmatched-signers": "Tu dirección de Ethereum no es la de las firmas solicitadas",
+    "already-signed": "Ya has firmado este documento",
+    "is-document-creator": "Como el creador del documento, ya has emitido tu firma"
+  },
+  "close": "Cerrar",
+  "exit": "Salir",
+  "forbidden": "Prohibido",
   "published": "publicado",
   "signed": "firmado",
   "pending": "pendiente",
