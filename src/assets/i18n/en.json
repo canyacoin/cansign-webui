@@ -11,6 +11,16 @@
     "already-signed": "You already signed this document",
     "is-document-creator": "As the document creator, you already signed this document"
   },
+  "documents-request": {
+    "add-a-signer": "Add a signer",
+    "signer-eth-address": "Signer ETH address",
+    "signer-email": "Signer email",
+    "add-signer": "Add signer"
+  },
+  "eth-address": "ETH Address",
+  "email": "Email",
+  "signers": "Signers",
+  "cancel": "Cancel",
   "close": "Close",
   "exit": "Exit",
   "forbidden": "Forbidden",

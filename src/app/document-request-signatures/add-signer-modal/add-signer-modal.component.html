@@ -3,40 +3,40 @@
     <div class="row justify-content-center">
       <div class="col-6">
         <div class="modal-body" *ngIf="onAddSigner">
-          <h2>Add a signer</h2>
+          <h2>{{ 'documents-request.add-a-signer' | translate }}</h2>
           <hr class="mt-0">
 
           <div id="new-signer-form">
             <fieldset class="form-group">
-              <label for="signerEthAddress">Signer ETH address</label>
+              <label for="signerEthAddress">{{ 'documents-request.signer-eth-address' | translate }}</label>
               <input type="text" name="signerEthAddress" class="form-control" [(ngModel)]="signer.ETHAddress">
               <p class="on-error" *ngIf="!isValidSignerAddress">{{ invalidSignerAddressMessage }}</p>
             </fieldset>
             <fieldset class="form-group">
-              <label for="signerEmail">Signer email</label>
+              <label for="signerEmail">{{ 'documents-request.signer-email' | translate }}</label>
               <input type="text" name="signerEmail" class="form-control" [(ngModel)]="signer.email">
               <p class="on-error" *ngIf="!isValidSignerEmail">{{ invalidSignerEmailMessage }}</p>
             </fieldset>
           </div>
 
           <nav>
-            <button class="btn btn-success" (click)="addSigner()">Add signer</button>
-            <button class="btn btn-outline-danger" (click)="display = false">Cancel</button>
+            <button class="btn btn-success" (click)="addSigner()">{{ 'documents-request.add-signer' | translate }}</button>
+            <button class="btn btn-outline-danger" (click)="display = false">{{ 'cancel' | translate }}</button>
           </nav>
         </div>
         <div class="modal-body" *ngIf="onSignersList">
-          <h2>Signers</h2>
+          <h2>{{ 'signers' | translate }}</h2>
           <hr class="mt-0">
 
           <div class="row">
             <div class="col-5">
-              <small>ETH Address</small>
+              <small>{{ 'eth-address' | translate }}</small>
             </div>
             <div class="col-5">
-              <small>Email</small>
+              <small>{{ 'email' | translate }}</small>
             </div>
             <div class="col-2">
-              <small>Remove</small>
+              <small>{{ 'remove' | translate }}</small>
             </div>
           </div>
 
@@ -48,13 +48,13 @@
               <p>{{ signer.email }}</p>
             </div>
             <div class="col-2">
-              <span class="remove-signer" (click)="removeSigner(signer)">remove</span>
+              <span class="remove-signer" (click)="removeSigner(signer)">{{ 'remove' | translate }}</span>
             </div>
           </div>
 
           <nav class="mt-3">
-            <button class="btn btn-success" (click)="shared.openAddSignerModal()">Add signer</button>
-            <button class="btn btn-outline-dark" (click)="display = false">Close</button>
+            <button class="btn btn-success" (click)="shared.openAddSignerModal()">{{ 'documents-request.add-signer' | translate }}</button>
+            <button class="btn btn-outline-dark" (click)="display = false">{{ 'close' | translate }}</button>
           </nav>
         </div>
       </div>
