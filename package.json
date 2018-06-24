@@ -21,6 +21,8 @@
     "@angular/platform-browser": "^5.2.11",
     "@angular/platform-browser-dynamic": "^5.2.11",
     "@angular/router": "^5.2.11",
+    "@ngx-translate/core": "^9.1.1",
+    "@ngx-translate/http-loader": "^3.0.1",
     "angularfire2": "^5.0.0-rc.9",
     "bowser": "^1.9.3",
     "clipboard": "^2.0.1",

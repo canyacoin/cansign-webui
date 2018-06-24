@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
@@ -23,7 +23,15 @@ import { SharedService } from './@service/shared.service';
 import { environment } from '@environment/environment';
 
 import { MissingMetamaskGuard } from '@guard/missing-metamask.guard';
-import { MissingMetamaskModule } from './missing-metamask/missing-metamask.module'
+import { MissingMetamaskModule } from './missing-metamask/missing-metamask.module';
+
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http)
+}
 
 @NgModule({
   declarations: [
@@ -41,7 +49,14 @@ import { MissingMetamaskModule } from './missing-metamask/missing-metamask.modul
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     SharedModule,
-    MissingMetamaskModule
+    MissingMetamaskModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     IpfsService,

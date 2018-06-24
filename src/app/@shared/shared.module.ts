@@ -4,6 +4,7 @@ import { FooterComponent } from './footer/footer.component';
 import { CardsComponent } from './cards/cards.component';
 import { DocumentContentComponent } from './document-content/document-content.component';
 import { AboutModalComponent } from './about-modal/about-modal.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { AboutModalComponent } from './about-modal/about-modal.component';
     DocumentContentComponent,
     CardsComponent,
     AboutModalComponent,
+    TranslateModule
   ],
   declarations: [
     FooterComponent,
