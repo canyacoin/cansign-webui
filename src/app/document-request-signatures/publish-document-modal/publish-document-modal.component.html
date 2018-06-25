@@ -3,22 +3,22 @@
     <div class="row justify-content-center">
       <div class="col-8">
         <div class="modal-body" *ngIf="onBeforePublish">
-          <h4>IMPORTANT</h4>
-          <small>Note: you are connected to the <em>{{ eth.networkType }}</em> Ethereum network using this Ethereum address: <strong>{{ eth.ETHAddress }}</strong></small>
-          <p class="mt-3">By publishing the document <strong>{{ currentFile.name }}</strong>:</p>
+          <h4>{{ 'important' | translate }}</h4>
+          <small [innerHTML]="'documents-request.connected-to' | translate:{ network: eth.networkType, address: eth.ETHAddress }"></small>
+          <p class="mt-3" [innerHTML]="'documents-request.by-publishing' | translate:{ name: currentFile.name }"></p>
           <ul>
-            <li>You will create a new record in this smart contract: <a href="{{ eth.networkURL }}/address/{{ eth.contractAddress }}" target="_blank" class="text-truncate d-inline-block" style="width: 120px; margin-bottom: -9px;">{{ eth.contractAddress }}</a></li>
-            <li>The signers will be notified via email</li>
-            <li>Each signer address must match the signer address specified in this document</li>
+            <li>{{ 'documents-request.new-record' | translate }} <a href="{{ eth.networkURL }}/address/{{ eth.contractAddress }}" target="_blank" class="text-truncate d-inline-block" style="width: 120px; margin-bottom: -9px;">{{ eth.contractAddress }}</a></li>
+            <li>{{ 'documents-request.signers-notified' | translate }}</li>
+            <li>{{ 'documents-request.signers-must-match' | translate }}</li>
           </ul>
           <nav class="mt-3">
-            <button class="btn btn-primary" (click)="eth.publishDocument(currentFile)">Confirm &amp; Publish</button>
-            <button class="btn btn-outline-success" (click)="shared.openSignersListModal()">View signers</button>
-            <button class="btn btn-outline-danger" (click)="reset()">Cancel</button>
+            <button class="btn btn-primary" (click)="eth.publishDocument(currentFile)">{{ 'documents-request.confirm-and-publish' | translate }}</button>
+            <button class="btn btn-outline-success" (click)="shared.openSignersListModal()">{{ 'documents-request.view-signers' | translate }}</button>
+            <button class="btn btn-outline-danger" (click)="reset()">{{ 'cancel' | translate }}</button>
           </nav>
         </div>
         <div class="modal-body" *ngIf="onPublishing">
-          <h4>Waiting for confirmation</h4>
+          <h4>{{ 'waiting-for-confirmation' | translate }}</h4>
           <div class="spinner-wrapper">
             <svg class="svg" xmlns="http://www.w3.org/2000/svg">
               <circle class="circle" r="42" cx="50%" cy="50%" fill="transparent" stroke-dasharray="0"></circle>
@@ -27,18 +27,18 @@
           </div>
         </div>
         <div class="modal-body" *ngIf="onError">
-          <h4>There was an error...</h4>
+          <h4>{{ 'there-was-an-error' | translate }}</h4>
           <nav>
-            <button class="btn btn-danger btn-outline" (click)="reset()">Close</button>
+            <button class="btn btn-danger btn-outline" (click)="reset()">{{ 'close' | translate }}</button>
           </nav>
         </div>
         <div class="modal-body" *ngIf="onAfterPublishing">
-          <h4>All set</h4>
-          <h5>The document was published in this transaction: <a href="{{ eth.networkURL }}/tx/{{ tx }}" target="_blank" class="text-truncate d-inline-block" style="width: 120px; margin-bottom: -9px;">{{ tx }}</a></h5>
-          <p>An email notification was sent to the signers. You will be notified when a signer signs the document.</p>
+          <h4>{{ 'all-set' | translate }}</h4>
+          <h5>{{ 'documents-request.published-in-tx' | translate }}: <a href="{{ eth.networkURL }}/tx/{{ tx }}" target="_blank" class="text-truncate d-inline-block" style="width: 120px; margin-bottom: -9px;">{{ tx }}</a></h5>
+          <p>{{ 'documents-request.signers-were-notified' | translate }}</p>
           <nav>
-            <a [routerLink]="['/documents', currentFile.hash, 'sign']" class="btn btn-danger btn-primary" (click)="reset()">See published document</a>
-            <button class="btn btn-danger btn-outline" (click)="reset()">Close</button>
+            <a [routerLink]="['/documents', currentFile.hash, 'sign']" class="btn btn-danger btn-primary" (click)="reset()">{{ 'documents-request.see-published-document' | translate }}</a>
+            <button class="btn btn-danger btn-outline" (click)="reset()">{{ 'close' | translate }}</button>
           </nav>
         </div>
       </div>
