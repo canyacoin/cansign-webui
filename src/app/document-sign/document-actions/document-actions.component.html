@@ -1,38 +1,38 @@
 <aside id="document-actions">
   <div class="container-fluid">
     <article>
-      <h6>DOCUMENT ACTIONS</h6>
-      <button class="btn btn-primary btn-block" [disabled]="isSigned()" (click)="onSignDocument()">Sign</button>
+      <h6>{{ 'document-actions' | translate }}</h6>
+      <button class="btn btn-primary btn-block" [disabled]="isSigned()" (click)="onSignDocument()">{{ 'sign' | translate }}</button>
     </article>
     <article>
-      <h6>DOCUMENT INFO</h6>
-      <small>IPFS location</small>
+      <h6>{{ 'document-info' | translate }}</h6>
+      <small>{{ 'ipfs-location' | translate }}</small>
       <a href="{{ ipfs.gatewayURL }}/{{ docId }}" target="_blank" class="text-truncate d-block" style="width: 280px;">{{ docId }}</a>
-      <small>Creator</small>
+      <small>{{ 'creator' | translate }}</small>
       <a href="{{ eth.networkURL }}/address/{{ creator.ETHAddress }}" target="_blank" class="text-truncate d-block" style="width: 280px;">{{ creator.ETHAddress }}</a>
-      <small>Name</small>
+      <small>{{ 'name' | translate }}</small>
       <p>{{ currentFile.name }}</p>
-      <small>Last modified</small>
+      <small>{{ 'last-modified' | translate }}</small>
       <p>{{ moment(currentFile.lastModified).format(shared.dateFormats.long) }}</p>
-      <small>Uploaded at</small>
+      <small>{{ 'uploaded-at' | translate }}</small>
       <p>{{ moment(currentFile.uploadedAt).format(shared.dateFormats.long) }}</p>
-      <small>Status</small>
-      <p class="capitalize">{{ currentFile.status }}</p>
+      <small>{{ 'status' | translate }}</small>
+      <p class="capitalize">{{ currentFile.status | translate }}</p>
     </article>
     <!-- <article>
       <h6>EXPIRATION DATE</h6>
     </article> -->
     <article>
-      <h6>SIGNERS</h6>
+      <h6>{{ 'signers' | translate }}</h6>
       <div class="signer" *ngFor="let signer of signers">
-        <small>ETH Address</small>
+        <small>{{ 'eth-address' | translate }}</small>
         <a href="{{ eth.networkURL }}/address/{{ signer.ETHAddress }}" target="_blank" class="text-truncate d-block" style="width: 280px;">{{ signer.ETHAddress }}</a>
-        <small>Email</small>
+        <small>{{ 'email' | translate }}</small>
         <p>{{ signer.email }}</p>
-        <small>Status</small>
-        <p class="text-capitalize">{{ signer.status }}</p>
+        <small>{{ 'status' | translate }}</small>
+        <p class="text-capitalize">{{ signer.status | translate }}</p>
         <div *ngIf="signer.tx">
-          <small>Signature</small>
+          <small>{{ 'signature' | translate }}</small>
           <a href="{{ eth.networkURL }}/tx/{{ signer.tx }}" target="_blank" class="text-truncate d-block" style="width: 280px;">{{ signer.tx }}</a>
         </div>
       </div>

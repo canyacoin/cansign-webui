@@ -35,6 +35,8 @@
     "signers-were-notified": "An email notification was sent to the signers. You will be notified when all signers have signed the document.",
     "see-published-document": "See published document"
   },
+  "sign": "Sign",
+  "signature": "Signature",
   "all-set": "All set",
   "there-was-an-error": "There was an error...",
   "waiting-for-confirmation": "Waiting for confirmation",

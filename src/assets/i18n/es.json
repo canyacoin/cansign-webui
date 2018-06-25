@@ -35,6 +35,8 @@
     "signers-were-notified": "Se le ha enviado un correo electrónico a los firmantes. Te será notificado cuando todos los firmantes hayan firmado el documento.",
     "see-published-document": "Ver el documento publicado"
   },
+  "sign": "Firmar",
+  "signature": "Firma",
   "all-set": "Todo listo",
   "there-was-an-error": "Hubo un error...",
   "waiting-for-confirmation": "Esperando confirmación",
