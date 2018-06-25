@@ -59,13 +59,13 @@ export class DocumentActionsComponent implements OnInit {
     this.ls.getDocument(this.docId).then((document: Document) => {
       if (!document.signers || Object.keys(document.signers).length <= 0) {
         this.canRequestSignatures = false
-        this.onRequestSignaturesFailMessage = 'At least 1 signer needs to be added in order to request signatures'
+        this.onRequestSignaturesFailMessage = 'documents-request.at-least-1-signer'
         return false
       }
 
       if (!this.creator.email) {
         this.canRequestSignatures = false
-        this.onRequestSignaturesFailMessage = 'You need to add a notification email'
+        this.onRequestSignaturesFailMessage = 'documents-request.add-notification-email'
         return false
       }
 
@@ -90,13 +90,13 @@ export class DocumentActionsComponent implements OnInit {
 
     this.ls.updateDocument(this.docId, {creator: this.creator})
 
-    window.$('#btn-add-email').text('Added!')
+    window.$('#btn-add-email').html('<i class="fa fa-check"></i>')
   }
 
   _isValidCreatorEmail(): boolean {
     if (typeof this.creator.email != 'string' || !validator.isEmail(this.creator.email)) {
       this.isValidCreatorEmail = false
-      this.invalidCreatorEmailMessage = 'Email is not a valid email address'
+      this.invalidCreatorEmailMessage = 'documents-request.invalid-email-address'
 
       return false
     }
@@ -110,7 +110,7 @@ export class DocumentActionsComponent implements OnInit {
 
     if (emailExists) {
       this.isValidCreatorEmail = false
-      this.invalidCreatorEmailMessage = 'Email should not match another signer email'
+      this.invalidCreatorEmailMessage = 'documents-request.email-equals-another-email'
 
       return false
     }
