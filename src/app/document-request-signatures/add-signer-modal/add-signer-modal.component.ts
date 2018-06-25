@@ -122,17 +122,17 @@ export class AddSignerModalComponent implements OnInit {
 
   _isValidSignerAddress(): boolean {
     if (!Web3.utils.isAddress(this.signer.ETHAddress)) {
-      this.isValidSignerAddress = false;
-      this.invalidSignerAddressMessage = 'Address is not a valid HEX Ethereum address';
+      this.isValidSignerAddress = false
+      this.invalidSignerAddressMessage = 'documents-request.invalid-hex-address'
 
-      return false;
+      return false
     }
 
     if (this.signer.ETHAddress.toUpperCase() === this.eth.ETHAddress.toUpperCase()) {
-      this.isValidSignerAddress = false;
-      this.invalidSignerAddressMessage = 'Address should not be equal to the document creator address';
+      this.isValidSignerAddress = false
+      this.invalidSignerAddressMessage = 'documents-request.address-equals-creator'
 
-      return false;
+      return false
     }
 
     let addressExists = this.signers.map(signer => {
@@ -140,28 +140,28 @@ export class AddSignerModalComponent implements OnInit {
     }).indexOf(this.signer.ETHAddress.toUpperCase()) != -1;
 
     if (addressExists) {
-      this.isValidSignerAddress = false;
-      this.invalidSignerAddressMessage = 'Address should not match another signer address';
+      this.isValidSignerAddress = false
+      this.invalidSignerAddressMessage = 'documents-request.address-equals-another-address'
 
-      return false;
+      return false
     }
 
-    return true;
+    return true
   }
 
   _isValidSignerEmail(): boolean {
     if (typeof this.signer.email != 'string' || !validator.isEmail(this.signer.email)) {
-      this.isValidSignerEmail = false;
-      this.invalidSignerEmailMessage = 'Email is not a valid email address';
+      this.isValidSignerEmail = false
+      this.invalidSignerEmailMessage = 'documents-request.invalid-email-address'
 
-      return false;
+      return false
     }
 
     if (this.signer.email === this.creator.email) {
-      this.isValidSignerEmail = false;
-      this.invalidSignerEmailMessage = 'Email should not be equal to the document creator email';
+      this.isValidSignerEmail = false
+      this.invalidSignerEmailMessage = 'documents-request.email-equals-creator-email'
 
-      return false;
+      return false
     }
 
     let emailExists = this.signers.map(signer => {
@@ -169,13 +169,13 @@ export class AddSignerModalComponent implements OnInit {
     }).indexOf(this.signer.email) != -1;
 
     if (emailExists) {
-      this.isValidSignerEmail = false;
-      this.invalidSignerEmailMessage = 'Email should not match another signer email';
+      this.isValidSignerEmail = false
+      this.invalidSignerEmailMessage = 'documents-request.email-equals-another-email'
 
-      return false;
+      return false
     }
 
-    return true;
+    return true
   }
 
 }

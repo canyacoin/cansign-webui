@@ -10,12 +10,12 @@
             <fieldset class="form-group">
               <label for="signerEthAddress">{{ 'documents-request.signer-eth-address' | translate }}</label>
               <input type="text" name="signerEthAddress" class="form-control" [(ngModel)]="signer.ETHAddress">
-              <p class="on-error" *ngIf="!isValidSignerAddress">{{ invalidSignerAddressMessage }}</p>
+              <p class="on-error" *ngIf="!isValidSignerAddress">{{ invalidSignerAddressMessage | translate }}</p>
             </fieldset>
             <fieldset class="form-group">
               <label for="signerEmail">{{ 'documents-request.signer-email' | translate }}</label>
               <input type="text" name="signerEmail" class="form-control" [(ngModel)]="signer.email">
-              <p class="on-error" *ngIf="!isValidSignerEmail">{{ invalidSignerEmailMessage }}</p>
+              <p class="on-error" *ngIf="!isValidSignerEmail">{{ invalidSignerEmailMessage | translate }}</p>
             </fieldset>
           </div>
 
@@ -36,7 +36,7 @@
               <small>{{ 'email' | translate }}</small>
             </div>
             <div class="col-2">
-              <small>{{ 'remove' | translate }}</small>
+              <small class="text-capitalize">{{ 'remove' | translate }}</small>
             </div>
           </div>
 
@@ -48,7 +48,7 @@
               <p>{{ signer.email }}</p>
             </div>
             <div class="col-2">
-              <span class="remove-signer" (click)="removeSigner(signer)">{{ 'remove' | translate }}</span>
+              <span class="remove-signer text-capitalize" (click)="removeSigner(signer)">{{ 'remove' | translate }}</span>
             </div>
           </div>
 

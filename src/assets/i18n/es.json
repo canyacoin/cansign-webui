@@ -15,7 +15,13 @@
     "add-a-signer": "Agregar un firmante",
     "signer-eth-address": "Dirección ETH del firmante",
     "signer-email": "Correo electrónico del firmante",
-    "add-signer": "Agregar firmante"
+    "add-signer": "Agregar firmante",
+    "invalid-hex-address": "La dirección de Ethereum no es válida",
+    "address-equals-creator": "La dirección no debe ser igual a la del creador",
+    "address-equals-another-address": "La dirección no debe ser igual a la de otro firmante",
+    "invalid-email-address": "El correo electrónico no es válido",
+    "email-equals-creator-email": "El correo electrónico no debe ser igual al del creador",
+    "email-equals-another-email": "El correo electrónico no debe ser igual al de otro firmante"
   },
   "eth-address": "Dirección ETH",
   "email": "Correo electrónico",

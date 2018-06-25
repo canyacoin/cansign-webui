@@ -15,7 +15,13 @@
     "add-a-signer": "Add a signer",
     "signer-eth-address": "Signer ETH address",
     "signer-email": "Signer email",
-    "add-signer": "Add signer"
+    "add-signer": "Add signer",
+    "invalid-hex-address": "Address is not a valid HEX Ethereum address",
+    "address-equals-creator": "Address should not be equal to the document creator address",
+    "address-equals-another-address": "Address should not match another signer address",
+    "invalid-email-address": "Email is not a valid email address",
+    "email-equals-creator-email": "Email should not be equal to the document creator email",
+    "email-equals-another-email": "Email should not match another signer email"
   },
   "eth-address": "ETH Address",
   "email": "Email",
