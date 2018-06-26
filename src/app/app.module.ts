@@ -25,15 +25,7 @@ import { environment } from '@environment/environment';
 import { MissingMetamaskGuard } from '@guard/missing-metamask.guard';
 import { MissingMetamaskModule } from './missing-metamask/missing-metamask.module';
 
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-
 import { CommonLibModule } from '@canyaio/common-lib';
-
-// AoT requires an exported function for factories
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http)
-}
 
 @NgModule({
   declarations: [
@@ -53,13 +45,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     SharedModule,
     MissingMetamaskModule,
     CommonLibModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
   ],
   providers: [
     IpfsService,

@@ -1,4 +1,10 @@
 {
+  "header": {
+    "blog": "Blog",
+    "forum": "Foro",
+    "telegram": "Telegram",
+    "about": "Acerca de"
+  },
   "documents-index": {
     "site-wide-notice": "Sube documentos a IPFS y fírmalos con tu dirección de Ethereum.",
     "dropzone-message": "<i class='fa fa-cloud-upload-alt'></i> <h4>Arrastra un documento para cargarlo</h4> <p>- ó -</p> <span class='btn btn-primary'>Búscalo</span>",
