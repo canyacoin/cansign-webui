@@ -3,7 +3,7 @@
 <app-about-modal></app-about-modal>
 
 <canyalib-header
-  [logo]="{ src: 'assets/img/CanSign.svg', alt: 'CanSign Logo', href: '/documents/index' }"
+  [logo]="{ src: 'assets/img/CanSign.svg', alt: 'CanSign Logo', routerLink: ['/documents/index'] }"
   [buttons]="[{ index: 0, innerHtml: 'header.about', class: 'btn btn-primary', onClick: [shared, 'displayAboutModal'] }]">
   </canyalib-header>
 
