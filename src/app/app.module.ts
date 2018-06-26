@@ -14,7 +14,6 @@ import { DocumentNewModule } from './document-new/document-new.module';
 import { DocumentSignModule } from './document-sign/document-sign.module';
 import { DocumentRequestSignaturesModule } from './document-request-signatures/document-request-signatures.module';
 
-import { HeaderComponent } from './header/header.component';
 import { IpfsService } from './@service/ipfs.service';
 import { LocalStorageService } from './@service/local-storage.service';
 import { EthereumService } from './@service/ethereum.service';
@@ -30,7 +29,6 @@ import { CommonLibModule } from '@canyaio/common-lib';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
   ],
   imports: [
     BrowserModule,
