@@ -5,6 +5,9 @@
     "telegram": "Telegram",
     "about": "About"
   },
+  "footer": {
+    "home": "Home"
+  },
   "documents-index": {
     "site-wide-notice": "Upload documents to IPFS and sign them with your Ethereum address.",
     "dropzone-message": "<i class='fa fa-cloud-upload-alt'></i> <h4>Drag a document to upload</h4> <p>- or -</p> <span class='btn btn-primary'>Browse</span>",

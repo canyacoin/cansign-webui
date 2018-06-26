@@ -1,24 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FooterComponent } from './footer/footer.component';
 import { CardsComponent } from './cards/cards.component';
 import { DocumentContentComponent } from './document-content/document-content.component';
 import { AboutModalComponent } from './about-modal/about-modal.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { CommonLibModule } from '@canyaio/common-lib';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    CommonLibModule
   ],
   exports: [
-    FooterComponent,
     DocumentContentComponent,
     CardsComponent,
     AboutModalComponent,
-    TranslateModule
+    TranslateModule,
+    CommonLibModule
   ],
   declarations: [
-    FooterComponent,
     DocumentContentComponent,
     CardsComponent,
     AboutModalComponent,
