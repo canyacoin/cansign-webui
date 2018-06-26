@@ -3,19 +3,19 @@
     <div class="row justify-content-center">
       <div class="col-8">
         <div class="modal-body" *ngIf="onBeforeSign">
-          <h4>IMPORTANT</h4>
-          <small>Note: you are connected to the <em>{{ eth.networkType }}</em> Ethereum network using this Ethereum address: <strong>{{ eth.ETHAddress }}</strong></small>
-          <p class="mt-3">By signing the document <strong>{{ currentFile.name }}</strong>:</p>
+          <h4>{{ 'important' | translate }}</h4>
+          <small [innerHTML]="'documents-request.connected-to' | translate:{ network: eth.networkType, address: eth.ETHAddress }"></small>
+          <p class="mt-3" [innerHTML]="'documents-sign.by-signing' | translate:{ name: currentFile.name }"></p>
           <ul>
-            <li>You will create a new immutable record in this smart contract: <a href="{{ eth.networkURL }}/address/{{ eth.contractAddress }}" target="_blank" class="text-truncate d-inline-block" style="width: 120px; margin-bottom: -9px;">{{ eth.contractAddress }}</a></li>
+            <li>{{ 'documents-sign.create-record' }} <a href="{{ eth.networkURL }}/address/{{ eth.contractAddress }}" target="_blank" class="text-truncate d-inline-block" style="width: 120px; margin-bottom: -9px;">{{ eth.contractAddress }}</a></li>
           </ul>
           <nav class="mt-3">
-            <button class="btn btn-primary" (click)="onSignDocument()">Confirm &amp; Sign</button>
-            <button class="btn btn-danger btn-outline" (click)="reset()">Cancel</button>
+            <button class="btn btn-primary" (click)="onSignDocument()">{{ 'documents-sign.confirm-and-sign' | translate }}</button>
+            <button class="btn btn-danger btn-outline" (click)="reset()">{{ 'cancel' | translate }}</button>
           </nav>
         </div>
         <div class="modal-body" *ngIf="onSigning">
-          <h4>Waiting for confirmation</h4>
+          <h4>{{ 'waiting-for-confirmation' | translate }}</h4>
           <div class="spinner-wrapper">
             <svg class="svg" xmlns="http://www.w3.org/2000/svg">
               <circle class="circle" r="42" cx="50%" cy="50%" fill="transparent" stroke-dasharray="0"></circle>
@@ -24,16 +24,16 @@
           </div>
         </div>
         <div class="modal-body" *ngIf="onError">
-          <h4>There was an error...</h4>
+          <h4>{{ 'there-was-an-error' | translate }}</h4>
           <nav>
-            <button class="btn btn-danger btn-outline" (click)="reset()">Close</button>
+            <button class="btn btn-danger btn-outline" (click)="reset()">{{ 'close' | translate }}</button>
           </nav>
         </div>
         <div class="modal-body" *ngIf="onAfterSigning">
-          <h4>All set</h4>
-          <h5>The document was signed in this transaction: <a href="{{ eth.networkURL }}/tx/{{ tx }}" target="_blank" class="text-truncate d-inline-block" style="width: 120px; margin-bottom: -9px;">{{ tx }}</a></h5>
+          <h4>{{ 'all-set' | translate }}</h4>
+          <h5>{{ 'documents-sign.signed-in-tx' | translate }} <a href="{{ eth.networkURL }}/tx/{{ tx }}" target="_blank" class="text-truncate d-inline-block" style="width: 120px; margin-bottom: -9px;">{{ tx }}</a></h5>
           <nav>
-            <button class="btn btn-danger btn-outline" (click)="reset()">Close</button>
+            <button class="btn btn-danger btn-outline" (click)="reset()">{{ 'close' | translate }}</button>
           </nav>
         </div>
       </div>

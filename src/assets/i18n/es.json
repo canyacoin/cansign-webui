@@ -9,7 +9,11 @@
     "unmatched-address": "Tu dirección de Ethereum no es la del creador del documento",
     "unmatched-signers": "Tu dirección de Ethereum no es la de las firmas solicitadas",
     "already-signed": "Ya has firmado este documento",
-    "is-document-creator": "Como el creador del documento, ya has emitido tu firma"
+    "is-document-creator": "Como el creador del documento, ya has emitido tu firma",
+    "by-signing": "Al firmar el documento {{ name }}:",
+    "create-record": "Crearás un registro inmutable en este smart contract:",
+    "signed-in-tx": "The document was signed in this transaction:",
+    "confirm-and-sign": "Confirmar y Firmar"
   },
   "documents-request": {
     "add-a-signer": "Agregar un firmante",
@@ -25,7 +29,7 @@
     "view-signers": "Ver firmantes",
     "at-least-1-signer": "Al menos 1 firmante debe ser agregado para solicitar la firma de este documento",
     "add-notification-email": "Es necesario agregar un correo electrónico de notificación",
-    "connected-to": "Nota: estás conectado a la red <em>{{ network }}</em> de Ethereum usando esta dirección: <strong>{{ address }}</strong>",
+    "connected-to": "Estás conectado a la red <em>{{ network }}</em> de Ethereum usando esta dirección: <strong>{{ address }}</strong>",
     "by-publishing": "Al publicar el documento <strong>{{ name }}</strong>:",
     "new-record": "Estarás creando un registro en este contrato:",
     "signers-notified": "Los firmantes serán notificados via correo electrónico",

@@ -9,7 +9,11 @@
     "unmatched-address": "Your Ethereum address does not match the document creator address",
     "unmatched-signers": "Your Ethereum address does not match any of the signers addresses",
     "already-signed": "You already signed this document",
-    "is-document-creator": "As the document creator, you already signed this document"
+    "is-document-creator": "As the document creator, you already signed this document",
+    "by-signing": "By signing the document {{ name }}:",
+    "create-record": "You will create a new immutable record in this smart contract:",
+    "signed-in-tx": "The document was signed in this transaction:",
+    "confirm-and-sign": "Confirm & Sign"
   },
   "documents-request": {
     "add-a-signer": "Add a signer",
@@ -25,7 +29,7 @@
     "view-signers": "View signers",
     "at-least-1-signer": "At least 1 signer needs to be added in order to request signatures",
     "add-notification-email": "You need to add a notification email",
-    "connected-to": "Note: you are connected to the <em>{{ network }}</em> Ethereum network using this Ethereum address: <strong>{{ address }}</strong>",
+    "connected-to": "You are connected to the <em>{{ network }}</em> Ethereum network using this Ethereum address: <strong>{{ address }}</strong>",
     "by-publishing": "By publishing the document <strong>{{ name }}</strong>:",
     "new-record": "You will create a new record in this smart contract:",
     "signers-notified": "The signers will be notified via email",
