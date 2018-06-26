@@ -2,4 +2,11 @@
 
 <app-about-modal></app-about-modal>
 
-<app-header></app-header>
+<!-- <app-header></app-header> -->
+
+<canyalib-header
+  [logo]="{ src: 'assets/img/CanSign.svg', alt: 'CanSign Logo', href: '/documents/index' }"
+  [buttons]="[{ index: 0, innerHtml: 'About', class: 'btn btn-primary' }]">
+  </canyalib-header>
+
+<canyalib-language-switch [exclude]="[]"></canyalib-language-switch>

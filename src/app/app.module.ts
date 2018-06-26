@@ -28,6 +28,8 @@ import { MissingMetamaskModule } from './missing-metamask/missing-metamask.modul
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
+import { CommonLibModule } from '@canyaio/common-lib';
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http)
@@ -50,6 +52,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AngularFireDatabaseModule,
     SharedModule,
     MissingMetamaskModule,
+    CommonLibModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
