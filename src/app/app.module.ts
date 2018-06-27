@@ -10,7 +10,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './@shared/shared.module';
 
 import { DocumentIndexModule } from './document-index/document-index.module';
-import { DocumentNewModule } from './document-new/document-new.module';
 import { DocumentSignModule } from './document-sign/document-sign.module';
 import { DocumentRequestSignaturesModule } from './document-request-signatures/document-request-signatures.module';
 
@@ -34,7 +33,6 @@ import { CommonLibModule } from '@canyaio/common-lib';
     BrowserModule,
     AppRoutingModule,
     DocumentIndexModule,
-    DocumentNewModule,
     DocumentSignModule,
     DocumentRequestSignaturesModule,
     HttpClientModule,
