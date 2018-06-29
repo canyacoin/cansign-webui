@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
@@ -35,12 +36,12 @@ import { CommonLibModule } from '@canyaio/common-lib';
     DocumentIndexModule,
     DocumentSignModule,
     DocumentRequestSignaturesModule,
-    HttpClientModule,
+    HttpModule,
+    CommonLibModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     SharedModule,
     MissingMetamaskModule,
-    CommonLibModule,
   ],
   providers: [
     IpfsService,

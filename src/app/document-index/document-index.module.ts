@@ -12,6 +12,8 @@ import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { FilesListComponent } from './files-list/files-list.component';
 import { FileComponent } from './file/file.component';
 
+import { CommonLibModule } from '@canyaio/common-lib';
+
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
   url: '/upload',
@@ -25,7 +27,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     CommonModule,
     DropzoneModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    CommonLibModule,
   ],
   providers: [
     { provide: DROPZONE_CONFIG, useValue: DEFAULT_DROPZONE_CONFIG, },
