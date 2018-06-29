@@ -48,6 +48,8 @@
     "signers-were-notified": "An email notification was sent to the signers. You will be notified when all signers have signed the document.",
     "see-published-document": "See published document"
   },
+  "footer-section-notice": "Got another question? Ask our active community on Telegram.",
+  "footer-section-cta": "Join us on Telegram",
   "sign": "Sign",
   "signature": "Signature",
   "all-set": "All set",
