@@ -10,8 +10,6 @@ import { DocumentActionsComponent } from './document-actions/document-actions.co
 import { PublishDocumentModalComponent } from './publish-document-modal/publish-document-modal.component';
 import { AddSignerModalComponent } from './add-signer-modal/add-signer-modal.component';
 
-import { CommonLibModule } from '@canyaio/common-lib';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -19,7 +17,6 @@ import { CommonLibModule } from '@canyaio/common-lib';
     FormsModule,
     AppRoutingModule,
     HttpModule,
-    CommonLibModule
   ],
   declarations: [
     DocumentsRequestSignaturesWrapperComponent,

@@ -6,13 +6,10 @@ import { DocumentActionsComponent } from './document-actions/document-actions.co
 import { SignDocumentModalComponent } from './sign-document-modal/sign-document-modal.component';
 import { DenySignatureModalComponent } from './deny-signature-modal/deny-signature-modal.component';
 
-import { CommonLibModule } from '@canyaio/common-lib';
-
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    CommonLibModule
   ],
   declarations: [DocumentsSignWrapperComponent, DocumentActionsComponent, SignDocumentModalComponent, DenySignatureModalComponent]
 })

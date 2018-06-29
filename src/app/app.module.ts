@@ -25,6 +25,7 @@ import { MissingMetamaskGuard } from '@guard/missing-metamask.guard';
 import { MissingMetamaskModule } from './missing-metamask/missing-metamask.module';
 
 import { CommonLibModule } from '@canyaio/common-lib';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
