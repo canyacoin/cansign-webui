@@ -41,7 +41,7 @@
     "stable": "0.1.6",
     "stream-buffers": "^3.0.2",
     "truffle-contract": "^3.0.5",
-    "validator": "^10.2.0",
+    "validator": "^13.7.0",
     "web3": "^1.0.0-beta.34",
     "zone.js": "^0.8.26"
   },
